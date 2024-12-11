@@ -67,7 +67,7 @@ const AdminPanel = () => {
 
   return (
     <Container className="position-absolute top-50 start-50 translate-middle p-3 rounded-3">
-      <Row>
+      <Row className="pb-3">
         <Col>
           <Controllers
             onDelete={handleDelete}
