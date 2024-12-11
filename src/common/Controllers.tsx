@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
+import { Stack, Button, InputGroup, FormControl } from "react-bootstrap";
 
 interface ControllersProps {
   onDelete: () => void;
@@ -16,19 +15,23 @@ const Controllers = ({
 }: ControllersProps) => {
   return (
     <div className="d-flex">
-      <div className="d-flex align-items-cente">
+      <Stack direction="horizontal" gap={3}>
         <Button variant="outline-primary" onClick={onBlock}>
-          <i className="bi bi-circle" /> Block
+          <i className="bi bi-lock-fill"></i> Block
         </Button>
         <Button variant="outline-primary" onClick={onUnblock}>
-          <i className="bi bi-circle" /> Unblock
+          <i className="bi-unlock-fill" /> Unblock
         </Button>
         <Button variant="outline-danger" onClick={onDelete}>
-          <i className="bi bi-circle" /> Delete
+          <i className="bi bi-trash-fill"></i> Delete
         </Button>
-      </div>
+      </Stack>
       <InputGroup>
-        <FormControl placeholder="Filter..." onChange={onFilterChange} />
+        <FormControl
+          className="border-primary ms-3"
+          placeholder="Filter..."
+          onChange={onFilterChange}
+        />
       </InputGroup>
     </div>
   );
