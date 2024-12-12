@@ -1,5 +1,5 @@
 import Header from "./common/Header";
-import Template from "./pages/Template";
+import Template from "./pages/template/Template";
 
 function App() {
   return (

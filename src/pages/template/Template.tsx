@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Container, Nav, Form, Button, ListGroup } from "react-bootstrap";
-import Comment from "../common/Comment";
+import Comment from "../../common/Comment";
+import Results from "./Results";
 
 interface Comment {
   id: number;
@@ -37,7 +38,7 @@ const Template: React.FC = () => {
   };
 
   return (
-    <Container>
+    <Container className="px-5 pb-3 px-sm-2">
       <Nav justify variant="tabs" defaultActiveKey="/home">
         <Nav.Item>
           <Nav.Link onClick={() => handleTabClick("Questions")} href="/home">
@@ -53,8 +54,9 @@ const Template: React.FC = () => {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => handleTabClick("Answers")} eventKey="link-2">
-            Answers
+          {/* if opening the page won't fetch list then make this href like questions */}
+          <Nav.Link onClick={() => handleTabClick("Results")} eventKey="link-2">
+            Results
           </Nav.Link>
         </Nav.Item>
       </Nav>
@@ -62,7 +64,7 @@ const Template: React.FC = () => {
       <div className="mt-4">
         {activeTab === "Questions" && <h2>Questions</h2>}
         {activeTab === "Statistics" && <h2>Statistics</h2>}
-        {activeTab === "Answers" && <h2>Answers</h2>}
+        {activeTab === "Results" && <Results />}
       </div>
 
       <div className="mt-5">
