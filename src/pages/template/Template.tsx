@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Container, Nav, Form, Button, ListGroup } from "react-bootstrap";
 import Comment from "../../common/Comment";
 import Results from "./Results";
+import Questions from "./Questions/Questions";
+import Aggregation from "./Questions/Aggregation";
 
 interface Comment {
   id: number;
@@ -47,10 +49,10 @@ const Template: React.FC = () => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link
-            onClick={() => handleTabClick("Statistics")}
+            onClick={() => handleTabClick("Aggregation")}
             eventKey="link-1"
           >
-            Statistics
+            Aggregation
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
@@ -62,8 +64,8 @@ const Template: React.FC = () => {
       </Nav>
 
       <div className="mt-4">
-        {activeTab === "Questions" && <h2>Questions</h2>}
-        {activeTab === "Statistics" && <h2>Statistics</h2>}
+        {activeTab === "Questions" && <Questions />}
+        {activeTab === "Aggregation" && <Aggregation />}
         {activeTab === "Results" && <Results />}
       </div>
 
@@ -81,7 +83,8 @@ const Template: React.FC = () => {
               as="textarea"
               rows={3}
               type="text"
-              className="w-50"
+              // make those 50 above sm and 100 by default
+              className="w-sm-50"
               placeholder="Write a comment..."
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
