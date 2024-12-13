@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto">
-          <Form onSubmit={handleSearch} className="d-flex">
+          <Form onSubmit={handleSearch} className="d-flex m-2">
             <FormControl
               type="text"
               placeholder="Search..."
@@ -49,10 +49,12 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
             </h3>
           ) : (
             <>
-              <Button variant="warning" className="me-2">
+              <Button variant="warning" className="m-1">
                 Register
               </Button>
-              <Button variant="warning">Login</Button>
+              <Button variant="warning" className="m-1">
+                Login
+              </Button>
             </>
           )}
         </Nav>
