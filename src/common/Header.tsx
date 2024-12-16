@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Navbar, Nav, Button, Badge, Form, FormControl } from "react-bootstrap";
+import LanguageSwitch from "./LanguageSwitch";
+import { useTranslation } from "react-i18next";
 
 interface HeaderProps {
   currentUser?: string;
@@ -7,6 +9,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const { t } = useTranslation();
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
@@ -16,21 +20,24 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
 
   return (
     <Navbar expand="lg" className="bg-primary px-4">
-      <Navbar.Brand href="#home">
-        <i
-          // add different color on toggle
-          // or replace it with different icons (moon and stars)
-          className="bi bi-lightbulb hand-cursor"
-          style={{ fontSize: "1.5rem" }}
-        />
-      </Navbar.Brand>
+      <Nav className="ml-auto d-flex align-items-center">
+        <Navbar.Brand href="#home">
+          <i
+            // add different color on toggle
+            // or replace it with different icons (moon and stars)
+            className="bi bi-lightbulb hand-cursor"
+            style={{ fontSize: "1.5rem" }}
+          />
+        </Navbar.Brand>
+        <LanguageSwitch />
+      </Nav>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto">
           <Form onSubmit={handleSearch} className="d-flex m-2">
             <FormControl
               type="text"
-              placeholder="Search..."
+              placeholder={t("header.search")}
               className="mr-sm-2 border-success"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -50,10 +57,10 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
           ) : (
             <>
               <Button variant="warning" className="m-1">
-                Register
+                {t("header.register")}
               </Button>
               <Button variant="warning" className="m-1">
-                Login
+                {t("header.login")}
               </Button>
             </>
           )}

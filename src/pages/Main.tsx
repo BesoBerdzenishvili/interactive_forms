@@ -1,5 +1,6 @@
 import { Stack, Carousel, Table } from "react-bootstrap";
 import TagBadge from "../common/TagBadge";
+import { useTranslation } from "react-i18next";
 
 interface PopularItem {
   title: string;
@@ -72,6 +73,7 @@ const mock: MockData = {
 };
 
 export default function Main() {
+  const { t } = useTranslation();
   return (
     <div className="d-flex flex-column align-items-center justify-content-evenly w-75 h-100 position-absolute top-50 start-50 translate-middle">
       {/* Tags Section */}
@@ -103,9 +105,9 @@ export default function Main() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Responses</th>
+            <th>{t("main.tab.title")}</th>
+            <th>{t("main.tab.author")}</th>
+            <th>{t("main.tab.responses")}</th>
           </tr>
         </thead>
         <tbody>

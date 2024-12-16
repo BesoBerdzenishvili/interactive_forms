@@ -3,6 +3,7 @@ import { Table, Container, Row, Col, Form } from "react-bootstrap";
 import Controllers from "../common/Controllers";
 import UserPanel from "../common/User";
 import { User } from "../types";
+import { useTranslation } from "react-i18next";
 
 const AdminPanel = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -64,6 +65,7 @@ const AdminPanel = () => {
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(filter.toLowerCase())
   );
+  const { t } = useTranslation();
 
   return (
     <Container className="position-absolute top-50 start-50 translate-middle p-3 rounded-3">
@@ -89,9 +91,9 @@ const AdminPanel = () => {
                     onChange={handleSelectAll}
                   />
                 </th>
-                <th className="bg-danger">Name</th>
-                <th className="bg-danger">Email</th>
-                <th className="bg-danger">Last Seen</th>
+                <th className="bg-danger">{t("admin_panel.tab.name")}</th>
+                <th className="bg-danger">{t("admin_panel.tab.email")}</th>
+                <th className="bg-danger">{t("admin_panel.tab.last_seen")}</th>
               </tr>
             </thead>
             <tbody>

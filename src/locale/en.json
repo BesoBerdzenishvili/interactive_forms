@@ -1,0 +1,103 @@
+{
+  "translation": {
+    "header": {
+      "search": "Search...",
+      "register": "Register",
+      "login": "Login"
+    },
+    "template": {
+      "nav": {
+        "questions": "Questions",
+        "aggregation": "Aggregation",
+        "results": "Results"
+      },
+      "questions": {
+        "title": "Create a Questionnaire",
+        "form_title": "Title",
+        "title_placeholder": "Enter form title",
+        "description": "Description",
+        "topic": "Topic",
+        "tags": "Tags",
+        "tags_placeholder": "Enter a tag",
+        "image": "Optional Image",
+        "image_choice": "Choose File",
+        "image_not_chosen": "No file chosen",
+        "allowed_users": {
+          "title": "Allowed Users",
+          "name": "Name",
+          "email": "Email",
+          "name_placeholder": "User name",
+          "email_placeholder": "User email"
+        },
+        "questions": "Questions",
+        "add_question": "Add Question"
+      },
+      "aggregation": {
+        "title": "Aggregation(?)"
+      },
+      "results": {
+        "title": "Filled Forms",
+        "tab": {
+          "index": "Index",
+          "user": "User",
+          "filled_at": "Filled at"
+        }
+      },
+      "comments": {
+        "title": "Comments",
+        "placeholder": "Write a comment...",
+        "add_button": "Add Comment"
+      }
+    },
+    "user_form": {
+      "topic": "Topic",
+      "created_by": "Created By",
+      "created_at": "Created At",
+      "tags": "Tags"
+    },
+    "admin_panel": {
+      "buttons": {
+        "block": "Block",
+        "unblock": "Unblock",
+        "delete": "Delete"
+      },
+      "filter": "Filter...",
+      "tab": {
+        "name": "Name",
+        "email": "Email",
+        "last_seen": "Last Seen"
+      }
+    },
+    "user_panel": {
+      "templates": {
+        "title": "Templates",
+        "add_button": "Add Template",
+        "tab": {
+          "index": "Index",
+          "template_title": "Template Title",
+          "actions": "Actions"
+        }
+      },
+      "filled_forms": {
+        "title": "Filled Forms",
+        "tab": {
+          "index": "Index",
+          "template": "Template",
+          "author": "Author"
+        }
+      }
+    },
+    "main": {
+      "tab": {
+        "title": "Title",
+        "author": "Author",
+        "responses": "Responses"
+      }
+    },
+    "not_found": {
+      "title": "Page Not Found",
+      "message": "The page you’re looking for doesn’t exist or has been moved.",
+      "button": "Go Back Home"
+    }
+  }
+}

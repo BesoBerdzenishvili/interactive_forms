@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Container, Card, Badge, Image } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 interface Answer {
   id: number;
@@ -81,6 +82,7 @@ const answers: Answer[] = [
 const UserForm: React.FC = () => {
   // all we'll get from props is form id
   // and then fetch form data and questions from it
+  const { t } = useTranslation();
   return (
     <Container>
       {/* Form Header */}
@@ -99,16 +101,17 @@ const UserForm: React.FC = () => {
         </Card.Title>
         <Card.Text>{formData.description}</Card.Text>
         <Card.Text>
-          <strong>Topic:</strong> {formData.topic}
+          <strong>{t("user_form.topic")}:</strong> {formData.topic}
         </Card.Text>
         <Card.Text>
-          <strong>Created By:</strong> {formData.username} ({formData.email})
+          <strong>{t("user_form.created_by")}:</strong> {formData.username} (
+          {formData.email})
         </Card.Text>
         <Card.Text>
-          <strong>Created At:</strong> {formData.createdAt}
+          <strong>{t("user_form.created_at")}:</strong> {formData.createdAt}
         </Card.Text>
         <Card.Text>
-          <strong className="me-2">Tags:</strong>
+          <strong className="me-2">{t("user_form.tags")}:</strong>
           {formData.tags.map((tag, index) => (
             <Badge bg="primary" key={index} className="me-2">
               {tag}

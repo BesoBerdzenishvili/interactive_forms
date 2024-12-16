@@ -1,5 +1,6 @@
 import { Button, Form, InputGroup, Stack } from "react-bootstrap";
 import AllowedUsers from "./AllowedUsers";
+import { useTranslation } from "react-i18next";
 
 interface User {
   id: number;
@@ -22,6 +23,7 @@ export default function AllowedUsersList({
   newUserEmail: string;
   setNewUserEmail: (e: string) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div>
       {/* Users Table */}
@@ -33,13 +35,17 @@ export default function AllowedUsersList({
           <Stack direction="vertical" gap={2}>
             <Form.Control
               type="text"
-              placeholder="User name"
+              placeholder={t(
+                "template.questions.allowed_users.name_placeholder"
+              )}
               value={newUserName}
               onChange={(e) => setNewUserName(e.target.value)}
             />
             <Form.Control
               type="email"
-              placeholder="User email"
+              placeholder={t(
+                "template.questions.allowed_users.email_placeholder"
+              )}
               value={newUserEmail}
               onChange={(e) => setNewUserEmail(e.target.value)}
             />

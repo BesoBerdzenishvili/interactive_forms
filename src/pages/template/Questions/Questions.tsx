@@ -3,6 +3,7 @@ import { Form, Button, InputGroup } from "react-bootstrap";
 import Question from "./Question";
 import AllowedUsersList from "./AllowedUsersList";
 import Descroption from "./Descroption";
+import { useTranslation } from "react-i18next";
 
 interface Question {
   id: number;
@@ -36,6 +37,8 @@ const Questions: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [newUserName, setNewUserName] = useState("");
   const [newUserEmail, setNewUserEmail] = useState("");
+
+  const { t } = useTranslation();
 
   const handleAddTag = () => {
     if (tagInput && !tags.includes(tagInput)) {
@@ -89,14 +92,14 @@ const Questions: React.FC = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-center">Create a Questionnaire</h2>
+      <h2 className="text-center">{t("template.questions.title")}</h2>
       <Form>
         {/* Title */}
         <Form.Group controlId="formTitle" className="my-3 w-sm-25">
-          <Form.Label>Title</Form.Label>
+          <Form.Label>{t("template.questions.form_title")}</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter form title"
+            placeholder={t("template.questions.title_placeholder")}
             value={formTitle}
             onChange={(e) => setFormTitle(e.target.value)}
           />
@@ -110,7 +113,7 @@ const Questions: React.FC = () => {
 
         {/* Topic */}
         <Form.Group controlId="formTopic" className="mb-3 w-sm-25">
-          <Form.Label>Topic</Form.Label>
+          <Form.Label>{t("template.questions.topic")}</Form.Label>
           <Form.Select value={topic} onChange={(e) => setTopic(e.target.value)}>
             {mockTopics.map((topic, index) => (
               <option key={index} value={topic}>
@@ -122,11 +125,11 @@ const Questions: React.FC = () => {
 
         {/* Tags */}
         <Form.Group controlId="formTags" className="mb-3 w-sm-25">
-          <Form.Label>Tags</Form.Label>
+          <Form.Label>{t("template.questions.tags")}</Form.Label>
           <InputGroup>
             <Form.Control
               type="text"
-              placeholder="Enter a tag"
+              placeholder={t("template.questions.tags_placeholder")}
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
             />
@@ -145,7 +148,7 @@ const Questions: React.FC = () => {
 
         {/* Image */}
         <Form.Group controlId="formImage" className="mb-3 w-sm-25">
-          <Form.Label>Optional Image</Form.Label>
+          <Form.Label>{t("template.questions.image")}</Form.Label>
           <Form.Control type="file" onChange={handleImageChange} />
         </Form.Group>
 
@@ -161,13 +164,13 @@ const Questions: React.FC = () => {
         />
 
         {/* Questions */}
-        <h4 className="mt-5">Questions</h4>
+        <h4 className="mt-5">{t("template.questions.questions")}</h4>
 
         {questions.map((q) => (
           <Question q={q} handleUpdateQuestion={handleUpdateQuestion} />
         ))}
         <Button variant="primary" onClick={handleAddQuestion}>
-          <i className="bi bi-plus"></i> Add Question
+          <i className="bi bi-plus"></i> {t("template.questions.add_question")}
         </Button>
       </Form>
     </div>

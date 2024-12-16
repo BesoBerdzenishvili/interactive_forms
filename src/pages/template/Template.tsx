@@ -4,6 +4,7 @@ import Comment from "../../common/Comment";
 import Results from "./Results";
 import Questions from "./Questions/Questions";
 import Aggregation from "./Questions/Aggregation";
+import { useTranslation } from "react-i18next";
 
 interface Comment {
   id: number;
@@ -38,13 +39,14 @@ const Template: React.FC = () => {
       setNewComment("");
     }
   };
+  const { t } = useTranslation();
 
   return (
     <Container className="px-5 pb-3 px-sm-2">
       <Nav justify variant="tabs" defaultActiveKey="/home">
         <Nav.Item>
           <Nav.Link onClick={() => handleTabClick("Questions")} href="/home">
-            Questions
+            {t("template.nav.questions")}
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
@@ -52,13 +54,13 @@ const Template: React.FC = () => {
             onClick={() => handleTabClick("Aggregation")}
             eventKey="link-1"
           >
-            Aggregation
+            {t("template.nav.aggregation")}
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           {/* if opening the page won't fetch list then make this href like questions */}
           <Nav.Link onClick={() => handleTabClick("Results")} eventKey="link-2">
-            Results
+            {t("template.nav.results")}
           </Nav.Link>
         </Nav.Item>
       </Nav>
@@ -70,7 +72,7 @@ const Template: React.FC = () => {
       </div>
 
       <div className="mt-5">
-        <h4>Comments:</h4>
+        <h4> {t("template.comments.title")}:</h4>
         <ListGroup className="mb-3">
           {comments.map((comment) => (
             <Comment comment={comment} key={comment.id} />
@@ -85,13 +87,13 @@ const Template: React.FC = () => {
               type="text"
               // make those 50 above sm and 100 by default
               className="w-sm-50"
-              placeholder="Write a comment..."
+              placeholder={t("template.comments.placeholder")}
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
             />
           </Form.Group>
           <Button variant="primary" onClick={handleAddComment}>
-            Add Comment
+            {t("template.comments.add_button")}
           </Button>
         </Form>
       </div>
