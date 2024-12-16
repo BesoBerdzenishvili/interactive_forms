@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Table, Button, Container, Row, Col } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 interface Template {
   id: number;
@@ -22,6 +23,8 @@ const UserPanel: React.FC = () => {
     { index: 1, templateName: "Template 1", authorName: "User A" },
     { index: 2, templateName: "Template 2", authorName: "User B" },
   ]);
+
+  const { t } = useTranslation();
 
   const addTemplate = () => {
     const newTemplate = {
@@ -54,9 +57,10 @@ const UserPanel: React.FC = () => {
       <Row className="mb-4">
         <Col>
           <div className="d-flex justify-content-between">
-            <h3>Templates</h3>
+            <h3>{t("user_panel.templates.title")}</h3>
             <Button variant="primary" onClick={addTemplate}>
-              <i className="bi bi-plus" /> Add Template
+              <i className="bi bi-plus" />{" "}
+              {t("user_panel.templates.add_button")}
             </Button>
           </div>
           <Table
@@ -68,11 +72,13 @@ const UserPanel: React.FC = () => {
           >
             <thead>
               <tr>
-                <th onClick={() => handleSortTemplates("id")}>Index</th>
-                <th onClick={() => handleSortTemplates("title")}>
-                  Template Title
+                <th onClick={() => handleSortTemplates("id")}>
+                  {t("user_panel.templates.tab.index")}
                 </th>
-                <th>Actions</th>
+                <th onClick={() => handleSortTemplates("title")}>
+                  {t("user_panel.templates.tab.template_title")}
+                </th>
+                <th>{t("user_panel.templates.tab.actions")}</th>
               </tr>
             </thead>
             <tbody>
@@ -94,7 +100,7 @@ const UserPanel: React.FC = () => {
           </Table>
         </Col>
         <Col className="text-center">
-          <h3>Filled Forms</h3>
+          <h3>{t("user_panel.filled_forms.title")}</h3>
           <Table
             bordered
             responsive
@@ -105,12 +111,14 @@ const UserPanel: React.FC = () => {
           >
             <thead>
               <tr>
-                <th onClick={() => handleSortFilledForms("index")}>Index</th>
+                <th onClick={() => handleSortFilledForms("index")}>
+                  {t("user_panel.filled_forms.tab.index")}
+                </th>
                 <th onClick={() => handleSortFilledForms("templateName")}>
-                  Template
+                  {t("user_panel.filled_forms.tab.template")}
                 </th>
                 <th onClick={() => handleSortFilledForms("authorName")}>
-                  Author
+                  {t("user_panel.filled_forms.tab.author")}
                 </th>
               </tr>
             </thead>

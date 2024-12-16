@@ -1,0 +1,103 @@
+{
+  "translation": {
+    "header": {
+      "search": "ძიება...",
+      "register": "რეგისტრაცია",
+      "login": "შესვლა"
+    },
+    "template": {
+      "nav": {
+        "questions": "კითხვები",
+        "aggregation": "აგრეგაცია",
+        "results": "შედეგები"
+      },
+      "questions": {
+        "title": "კითხვარის შექმნა",
+        "form_title": "სათაური",
+        "title_placeholder": "შეიყვანეთ სათაური",
+        "description": "აღწერა",
+        "topic": "საკითხი",
+        "tags": "თაგები",
+        "tags_placeholder": "შეიყვანეთ თაგი",
+        "image": "არჩევითი სურათი",
+        "image_choice": "აირჩიეთ ფაილი",
+        "image_not_chosen": "ფაილი არაა არჩეული",
+        "allowed_users": {
+          "title": "დაშვებული მომხმარებლები",
+          "name": "სახელი",
+          "email": "ელ-ფოსტა",
+          "name_placeholder": "მომხმარებლის სახელი",
+          "email_placeholder": "მომხმარებლის ელ-ფოსტა"
+        },
+        "questions": "შეკითხვები",
+        "add_question": "დაამატე კითხვა"
+      },
+      "aggregation": {
+        "title": "აგრეგაცია(?)"
+      },
+      "results": {
+        "title": "შევსებული ფორმები",
+        "tab": {
+          "index": "რიგი",
+          "user": "მომხმარებელი",
+          "filled_at": "შევსების დრო"
+        }
+      },
+      "comments": {
+        "title": "კომენტარები",
+        "placeholder": "დაწერე კომენტარი...",
+        "add_button": "დაამატე კომენტარი"
+      }
+    },
+    "user_form": {
+      "topic": "საკითხი",
+      "created_by": "შემქმნელი",
+      "created_at": "შექმნის დრო",
+      "tags": "თაგები"
+    },
+    "admin_panel": {
+      "buttons": {
+        "block": "დაბლოკვა",
+        "unblock": "განბლოკვა",
+        "delete": "წაშლა"
+      },
+      "filter": "გაფილტრე...",
+      "tab": {
+        "name": "სახელი",
+        "email": "ელ-ფოსტა",
+        "last_seen": "ბოლოს შემოსულია"
+      }
+    },
+    "user_panel": {
+      "templates": {
+        "title": "შაბლონები",
+        "add_button": "დაამატე შაბლონი",
+        "tab": {
+          "index": "რიგი",
+          "template_title": "შაბლონის სათაური",
+          "actions": "მოქმედებები"
+        }
+      },
+      "filled_forms": {
+        "title": "შევსებული ფორმები",
+        "tab": {
+          "index": "რიგი",
+          "template": "შაბლონი",
+          "author": "ავტორი"
+        }
+      }
+    },
+    "main": {
+      "tab": {
+        "title": "სათაური",
+        "author": "ავტორი",
+        "responses": "პასუხები"
+      }
+    },
+    "not_found": {
+      "title": "გვერდი ვერ მოიძებნა",
+      "message": "გვერდი რომელსაც ეძებთ არ არსებობს ან გადატანილია.",
+      "button": "დაბრუნება მთავარ გვერდზე"
+    }
+  }
+}

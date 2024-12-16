@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Table } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 interface User {
   id: number;
@@ -12,15 +13,20 @@ const AllowedUsers: React.FC<{ users: User[] }> = ({ users }) => {
   const sortedUsers = [...users].sort((a, b) =>
     a[sortField].localeCompare(b[sortField])
   );
+  const { t } = useTranslation();
 
   return (
     <div className="my-4">
-      <h4>Allowed Users</h4>
+      <h4> {t("template.questions.allowed_users.title")}</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th onClick={() => setSortField("name")}>Name</th>
-            <th onClick={() => setSortField("email")}>Email</th>
+            <th onClick={() => setSortField("name")}>
+              {t("template.questions.allowed_users.name")}
+            </th>
+            <th onClick={() => setSortField("email")}>
+              {t("template.questions.allowed_users.email")}
+            </th>
           </tr>
         </thead>
         <tbody>
