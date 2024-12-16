@@ -5,6 +5,24 @@
       "register": "Register",
       "login": "Login"
     },
+    "registration": {
+      "name": "Name",
+      "name_placeholder": "Enter your name",
+      "email": "Email address",
+      "email_placeholder": "Enter Email",
+      "password": "Password",
+      "password_placeholder": "Password",
+      "register": "Register",
+      "login": "Login"
+    },
+    "login": {
+      "email": "Email address",
+      "email_placeholder": "Enter Email",
+      "password": "Password",
+      "password_placeholder": "Password",
+      "register": "Register",
+      "login": "Login"
+    },
     "template": {
       "nav": {
         "questions": "Questions",

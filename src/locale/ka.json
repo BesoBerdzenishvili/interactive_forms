@@ -5,6 +5,24 @@
       "register": "რეგისტრაცია",
       "login": "შესვლა"
     },
+    "registration": {
+      "name": "სახელი",
+      "name_placeholder": "შეიყვანეთ სახელი",
+      "email": "ელ-ფოსტა",
+      "email_placeholder": "შეიყვანეთ ელ-ფოსტა",
+      "password": "პაროლი",
+      "password_placeholder": "პაროლი",
+      "register": "რეგისტრაცია",
+      "login": "შესვლა"
+    },
+    "login": {
+      "email": "ელ-ფოსტა",
+      "email_placeholder": "შეიყვანეთ ელ-ფოსტა",
+      "password": "პაროლი",
+      "password_placeholder": "პაროლი",
+      "register": "რეგისტრაცია",
+      "login": "შესვლა"
+    },
     "template": {
       "nav": {
         "questions": "კითხვები",

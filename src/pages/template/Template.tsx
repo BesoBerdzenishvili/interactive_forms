@@ -3,7 +3,7 @@ import { Container, Nav, Form, Button, ListGroup } from "react-bootstrap";
 import Comment from "../../common/Comment";
 import Results from "./Results";
 import Questions from "./Questions/Questions";
-import Aggregation from "./Questions/Aggregation";
+import Aggregation from "./Aggregation";
 import { useTranslation } from "react-i18next";
 
 interface Comment {
@@ -17,7 +17,8 @@ const mockComments: Comment[] = [
   { id: 2, name: "Bob", text: "Thanks for adding this functionality." },
   { id: 3, name: "Charlie", text: "Looking forward to more updates!" },
 ];
-
+// https://reactrouter.com/start/framework/routing#dynamic-segments
+// get route parameters
 const Template: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("Questions");
   const [comments, setComments] = useState<Comment[]>(mockComments);
@@ -43,9 +44,15 @@ const Template: React.FC = () => {
 
   return (
     <Container className="px-5 pb-3 px-sm-2">
-      <Nav justify variant="tabs" defaultActiveKey="/home">
+      <Nav justify variant="tabs" defaultActiveKey="/">
         <Nav.Item>
-          <Nav.Link onClick={() => handleTabClick("Questions")} href="/home">
+          <Nav.Link
+            onClick={(e) => {
+              e.preventDefault();
+              handleTabClick("Questions");
+            }}
+            href="/"
+          >
             {t("template.nav.questions")}
           </Nav.Link>
         </Nav.Item>

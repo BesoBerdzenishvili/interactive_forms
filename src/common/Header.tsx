@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Navbar, Nav, Button, Badge, Form, FormControl } from "react-bootstrap";
 import LanguageSwitch from "./LanguageSwitch";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   currentUser?: string;
 }
-
+// make header sticky
 const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -22,6 +23,8 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
     <Navbar expand="lg" className="bg-primary px-4">
       <Nav className="ml-auto d-flex align-items-center">
         <Navbar.Brand href="#home">
+          {/* add an actual logo to navigate to the main page '/' */}
+          {/* maybe just a big Q as symbol (in dark purple) */}
           <i
             // add different color on toggle
             // or replace it with different icons (moon and stars)
@@ -56,12 +59,16 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
             </h3>
           ) : (
             <>
-              <Button variant="warning" className="m-1">
-                {t("header.register")}
-              </Button>
-              <Button variant="warning" className="m-1">
-                {t("header.login")}
-              </Button>
+              <Link to="/registration">
+                <Button variant="warning" className="m-1">
+                  {t("header.register")}
+                </Button>
+              </Link>
+              <Link to="/login">
+                <Button variant="warning" className="m-1">
+                  {t("header.login")}
+                </Button>
+              </Link>
             </>
           )}
         </Nav>

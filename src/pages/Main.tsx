@@ -1,6 +1,7 @@
 import { Stack, Carousel, Table } from "react-bootstrap";
 import TagBadge from "../common/TagBadge";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 interface PopularItem {
   title: string;
@@ -74,6 +75,7 @@ const mock: MockData = {
 
 export default function Main() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <div className="d-flex flex-column align-items-center justify-content-evenly w-75 h-100 position-absolute top-50 start-50 translate-middle">
       {/* Tags Section */}
@@ -85,6 +87,7 @@ export default function Main() {
 
       {/* Gallery Section */}
       <Carousel className="w-50 h-50">
+        {/* add navigate here as well - when user clicks on image should navigate to template id */}
         {mock.image_urls.map((image_url, index) => (
           <Carousel.Item key={index}>
             <img
@@ -112,7 +115,7 @@ export default function Main() {
         </thead>
         <tbody>
           {mock.populars.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} onClick={() => navigate("/template/hethrt")}>
               <td>{index + 1}</td>
               <td>{item.title}</td>
               <td>{item.author}</td>
