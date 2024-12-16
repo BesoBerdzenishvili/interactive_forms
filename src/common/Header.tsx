@@ -22,16 +22,17 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
   return (
     <Navbar expand="lg" className="bg-primary px-4">
       <Nav className="ml-auto d-flex align-items-center">
-        <Navbar.Brand href="#home">
-          {/* add an actual logo to navigate to the main page '/' */}
-          {/* maybe just a big Q as symbol (in dark purple) */}
-          <i
-            // add different color on toggle
-            // or replace it with different icons (moon and stars)
-            className="bi bi-lightbulb hand-cursor"
-            style={{ fontSize: "1.5rem" }}
-          />
+        <Navbar.Brand href="/">
+          <h1>Q</h1>
         </Navbar.Brand>
+        {/* add an actual logo to navigate to the main page '/' */}
+        {/* maybe just a big Q as symbol (in dark purple) */}
+        <i
+          // add different color on toggle
+          // or replace it with different icons (moon and stars)
+          className="bi bi-lightbulb hand-cursor"
+          style={{ fontSize: "1.5rem" }}
+        />
         <LanguageSwitch />
       </Nav>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
