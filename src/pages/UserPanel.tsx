@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Table, Button, Container, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 interface Template {
   id: number;
@@ -18,6 +19,8 @@ const UserPanel: React.FC = () => {
     { id: 1, title: "Template 1" },
     { id: 2, title: "Template 2" },
   ]);
+
+  const navigate = useNavigate();
 
   const [filledForms, setFilledForms] = useState<FilledForm[]>([
     { index: 1, templateName: "Template 1", authorName: "User A" },
@@ -83,7 +86,10 @@ const UserPanel: React.FC = () => {
             </thead>
             <tbody>
               {templates.map((template) => (
-                <tr key={template.id}>
+                <tr
+                  key={template.id}
+                  onClick={() => navigate("/template/ttrj")}
+                >
                   <td>{template.id}</td>
                   <td>{template.title}</td>
                   <td>
@@ -124,7 +130,7 @@ const UserPanel: React.FC = () => {
             </thead>
             <tbody>
               {filledForms.map((form) => (
-                <tr key={form.index}>
+                <tr key={form.index} onClick={() => navigate("/template/ttrj")}>
                   <td>{form.index}</td>
                   <td>{form.templateName}</td>
                   <td>{form.authorName}</td>

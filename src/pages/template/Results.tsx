@@ -1,4 +1,5 @@
 import { Table } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const list = [
   {
@@ -19,8 +20,10 @@ const list = [
 ];
 
 export default function Results() {
+  const navigate = useNavigate();
   return (
     <div className="text-center">
+      {/* add translate here */}
       <h3>Filled Forms</h3>
       <Table
         bordered
@@ -38,7 +41,7 @@ export default function Results() {
         </thead>
         <tbody>
           {list.map((template) => (
-            <tr key={template.id}>
+            <tr key={template.id} onClick={() => navigate("/user-form/rhtj")}>
               <td>{template.id}</td>
               <td>{template.user}</td>
               <td>{template.name}</td>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 interface RegistrationForm {
   name: string;
@@ -67,7 +68,9 @@ const Registration: React.FC = () => {
           <Button variant="outline-light" type="submit">
             Register
           </Button>
-          <Button variant="outline-light">Login</Button>
+          <Link to="/login">
+            <Button variant="outline-light">Login</Button>
+          </Link>
         </div>
       </Form>
     </div>

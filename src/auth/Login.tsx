@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -36,7 +37,9 @@ const Login: React.FC = () => {
           <Button variant="outline-light" type="submit">
             Login
           </Button>
-          <Button variant="outline-light">Register</Button>
+          <Link to="/registration">
+            <Button variant="outline-light">Register</Button>
+          </Link>
         </div>
       </Form>
     </div>
