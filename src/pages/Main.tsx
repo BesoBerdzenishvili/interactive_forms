@@ -18,29 +18,7 @@ interface MockData {
 }
 
 const mock: MockData = {
-  tags: [
-    "movies",
-    "music",
-    "education",
-    "movies",
-    "music",
-    "education",
-    "movies",
-    "music",
-    "education",
-    "movies",
-    "music",
-    "education",
-    "movies",
-    "music",
-    "education",
-    "movies",
-    "music",
-    "education",
-    "movies",
-    "music",
-    "education",
-  ],
+  tags: ["movies", "music", "education"],
   image_urls: [
     "https://media.istockphoto.com/id/2184389445/photo/woman-with-curly-hair-taking-selfie.jpg?s=1024x1024&w=is&k=20&c=xzz8yWlGib6OYqvVz8uutbrVYwb4EsI6Zgk22Wq-wEU=",
     "https://media.istockphoto.com/id/1360401313/photo/summer-beach-holiday-travel-background-palm-tree-with-chair-and-inflatable-ring-on-sand.jpg?s=1024x1024&w=is&k=20&c=6ul7SJIYT5652F0GnPtD24JAQPfD8b0lgl4TpSZQwuY=",
