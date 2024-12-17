@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import { User } from "../types";
+import { User } from "../types/types";
 
 interface UserPanel {
   user: User;

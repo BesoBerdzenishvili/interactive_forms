@@ -1,7 +1,9 @@
 import { Stack, Carousel, Table } from "react-bootstrap";
-import TagBadge from "../common/TagBadge";
+import TagBadge from "../components/TagBadge";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 
 interface PopularItem {
   title: string;
@@ -76,6 +78,7 @@ const mock: MockData = {
 export default function Main() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { darkMode } = useContext(DarkModeContext);
   return (
     <div className="d-flex flex-column align-items-center justify-content-evenly w-75 h-100 position-absolute top-50 start-50 translate-middle">
       {/* Tags Section */}
@@ -104,7 +107,12 @@ export default function Main() {
       </Carousel>
 
       {/* Table Section */}
-      <Table bordered variant="dark" hover className="text-center">
+      <Table
+        bordered
+        variant={darkMode ? "dark" : ""}
+        hover
+        className="text-center"
+      >
         <thead>
           <tr>
             <th>#</th>

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Container, Nav, Form, Button, ListGroup } from "react-bootstrap";
-import Comment from "../../common/Comment";
+import Comment from "../../components/Comment";
 import Results from "./Results";
 import Questions from "./Questions/Questions";
 import Aggregation from "./Aggregation";
 import { useTranslation } from "react-i18next";
+import { DarkModeContext } from "../../contexts/dark_mode/DarkModeContext";
 
 interface Comment {
   id: number;
@@ -41,9 +42,10 @@ const Template: React.FC = () => {
     }
   };
   const { t } = useTranslation();
+  const { darkMode } = useContext(DarkModeContext);
 
   return (
-    <Container className="px-5 pb-3 px-sm-2">
+    <Container className={`px-5 pb-3 px-sm-2 ${darkMode ? "text-white" : ""}`}>
       <Nav justify variant="tabs" defaultActiveKey="/">
         <Nav.Item>
           <Nav.Link
@@ -93,7 +95,7 @@ const Template: React.FC = () => {
               rows={3}
               type="text"
               // make those 50 above sm and 100 by default
-              className="w-sm-50"
+              className={`w-sm-50 ${darkMode ? "bg-secondary" : ""}`}
               placeholder={t("template.comments.placeholder")}
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}

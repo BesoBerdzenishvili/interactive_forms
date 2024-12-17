@@ -8,7 +8,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
 
   const { t } = useTranslation();
-
+  // use context for currentUser
   return (
     <div className="bg-primary position-absolute top-50 start-50 translate-middle p-3 rounded-3">
       <Form>

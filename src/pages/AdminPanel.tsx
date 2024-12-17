@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Table, Container, Row, Col, Form } from "react-bootstrap";
-import Controllers from "../common/Controllers";
-import UserPanel from "../common/User";
-import { User } from "../types";
+import Controllers from "../components/Controllers";
+import UserPanel from "../components/User";
+import { User } from "../types/types";
 import { useTranslation } from "react-i18next";
 
 const AdminPanel = () => {

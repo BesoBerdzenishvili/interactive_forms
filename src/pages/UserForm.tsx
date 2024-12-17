@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Container, Card, Badge, Image } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 
 interface Answer {
   id: number;
@@ -83,10 +84,11 @@ const UserForm: React.FC = () => {
   // all we'll get from props is form id
   // and then fetch form data and questions from it
   const { t } = useTranslation();
+  const { darkMode } = useContext(DarkModeContext);
   return (
     <Container>
       {/* Form Header */}
-      <Card className="mb-4">
+      <Card className={`mb-4 ${darkMode && "bg-dark text-white"}`}>
         {formData.image && (
           <Image
             width={400}
@@ -96,7 +98,7 @@ const UserForm: React.FC = () => {
             thumbnail
           />
         )}
-        <Card.Title className="bg-primary text-white text-center rounded p-2 mt-2">
+        <Card.Title className="bg-primary text-white text-center p-2 mt-2">
           {formData.formTitle}
         </Card.Title>
         <Card.Text>{formData.description}</Card.Text>
@@ -125,11 +127,14 @@ const UserForm: React.FC = () => {
         {answers
           .sort((a, b) => a.order - b.order)
           .map((answer) => (
-            <Card key={answer.id} className="mb-3 bg-secondary">
+            <Card
+              key={answer.id}
+              className={`mb-4 ${darkMode && "bg-dark text-white"}`}
+            >
               <Card.Body>
                 <Card.Title>{answer.title}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  {answer.description}
+                <Card.Subtitle className="mb-2 text-secondary">
+                  <i>{answer.description}</i>
                 </Card.Subtitle>
                 <Card.Text>
                   <i>

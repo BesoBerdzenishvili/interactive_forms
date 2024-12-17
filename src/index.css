@@ -4,6 +4,7 @@
   padding: 0;
 }
 
-td {
+td,
+i {
   cursor: pointer;
 }

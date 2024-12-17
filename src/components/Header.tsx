@@ -1,8 +1,17 @@
-import { useState } from "react";
-import { Navbar, Nav, Button, Badge, Form, FormControl } from "react-bootstrap";
+import { useContext, useState } from "react";
+import {
+  Navbar,
+  Nav,
+  Button,
+  Badge,
+  Form,
+  FormControl,
+  Stack,
+} from "react-bootstrap";
 import LanguageSwitch from "./LanguageSwitch";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 
 interface HeaderProps {
   currentUser?: string;
@@ -12,29 +21,27 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const { t } = useTranslation();
+  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
     console.log("Search query:", searchQuery);
     // Add search logic here
   };
-
+  document.body.style.backgroundColor = darkMode ? "black" : "";
   return (
     <Navbar expand="lg" className="bg-primary px-4">
-      <Nav className="ml-auto d-flex align-items-center">
+      <Stack direction="horizontal" gap={3}>
         <Navbar.Brand href="/">
           <h1>Q</h1>
         </Navbar.Brand>
-        {/* add an actual logo to navigate to the main page '/' */}
-        {/* maybe just a big Q as symbol (in dark purple) */}
         <i
-          // add different color on toggle
-          // or replace it with different icons (moon and stars)
-          className="bi bi-lightbulb hand-cursor"
+          className={`bi bi-${darkMode ? "brightness-high" : "moon"}-fill`}
           style={{ fontSize: "1.5rem" }}
+          onClick={toggleDarkMode}
         />
         <LanguageSwitch />
-      </Nav>
+      </Stack>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto">
@@ -54,9 +61,11 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
         <Nav className="ml-auto">
           {currentUser ? (
             <h3 className="px-3">
-              <Badge pill bg="danger" className="pb-2">
-                {currentUser}
-              </Badge>
+              <Link to="/user-panel">
+                <Badge pill bg="danger" className="pb-2">
+                  {currentUser}
+                </Badge>
+              </Link>
             </h3>
           ) : (
             <>

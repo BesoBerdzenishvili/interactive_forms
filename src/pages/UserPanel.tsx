@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Table, Button, Container, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 
 interface Template {
   id: number;
@@ -28,6 +29,7 @@ const UserPanel: React.FC = () => {
   ]);
 
   const { t } = useTranslation();
+  const { darkMode } = useContext(DarkModeContext);
 
   const addTemplate = () => {
     const newTemplate = {
@@ -60,7 +62,9 @@ const UserPanel: React.FC = () => {
       <Row className="mb-4">
         <Col>
           <div className="d-flex justify-content-between">
-            <h3>{t("user_panel.templates.title")}</h3>
+            <h3 className="text-secondary">
+              {t("user_panel.templates.title")}
+            </h3>
             <Button variant="primary" onClick={addTemplate}>
               <i className="bi bi-plus" />{" "}
               {t("user_panel.templates.add_button")}
@@ -70,7 +74,7 @@ const UserPanel: React.FC = () => {
             bordered
             responsive
             hover
-            variant="dark"
+            variant={darkMode ? "dark" : ""}
             className="mt-3 text-center"
           >
             <thead>
@@ -106,12 +110,14 @@ const UserPanel: React.FC = () => {
           </Table>
         </Col>
         <Col className="text-center">
-          <h3>{t("user_panel.filled_forms.title")}</h3>
+          <h3 className="text-secondary">
+            {t("user_panel.filled_forms.title")}
+          </h3>
           <Table
             bordered
             responsive
             hover
-            variant="dark"
+            variant={darkMode ? "dark" : ""}
             className="mt-3"
             style={{ overflow: "auto" }}
           >

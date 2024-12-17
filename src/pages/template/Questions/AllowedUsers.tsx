@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Table } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { DarkModeContext } from "../../../contexts/dark_mode/DarkModeContext";
 
 interface User {
   id: number;
@@ -14,11 +15,12 @@ const AllowedUsers: React.FC<{ users: User[] }> = ({ users }) => {
     a[sortField].localeCompare(b[sortField])
   );
   const { t } = useTranslation();
+  const { darkMode } = useContext(DarkModeContext);
 
   return (
     <div className="my-4">
       <h4> {t("template.questions.allowed_users.title")}</h4>
-      <Table striped bordered hover>
+      <Table striped bordered hover className={darkMode ? "table-dark" : ""}>
         <thead>
           <tr>
             <th onClick={() => setSortField("name")}>
