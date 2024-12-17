@@ -80,9 +80,9 @@ export default function Main() {
   const navigate = useNavigate();
   const { darkMode } = useContext(DarkModeContext);
   return (
-    <div className="d-flex flex-column align-items-center justify-content-evenly w-75 h-100 position-absolute top-50 start-50 translate-middle">
+    <div className="d-flex flex-column mt-5 align-items-center justify-content-evenly w-75 h-100 position-absolute top-50 start-50 translate-middle">
       {/* Tags Section */}
-      <Stack direction="horizontal" gap={3} className="overflow-auto">
+      <Stack direction="horizontal" gap={3} className="overflow-auto mt-5">
         {mock.tags.map((tag) => (
           <TagBadge key={tag} tag={tag} />
         ))}
