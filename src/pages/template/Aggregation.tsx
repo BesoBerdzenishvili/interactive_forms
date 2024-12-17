@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import { DarkModeContext } from "../../contexts/dark_mode/DarkModeContext";
 
 interface DataItem {
   id: number;
@@ -111,6 +112,7 @@ const mockData: DataItem[] = [
 
 const Aggregation: React.FC = () => {
   const sortedData = [...mockData].sort((a, b) => a.order - b.order);
+  const { darkMode } = useContext(DarkModeContext);
 
   const aggregateAnswers = (type: string, items: DataItem[]) => {
     if (type === "text" || type === "paragraph") {
@@ -170,11 +172,11 @@ const Aggregation: React.FC = () => {
       {Object.entries(groupedData).map(([title, items]) => (
         <Row key={title} className="mb-4">
           <Col>
-            <Card>
+            <Card className={`${darkMode ? "bg-dark text-white" : ""}`}>
               <Card.Body>
                 <Card.Title>{title}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  {items[0].description}
+                <Card.Subtitle className="mb-2 text-secondary">
+                  <i>{items[0].description}</i>
                 </Card.Subtitle>
 
                 <Card.Text>{aggregateAnswers(items[0].type, items)}</Card.Text>

@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { Table } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { DarkModeContext } from "../../contexts/dark_mode/DarkModeContext";
 
 const list = [
   {
@@ -23,6 +25,7 @@ const list = [
 export default function Results() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { darkMode } = useContext(DarkModeContext);
   return (
     <div className="text-center">
       <h3>{t("template.results.title")}</h3>
@@ -30,7 +33,7 @@ export default function Results() {
         bordered
         responsive
         hover
-        variant="dark"
+        variant={darkMode ? "dark" : ""}
         className="mt-3 text-center"
       >
         <thead>

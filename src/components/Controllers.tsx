@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { Stack, Button, InputGroup, FormControl } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 
 interface ControllersProps {
   onDelete: () => void;
@@ -15,6 +17,7 @@ const Controllers = ({
   onFilterChange,
 }: ControllersProps) => {
   const { t } = useTranslation();
+  const { darkMode } = useContext(DarkModeContext);
   return (
     <div className="d-flex">
       <Stack direction="horizontal" gap={3}>
@@ -30,8 +33,8 @@ const Controllers = ({
       </Stack>
       <InputGroup>
         <FormControl
-          className="border-primary ms-3"
-          placeholder={t("admin_panel.filter")}
+          className={`border-primary ms-3 ${darkMode && "bg-black text-white"}`}
+          placeholder={t("admin_panel.filter")} // placeholder color must be white
           onChange={onFilterChange}
         />
       </InputGroup>

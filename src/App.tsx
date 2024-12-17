@@ -1,4 +1,4 @@
-import Header from "./common/Header";
+import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import AdminPanel from "./pages/AdminPanel";
@@ -10,18 +10,17 @@ import Registration from "./auth/Registration";
 import Login from "./auth/Login";
 
 function App() {
+  // restrict user-panel too if user isn't signed in (no current user)
   return (
     <Router>
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
-        {/* add translate to auth pages */}
         <Route path="/registration" element={<Registration />} />
         <Route path="/login" element={<Login />} />
         {/* redirect user to 404 if status !== admin */}
         {/* or as temporary measure restrict visibility of admin page if currentUser.status !== admin */}
         <Route path="/admin-panel" element={<AdminPanel />} />
-        {/* move up aggregation component in template folder */}
         <Route path="/template/:id" element={<Template />} />
         <Route path="/user-form/:id" element={<UserForm />} />
         <Route path="/user-panel" element={<UserPanel />} />

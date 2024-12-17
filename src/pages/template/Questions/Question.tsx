@@ -22,6 +22,7 @@ export default function Question({
         <Form.Control
           type="text"
           value={q.title}
+          required
           onChange={(e) => handleUpdateQuestion(q.id, "title", e.target.value)}
         />
       </Form.Group>
@@ -30,6 +31,7 @@ export default function Question({
         <Form.Control
           type="text"
           value={q.description}
+          required
           onChange={(e) =>
             handleUpdateQuestion(q.id, "description", e.target.value)
           }
