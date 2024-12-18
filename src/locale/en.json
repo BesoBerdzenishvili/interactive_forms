@@ -3,7 +3,9 @@
     "header": {
       "search": "Search...",
       "register": "Register",
-      "login": "Login"
+      "login": "Login",
+      "logout": "Logout",
+      "admin_panel": "Admin Panel"
     },
     "registration": {
       "name": "Name",
@@ -77,13 +79,16 @@
       "buttons": {
         "block": "Block",
         "unblock": "Unblock",
-        "delete": "Delete"
+        "delete": "Delete",
+        "user": "User",
+        "admin": "Admin"
       },
       "filter": "Filter...",
       "tab": {
         "name": "Name",
         "email": "Email",
-        "last_seen": "Last Seen"
+        "created_at": "Created At",
+        "is_admin": "Admin Status"
       }
     },
     "user_panel": {

@@ -8,6 +8,8 @@ interface ControllersProps {
   onBlock: () => void;
   onUnblock: () => void;
   onFilterChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleMakeUser: () => void;
+  handleMakeAdmin: () => void;
 }
 
 const Controllers = ({
@@ -15,6 +17,8 @@ const Controllers = ({
   onBlock,
   onUnblock,
   onFilterChange,
+  handleMakeUser,
+  handleMakeAdmin,
 }: ControllersProps) => {
   const { t } = useTranslation();
   const { darkMode } = useContext(DarkModeContext);
@@ -30,8 +34,17 @@ const Controllers = ({
         <Button variant="outline-danger" onClick={onDelete}>
           <i className="bi bi-trash-fill"></i> {t("admin_panel.buttons.delete")}
         </Button>
+        <Button variant="outline-danger" onClick={handleMakeUser}>
+          <i className="bi bi-person-fill"></i> {t("admin_panel.buttons.user")}
+        </Button>
+        <Button variant="outline-danger" onClick={handleMakeAdmin}>
+          <i className="bi bi-person-fill-add"></i>{" "}
+          {t("admin_panel.buttons.admin")}
+        </Button>
       </Stack>
       <InputGroup>
+        {/* search text must go down on small screens */}
+        {/* or put in into the next line anyway */}
         <FormControl
           className={`border-primary ms-3 ${darkMode && "bg-black text-white"}`}
           placeholder={t("admin_panel.filter")} // placeholder color must be white

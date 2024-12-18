@@ -72,9 +72,11 @@ const Header: React.FC<HeaderProps> = () => {
               </h3>
               {/* if Link has bad spacing use Button */}
               {currentUser.is_admin && (
-                <Link to="/admin-panel">Admin Panel</Link>
+                <Link to="/admin-panel">
+                  <Button> {t("header.admin_panel")}</Button>
+                </Link>
               )}
-              <Button onClick={logout}>Logout</Button>
+              <Button onClick={logout}> {t("header.logout")}</Button>
             </Stack>
           ) : (
             <>

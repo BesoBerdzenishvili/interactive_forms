@@ -19,7 +19,7 @@ const DismissibleAlert: React.FC<AlertProps> = ({
       variant="black"
       onClose={() => setShow(false)}
       dismissible
-      className={`position-absolute top-50 start-50 translate-middle bg-${
+      className={`z-3 position-absolute top-50 start-50 translate-middle bg-${
         color ? color : "warning"
       }`}
     >
