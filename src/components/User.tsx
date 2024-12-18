@@ -13,11 +13,11 @@ const UserPanel: React.FC<UserPanel> = ({
   selectedUsers,
   handleCheckboxChange,
 }) => {
-  const disable = user.status === "blocked" ? "secondary" : "primary";
+  const disable = user.is_blocked ? "secondary" : "primary";
   return (
     <tr
       style={{
-        textDecoration: user.status === "blocked" ? "line-through" : "none",
+        textDecoration: user.is_blocked ? "line-through" : "none",
         color: disable,
       }}
     >
@@ -30,8 +30,8 @@ const UserPanel: React.FC<UserPanel> = ({
       </td>
       <td className={`bg-${disable}`}>{user.name}</td>
       <td className={`bg-${disable}`}>{user.email}</td>
-      <td className={`bg-${disable}`} title={user.lastSeen}>
-        {user.lastSeen.split("T")[0]}
+      <td className={`bg-${disable}`} title={user.created_at}>
+        {user.created_at.split("T")[0]}
       </td>
     </tr>
   );
