@@ -3,7 +3,9 @@
     "header": {
       "search": "ძიება...",
       "register": "რეგისტრაცია",
-      "login": "შესვლა"
+      "login": "შესვლა",
+      "logout": "გამოსვლა",
+      "admin_panel": "ადმინის პანელი"
     },
     "registration": {
       "name": "სახელი",
@@ -77,13 +79,16 @@
       "buttons": {
         "block": "დაბლოკვა",
         "unblock": "განბლოკვა",
-        "delete": "წაშლა"
+        "delete": "წაშლა",
+        "user": "იუზერი",
+        "admin": "ადმინი"
       },
       "filter": "გაფილტრე...",
       "tab": {
         "name": "სახელი",
         "email": "ელ-ფოსტა",
-        "last_seen": "ბოლოს შემოსულია"
+        "created_at": "რეგისტრირებულია",
+        "is_admin": "ადმინის სტატუსი"
       }
     },
     "user_panel": {

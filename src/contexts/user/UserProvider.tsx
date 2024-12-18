@@ -31,6 +31,10 @@ export const CurrentUserProvider: React.FC<{ children: React.ReactNode }> = ({
     navigate("/");
   };
 
+  const update = (newUser: User) => {
+    setCurrentUser(newUser);
+  };
+
   const logout = () => {
     setCurrentUser({
       id: 0,
@@ -44,7 +48,7 @@ export const CurrentUserProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, login, logout }}>
+    <CurrentUserContext.Provider value={{ currentUser, login, logout, update }}>
       {children}
     </CurrentUserContext.Provider>
   );

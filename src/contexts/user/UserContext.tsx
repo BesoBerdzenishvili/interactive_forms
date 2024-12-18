@@ -4,6 +4,7 @@ import { User } from "../../types/types";
 type CurrentUserContextType = {
   currentUser: User;
   login: (newUser: User) => void;
+  update: (newUser: User) => void;
   logout: () => void;
 };
 
@@ -17,5 +18,6 @@ export const CurrentUserContext = createContext<CurrentUserContextType>({
     is_admin: false,
   },
   login: () => {},
+  update: () => {},
   logout: () => {},
 });

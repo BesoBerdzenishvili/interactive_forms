@@ -1,47 +1,95 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Table, Container, Row, Col, Form } from "react-bootstrap";
 import Controllers from "../components/Controllers";
 import UserPanel from "../components/User";
 import { User } from "../types/types";
 import { useTranslation } from "react-i18next";
+import supabase from "../config/supabase";
+import { CurrentUserContext } from "../contexts/user/UserContext";
+import DismissibleAlert from "../components/Alert";
 
 const AdminPanel = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [filter, setFilter] = useState("");
-  // replace last seen with created at
+  const [refetchUsers, setRefetchUsers] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const { currentUser, update } = useContext(CurrentUserContext);
+
   useEffect(() => {
-    const mockUsers: User[] = [
-      {
-        id: 1,
-        name: "John Doe",
-        email: "johndoe@example.com",
-        created_at: "2023-11-19",
-        is_blocked: false,
-        is_admin: false,
-      },
-      {
-        id: 2,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        created_at: "2023-11-18",
-        is_blocked: true,
-        is_admin: false,
-      },
-    ];
-    setUsers(mockUsers);
-  }, []);
+    const fetchProfiles = async () => {
+      try {
+        const { data, error } = await supabase.from("profiles").select();
+        if (data) {
+          setUsers(data);
+          const thisUser =
+            data && data.filter((i) => i.email === currentUser.email);
+          update(thisUser[0]);
+        } else {
+          console.log(error);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProfiles();
+  }, [refetchUsers]);
 
-  const handleDelete = () => {
-    // Implement deletion logic using selectedUsers
+  function fetchUsers() {
+    setRefetchUsers(!refetchUsers);
+  }
+
+  const handleDelete = async () => {
+    if (currentUser.is_admin) {
+      await supabase.from("profiles").delete().in("id", selectedUsers);
+      setShow(true);
+      fetchUsers();
+    }
   };
 
-  const handleBlock = () => {
-    // Implement blocking logic using selectedUsers
+  const handleBlock = async () => {
+    if (currentUser.is_admin) {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ is_blocked: true })
+        .in("id", selectedUsers);
+      fetchUsers();
+      error && console.error(error);
+    }
   };
 
-  const handleUnblock = () => {
-    // Implement unblocking logic using selectedUsers
+  const handleUnblock = async () => {
+    if (currentUser.is_admin) {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ is_blocked: false })
+        .in("id", selectedUsers);
+      fetchUsers();
+      error && console.error(error);
+    }
+  };
+  // see if you can use one function to toggle admin
+  const handleMakeUser = async () => {
+    if (currentUser.is_admin) {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ is_admin: false })
+        .in("id", selectedUsers);
+      fetchUsers();
+      error && console.error(error);
+    }
+  };
+
+  const handleMakeAdmin = async () => {
+    if (currentUser.is_admin) {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ is_admin: true })
+        .in("id", selectedUsers);
+      fetchUsers();
+      error && console.error(error);
+    }
   };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,10 +115,19 @@ const AdminPanel = () => {
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(filter.toLowerCase())
   );
+
   const { t } = useTranslation();
 
   return (
     <Container className="position-absolute top-50 start-50 translate-middle p-3 rounded-3">
+      {show && (
+        <DismissibleAlert
+          text="User successfully Deleted!"
+          heading="Success!"
+          setShow={setShow}
+          color="success"
+        />
+      )}
       <Row className="pb-3">
         <Col>
           <Controllers
@@ -78,6 +135,8 @@ const AdminPanel = () => {
             onBlock={handleBlock}
             onUnblock={handleUnblock}
             onFilterChange={handleFilterChange}
+            handleMakeUser={handleMakeUser}
+            handleMakeAdmin={handleMakeAdmin}
           />
         </Col>
       </Row>
@@ -95,12 +154,14 @@ const AdminPanel = () => {
                 </th>
                 <th className="bg-danger">{t("admin_panel.tab.name")}</th>
                 <th className="bg-danger">{t("admin_panel.tab.email")}</th>
-                <th className="bg-danger">{t("admin_panel.tab.last_seen")}</th>
+                <th className="bg-danger">{t("admin_panel.tab.created_at")}</th>
+                <th className="bg-danger">{t("admin_panel.tab.is_admin")}</th>
               </tr>
             </thead>
             <tbody>
               {filteredUsers.map((user) => (
                 <UserPanel
+                  key={user.id}
                   user={user}
                   selectedUsers={selectedUsers}
                   handleCheckboxChange={handleCheckboxChange}
