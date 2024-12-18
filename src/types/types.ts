@@ -2,6 +2,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  lastSeen: string;
-  status: "active" | "blocked";
+  created_at: string;
+  is_blocked: boolean;
+  is_admin: boolean;
 }

@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Table, Button, Container, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
+import { CurrentUserContext } from "../contexts/user/UserContext";
 
 interface Template {
   id: number;
@@ -30,6 +31,7 @@ const UserPanel: React.FC = () => {
 
   const { t } = useTranslation();
   const { darkMode } = useContext(DarkModeContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const addTemplate = () => {
     const newTemplate = {
@@ -56,6 +58,12 @@ const UserPanel: React.FC = () => {
     );
     setFilledForms(sortedFilledForms);
   };
+
+  useEffect(() => {
+    if (!currentUser.name) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <Container className="pt-4">
