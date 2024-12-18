@@ -1,17 +1,55 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import DismissibleAlert from "../components/Alert";
+import supabase from "../config/supabase";
+import { CurrentUserContext } from "../contexts/user/UserContext";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { t } = useTranslation();
-  // use context for currentUser
+  const { login } = useContext(CurrentUserContext);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { data, error } = await supabase.from("profiles").select();
+    const thisUser = data && data.filter((i) => i.email === email);
+    if (!thisUser?.length || thisUser[0].password !== password) {
+      setErrorMessage("Incorrect Email or Password!");
+      setShow(true);
+      return;
+    }
+    if (thisUser[0].is_blocked) {
+      setErrorMessage("User is blocked!");
+      setShow(true);
+      return;
+    }
+    if (error) {
+      console.error(error);
+      setErrorMessage(error.details);
+      setShow(true);
+    }
+    if (thisUser) {
+      login(thisUser[0]);
+    }
+  };
   return (
     <div className="bg-primary position-absolute top-50 start-50 translate-middle p-3 rounded-3">
-      <Form>
+      {show && (
+        <DismissibleAlert
+          text={errorMessage}
+          heading="Error!"
+          color="danger"
+          setShow={setShow}
+        />
+      )}
+      <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>{t("login.email")}</Form.Label>
           <br />

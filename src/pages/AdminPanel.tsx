@@ -9,22 +9,24 @@ const AdminPanel = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [filter, setFilter] = useState("");
-
+  // replace last seen with created at
   useEffect(() => {
     const mockUsers: User[] = [
       {
         id: 1,
         name: "John Doe",
         email: "johndoe@example.com",
-        lastSeen: "2023-11-19",
-        status: "active",
+        created_at: "2023-11-19",
+        is_blocked: false,
+        is_admin: false,
       },
       {
         id: 2,
         name: "Jane Smith",
         email: "janesmith@example.com",
-        lastSeen: "2023-11-18",
-        status: "blocked",
+        created_at: "2023-11-18",
+        is_blocked: true,
+        is_admin: false,
       },
     ];
     setUsers(mockUsers);

@@ -12,16 +12,18 @@ import LanguageSwitch from "./LanguageSwitch";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
+import { CurrentUserContext } from "../contexts/user/UserContext";
 
 interface HeaderProps {
   currentUser?: string;
 }
-// make header sticky
-const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
+// make header sticky (sticky-top)
+const Header: React.FC<HeaderProps> = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const { t } = useTranslation();
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+  const { currentUser, logout } = useContext(CurrentUserContext);
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
@@ -59,14 +61,21 @@ const Header: React.FC<HeaderProps> = ({ currentUser = "" }) => {
           </Form>
         </Nav>
         <Nav className="ml-auto">
-          {currentUser ? (
-            <h3 className="px-3">
-              <Link to="/user-panel">
-                <Badge pill bg="danger" className="pb-2">
-                  {currentUser}
-                </Badge>
-              </Link>
-            </h3>
+          {currentUser.name ? (
+            <Stack direction="horizontal" gap={3}>
+              <h3 className="px-3">
+                <Link to="/user-panel">
+                  <Badge pill bg="danger" className="pb-2">
+                    {currentUser.name}
+                  </Badge>
+                </Link>
+              </h3>
+              {/* if Link has bad spacing use Button */}
+              {currentUser.is_admin && (
+                <Link to="/admin-panel">Admin Panel</Link>
+              )}
+              <Button onClick={logout}>Logout</Button>
+            </Stack>
           ) : (
             <>
               <Link to="/registration">

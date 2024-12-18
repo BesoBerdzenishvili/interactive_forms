@@ -116,6 +116,10 @@
       "title": "Page Not Found",
       "message": "The page you’re looking for doesn’t exist or has been moved.",
       "button": "Go Back Home"
+    },
+    "no_access": {
+      "title": "Access Denied",
+      "message": "You do not have permission to access this page. Please contact the administrator if you believe this is an error."
     }
   }
 }

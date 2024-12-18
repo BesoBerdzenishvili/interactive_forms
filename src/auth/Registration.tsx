@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import supabase from "../config/supabase";
+import DismissibleAlert from "../components/Alert";
 
 interface RegistrationForm {
   name: string;
@@ -15,6 +17,10 @@ const Registration: React.FC = () => {
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [show, setShow] = useState(false);
+
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
 
@@ -25,9 +31,31 @@ const Registration: React.FC = () => {
     });
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const { error } = await supabase.from("profiles").insert(formData);
+      if (error) {
+        setErrorMessage(error.details);
+        setShow(true);
+      }
+      !error && navigate("/login");
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
+  };
+
   return (
     <div className="bg-primary position-absolute top-50 start-50 translate-middle p-3 rounded-3">
-      <Form>
+      {show && (
+        <DismissibleAlert
+          text={errorMessage}
+          heading="Error!"
+          color="danger"
+          setShow={setShow}
+        />
+      )}
+      <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>{t("registration.name")}</Form.Label>
           <br />
