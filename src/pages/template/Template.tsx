@@ -12,7 +12,7 @@ import { CurrentUserContext } from "../../contexts/user/UserContext";
 import { TemplateData } from "../../types/types";
 import useIsFormCreatorOrAdmin from "../../hooks/useIsFormCreatorOrAdmin";
 import Comments from "./Comments";
-
+        
 const Template: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("Questions");
 
@@ -24,6 +24,40 @@ const Template: React.FC = () => {
     tags: [],
     topic: "",
     creator_id: 0,
+    image_url: "",
+    who_can_fill: [],
+  });
+
+  const { id } = useParams();
+  const { currentUser } = useContext(CurrentUserContext);
+  const { t } = useTranslation();
+  const { darkMode } = useContext(DarkModeContext);
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      const { data, error } = await supabase
+        .from("templates")
+        .select()
+        .eq("id", id)
+        .single();
+      if (data) {
+        setData(data);
+      }
+
+      if (error) {
+        console.log(error);
+      }
+    };
+    fetchTemplates();
+  }, []);
+
+  const [data, setData] = useState<TemplateData>({
+    title: "",
+    description: "",
+    likes: [],
+    tags: [],
+    topic: "",
+    creator_id: "",
     image_url: "",
     who_can_fill: [],
   });
@@ -70,8 +104,21 @@ const Template: React.FC = () => {
     }
   };
 
-  const hasAccess = useIsFormCreatorOrAdmin(data.creator_id);
+  const handleAddComment = () => {
+    if (newComment.trim()) {
+      const newId = comments.length ? comments[comments.length - 1].id + 1 : 1;
+      const newCommentObj: Comment = {
+        id: newId,
+        name: "Anonymous",
+        text: newComment,
+      };
+      setComments([...comments, newCommentObj]);
+      setNewComment("");
+    }
+  };
 
+  const hasAccess = useIsFormCreatorOrAdmin(data.creator_id);
+        
   // that's how you insert several rows in a table (for answers submit)
   // const { data, error } = await supabase
   // .from('your_table_name')

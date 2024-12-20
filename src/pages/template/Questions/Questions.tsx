@@ -46,7 +46,7 @@ const Questions = ({
     setQuestions([...questions, newQuestion]);
   };
 
-  const handleUpdateQuestion = (id: number, field: string, value: string) => {
+  const handleUpdateQuestion = (id: string, field: string, value: string) => {
     const updatedQuestions = questions.map((q) =>
       q.id === id ? { ...q, [field]: value } : q
     );

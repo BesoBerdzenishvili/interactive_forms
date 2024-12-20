@@ -8,7 +8,7 @@ interface AllowedUsersProps {
   removeUser: (id: number) => void;
 }
 interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
 }
