@@ -37,7 +37,7 @@ export const CurrentUserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logout = () => {
     setCurrentUser({
-      id: "0",
+      id: 0,
       name: "",
       email: "",
       created_at: "",
