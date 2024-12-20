@@ -32,7 +32,7 @@
         "results": "შედეგები"
       },
       "questions": {
-        "title": "კითხვარის შექმნა",
+        "title": "კითხვარი",
         "form_title": "სათაური",
         "title_placeholder": "შეიყვანეთ სათაური",
         "description": "აღწერა",
@@ -41,15 +41,18 @@
         "tags_placeholder": "შეიყვანეთ თაგი",
         "image": "არჩევითი სურათი",
         "image_choice": "აირჩიეთ ფაილი",
-        "image_not_chosen": "ფაილი არაა არჩეული",
         "allowed_users": {
           "title": "დაშვებული მომხმარებლები",
+          "everyone": "ყველა",
+          "who_can_fill": "ვის შეუძლია შევსება",
           "name": "სახელი",
           "email": "ელ-ფოსტა",
+          "remove": "წაშლა",
           "name_placeholder": "მომხმარებლის სახელი",
           "email_placeholder": "მომხმარებლის ელ-ფოსტა"
         },
         "questions": "შეკითხვები",
+        "submit_questions": "პასუხების გაგზავნა",
         "add_question": "დაამატე კითხვა"
       },
       "aggregation": {
@@ -62,6 +65,10 @@
           "user": "მომხმარებელი",
           "filled_at": "შევსების დრო"
         }
+      },
+      "likes": {
+        "like": "მოწონება",
+        "likes": "მოწონება"
       },
       "comments": {
         "title": "კომენტარები",

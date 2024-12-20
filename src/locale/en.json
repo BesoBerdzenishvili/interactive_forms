@@ -32,7 +32,7 @@
         "results": "Results"
       },
       "questions": {
-        "title": "Create a Questionnaire",
+        "title": "Questionnaire",
         "form_title": "Title",
         "title_placeholder": "Enter form title",
         "description": "Description",
@@ -41,15 +41,18 @@
         "tags_placeholder": "Enter a tag",
         "image": "Optional Image",
         "image_choice": "Choose File",
-        "image_not_chosen": "No file chosen",
         "allowed_users": {
           "title": "Allowed Users",
+          "everyone": "everyone",
+          "who_can_fill": "Who can fill",
           "name": "Name",
           "email": "Email",
+          "remove": "Remove",
           "name_placeholder": "User name",
           "email_placeholder": "User email"
         },
         "questions": "Questions",
+        "submit_questions": "Submit Questions",
         "add_question": "Add Question"
       },
       "aggregation": {
@@ -62,6 +65,10 @@
           "user": "User",
           "filled_at": "Filled at"
         }
+      },
+      "likes": {
+        "like": "Like",
+        "likes": "Likes"
       },
       "comments": {
         "title": "Comments",

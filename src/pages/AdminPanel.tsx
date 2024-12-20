@@ -7,10 +7,11 @@ import { useTranslation } from "react-i18next";
 import supabase from "../config/supabase";
 import { CurrentUserContext } from "../contexts/user/UserContext";
 import DismissibleAlert from "../components/Alert";
+import alert from "../utils/alertMessages";
 
 const AdminPanel = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [filter, setFilter] = useState("");
   const [refetchUsers, setRefetchUsers] = useState(false);
   const [show, setShow] = useState(false);
@@ -96,7 +97,7 @@ const AdminPanel = () => {
     setFilter(event.target.value);
   };
 
-  const handleCheckboxChange = (userId: number) => {
+  const handleCheckboxChange = (userId: string) => {
     if (selectedUsers.includes(userId)) {
       setSelectedUsers(selectedUsers.filter((id) => id !== userId));
     } else {
@@ -121,12 +122,7 @@ const AdminPanel = () => {
   return (
     <Container className="position-absolute top-50 start-50 translate-middle p-3 rounded-3">
       {show && (
-        <DismissibleAlert
-          text="User successfully Deleted!"
-          heading="Success!"
-          setShow={setShow}
-          color="success"
-        />
+        <DismissibleAlert data={alert.adminPanel.deleted} setShow={setShow} />
       )}
       <Row className="pb-3">
         <Col>

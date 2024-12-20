@@ -87,6 +87,9 @@ export default function Main() {
       </Carousel>
 
       {/* Table Section */}
+      {/* for popular list:
+        1. order templates by filled_forms ascebding
+        2. fetch first 5 items */}
       <Table
         bordered
         variant={darkMode ? "dark" : ""}
@@ -103,7 +106,7 @@ export default function Main() {
         </thead>
         <tbody>
           {mock.populars.map((item, index) => (
-            <tr key={index} onClick={() => navigate("/template/hethrt")}>
+            <tr key={index} onClick={() => navigate("/template/1")}>
               <td>{index + 1}</td>
               <td>{item.title}</td>
               <td>{item.author}</td>

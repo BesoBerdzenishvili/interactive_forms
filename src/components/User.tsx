@@ -3,13 +3,13 @@ import { Form } from "react-bootstrap";
 import { User } from "../types/types";
 import { useTranslation } from "react-i18next";
 
-interface UserPanel {
+interface UserPanelProps {
   user: User;
-  selectedUsers: number[];
-  handleCheckboxChange: (userId: number) => void;
+  selectedUsers: string[];
+  handleCheckboxChange: (userId: string) => void;
 }
 
-const UserPanel: React.FC<UserPanel> = ({
+const UserPanel: React.FC<UserPanelProps> = ({
   user,
   selectedUsers,
   handleCheckboxChange,

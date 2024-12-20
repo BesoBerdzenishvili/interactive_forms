@@ -5,12 +5,17 @@ import { Link } from "react-router-dom";
 import DismissibleAlert from "../components/Alert";
 import supabase from "../config/supabase";
 import { CurrentUserContext } from "../contexts/user/UserContext";
+import alert from "../utils/alertMessages";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({
+    color: "",
+    heading: "",
+    text: "",
+  });
 
   const { t } = useTranslation();
   const { login } = useContext(CurrentUserContext);
@@ -21,18 +26,22 @@ const Login: React.FC = () => {
     const { data, error } = await supabase.from("profiles").select();
     const thisUser = data && data.filter((i) => i.email === email);
     if (!thisUser?.length || thisUser[0].password !== password) {
-      setErrorMessage("Incorrect Email or Password!");
+      setErrorMessage(alert.login.incorrect);
       setShow(true);
       return;
     }
     if (thisUser[0].is_blocked) {
-      setErrorMessage("User is blocked!");
+      setErrorMessage(alert.login.blocked);
       setShow(true);
       return;
     }
     if (error) {
       console.error(error);
-      setErrorMessage(error.details);
+      setErrorMessage({
+        color: "danger",
+        heading: "Error!",
+        text: error.details,
+      });
       setShow(true);
     }
     if (thisUser) {
@@ -41,14 +50,7 @@ const Login: React.FC = () => {
   };
   return (
     <div className="bg-primary position-absolute top-50 start-50 translate-middle p-3 rounded-3">
-      {show && (
-        <DismissibleAlert
-          text={errorMessage}
-          heading="Error!"
-          color="danger"
-          setShow={setShow}
-        />
-      )}
+      {show && <DismissibleAlert data={errorMessage} setShow={setShow} />}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>{t("login.email")}</Form.Label>

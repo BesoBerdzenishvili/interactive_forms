@@ -17,7 +17,11 @@ const Registration: React.FC = () => {
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({
+    color: "",
+    heading: "",
+    text: "",
+  });
   const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
@@ -36,7 +40,11 @@ const Registration: React.FC = () => {
     try {
       const { error } = await supabase.from("profiles").insert(formData);
       if (error) {
-        setErrorMessage(error.details);
+        setErrorMessage({
+          color: "danger",
+          heading: "Error!",
+          text: error.details,
+        });
         setShow(true);
       }
       !error && navigate("/login");
@@ -47,14 +55,7 @@ const Registration: React.FC = () => {
 
   return (
     <div className="bg-primary position-absolute top-50 start-50 translate-middle p-3 rounded-3">
-      {show && (
-        <DismissibleAlert
-          text={errorMessage}
-          heading="Error!"
-          color="danger"
-          setShow={setShow}
-        />
-      )}
+      {show && <DismissibleAlert data={errorMessage} setShow={setShow} />}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>{t("registration.name")}</Form.Label>
