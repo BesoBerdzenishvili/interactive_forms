@@ -13,7 +13,7 @@ export default function Question({
 }: // we may not need to fetch mockType as prop
 {
   q: Qtype;
-  handleUpdateQuestion: (id: string, field: string, value: string) => void;
+  handleUpdateQuestion: (id: number, field: string, value: string) => void;
   hasAccess: boolean;
   mockType?: string;
 }) {

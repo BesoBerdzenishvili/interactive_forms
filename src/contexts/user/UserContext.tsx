@@ -10,7 +10,7 @@ type CurrentUserContextType = {
 
 export const CurrentUserContext = createContext<CurrentUserContextType>({
   currentUser: {
-    id: "0",
+    id: 0,
     name: "",
     email: "",
     created_at: "",

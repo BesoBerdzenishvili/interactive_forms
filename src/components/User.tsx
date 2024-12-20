@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 
 interface UserPanelProps {
   user: User;
-  selectedUsers: string[];
-  handleCheckboxChange: (userId: string) => void;
+  selectedUsers: number[];
+  handleCheckboxChange: (userId: number) => void;
 }
 
 const UserPanel: React.FC<UserPanelProps> = ({

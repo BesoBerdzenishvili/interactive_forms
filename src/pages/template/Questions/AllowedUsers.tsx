@@ -5,10 +5,10 @@ import { DarkModeContext } from "../../../contexts/dark_mode/DarkModeContext";
 
 interface AllowedUsersProps {
   users: User[];
-  removeUser: (id: string) => void;
+  removeUser: (id: number) => void;
 }
 interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
 }

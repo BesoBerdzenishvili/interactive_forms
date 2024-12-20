@@ -1,31 +1,39 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../contexts/dark_mode/DarkModeContext";
+import supabase from "../../config/supabase";
+import { Answer } from "../../types/types";
+import Result from "../../components/Result";
 
-const list = [
-  {
-    id: 1,
-    user: "Alice yjtjtkuy",
-    name: "14/04/2024",
-  },
-  {
-    id: 2,
-    user: "Bob ftymtumyu",
-    name: "24/04/2024",
-  },
-  {
-    id: 3,
-    user: "Charlie rjryjtyjt",
-    name: "07/04/2024",
-  },
-];
+interface ResultsProps {
+  formId: number;
+}
 
-export default function Results() {
+export default function Results({ formId }: ResultsProps) {
+  const [answers, setAnswers] = useState<Answer[]>();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { darkMode } = useContext(DarkModeContext);
+
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      const { data, error } = await supabase
+        .from("answers")
+        .select()
+        .eq("form_id", formId)
+        .order("created_at");
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        setAnswers(data);
+      }
+    };
+    fetchAnswers();
+  }, []);
+
   return (
     <div className="text-center">
       <h3>{t("template.results.title")}</h3>
@@ -44,12 +52,11 @@ export default function Results() {
           </tr>
         </thead>
         <tbody>
-          {list.map((template) => (
-            <tr key={template.id} onClick={() => navigate("/user-form/rhtj")}>
-              <td>{template.id}</td>
-              <td>{template.user}</td>
-              <td>{template.name}</td>
-            </tr>
+          {answers?.map((template) => (
+            <Result
+              template={template}
+              onClick={() => navigate("/user-form/rhtj")}
+            />
           ))}
         </tbody>
       </Table>
