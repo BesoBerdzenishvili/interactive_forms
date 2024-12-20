@@ -95,10 +95,12 @@ const UserForm: React.FC = () => {
             height={400}
             src={formData.image}
             alt={formData.formTitle}
-            thumbnail
+            className="self-center my-3"
+            rounded
+            fluid
           />
         )}
-        <Card.Title className="bg-primary text-white text-center p-2 mt-2">
+        <Card.Title className="bg-primary text-white text-center p-2">
           {formData.formTitle}
         </Card.Title>
         <Card.Text>{formData.description}</Card.Text>

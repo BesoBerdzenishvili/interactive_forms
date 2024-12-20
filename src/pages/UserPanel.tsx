@@ -98,10 +98,7 @@ const UserPanel: React.FC = () => {
             </thead>
             <tbody>
               {templates.map((template) => (
-                <tr
-                  key={template.id}
-                  onClick={() => navigate("/template/ttrj")}
-                >
+                <tr key={template.id} onClick={() => navigate("/template/5")}>
                   <td>{template.id}</td>
                   <td>{template.title}</td>
                   <td>
