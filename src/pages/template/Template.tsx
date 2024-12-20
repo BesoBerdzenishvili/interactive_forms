@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { Container, Nav } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Results from "./Results";
 import Questions from "./Questions/Questions";
 import Aggregation from "./Aggregation";
-import { useTranslation } from "react-i18next";
 import { DarkModeContext } from "../../contexts/dark_mode/DarkModeContext";
 import Likes from "../../components/Likes";
 import supabase from "../../config/supabase";
@@ -12,6 +11,7 @@ import { CurrentUserContext } from "../../contexts/user/UserContext";
 import { TemplateData } from "../../types/types";
 import useIsFormCreatorOrAdmin from "../../hooks/useIsFormCreatorOrAdmin";
 import Comments from "./Comments";
+import NavBar from "./NavBar";
 
 const Template: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("Questions");
@@ -30,7 +30,6 @@ const Template: React.FC = () => {
 
   const { id } = useParams();
   const { currentUser } = useContext(CurrentUserContext);
-  const { t } = useTranslation();
   const { darkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
@@ -79,38 +78,7 @@ const Template: React.FC = () => {
 
   return (
     <Container className={`px-5 pb-3 px-sm-2 ${darkMode ? "text-white" : ""}`}>
-      {hasAccess && (
-        // should we make nav a component?
-        <Nav justify variant="tabs" defaultActiveKey="/">
-          <Nav.Item>
-            <Nav.Link
-              onClick={(e) => {
-                e.preventDefault();
-                handleTabClick("Questions");
-              }}
-              href="/"
-            >
-              {t("template.nav.questions")}
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              onClick={() => handleTabClick("Aggregation")}
-              eventKey="link-1"
-            >
-              {t("template.nav.aggregation")}
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              onClick={() => handleTabClick("Results")}
-              eventKey="link-2"
-            >
-              {t("template.nav.results")}
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
-      )}
+      {hasAccess && <NavBar handleTabClick={handleTabClick} />}
 
       <div className="mt-4">
         {activeTab === "Questions" && (
