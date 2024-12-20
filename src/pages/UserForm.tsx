@@ -88,14 +88,14 @@ const UserForm: React.FC = () => {
   return (
     <Container>
       {/* Form Header */}
-      <Card className={`mb-4 ${darkMode && "bg-dark text-white"}`}>
+      <Card className={`mb-4 px-3 py-4 ${darkMode && "bg-dark text-white"}`}>
         {formData.image && (
           <Image
             width={400}
             height={400}
             src={formData.image}
             alt={formData.formTitle}
-            className="self-center my-3"
+            className="self-center mb-3"
             rounded
             fluid
           />

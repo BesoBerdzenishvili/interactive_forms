@@ -56,7 +56,8 @@
         "add_question": "დაამატე კითხვა"
       },
       "aggregation": {
-        "title": "აგრეგაცია(?)"
+        "title": "აგრეგაცია(?)",
+        "total_users": "მოპასუხეები: {{uniqueUsers}}, პასუხები სულ: {{totalAnswers}}"
       },
       "results": {
         "title": "შევსებული ფორმები",

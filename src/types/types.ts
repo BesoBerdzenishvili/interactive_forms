@@ -1,7 +1,3 @@
-// id's are number
-// change ids to number here
-// find all instances of interface and refactor
-
 export interface User {
   id: number;
   name: string;
@@ -18,7 +14,7 @@ export interface TemplateData {
   likes: string[];
   tags: string[];
   topic: string;
-  creator_id: number; // this is number too
+  creator_id: number;
   image_url: string;
   who_can_fill: number[];
 }
@@ -47,6 +43,7 @@ export interface Answer {
   title: string;
   description: string;
   answer: string;
+  send_id: string;
   order: number;
   type: string;
 }

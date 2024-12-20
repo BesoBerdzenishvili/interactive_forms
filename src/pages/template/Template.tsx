@@ -72,6 +72,11 @@ const Template: React.FC = () => {
 
   const hasAccess = useIsFormCreatorOrAdmin(data.creator_id);
 
+  // that's how you insert several rows in a table (for answers submit)
+  // const { data, error } = await supabase
+  // .from('your_table_name')
+  // .insert([{id:1},{id:2}]);
+
   return (
     <Container className={`px-5 pb-3 px-sm-2 ${darkMode ? "text-white" : ""}`}>
       {hasAccess && (
@@ -115,7 +120,7 @@ const Template: React.FC = () => {
             setTemplateData={setData}
           />
         )}
-        {activeTab === "Aggregation" && <Aggregation />}
+        {activeTab === "Aggregation" && <Aggregation formId={data.id} />}
         {activeTab === "Results" && <Results formId={data.id} />}
       </div>
 
