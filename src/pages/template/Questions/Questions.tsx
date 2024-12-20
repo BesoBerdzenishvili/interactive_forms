@@ -37,7 +37,7 @@ const Questions = ({
 
   const handleAddQuestion = () => {
     const newQuestion: QType = {
-      id: Date.now().toString(),
+      id: Date.now(),
       title: "",
       description: "",
       order: questions.length,
@@ -46,7 +46,7 @@ const Questions = ({
     setQuestions([...questions, newQuestion]);
   };
 
-  const handleUpdateQuestion = (id: string, field: string, value: string) => {
+  const handleUpdateQuestion = (id: number, field: string, value: string) => {
     const updatedQuestions = questions.map((q) =>
       q.id === id ? { ...q, [field]: value } : q
     );
@@ -54,7 +54,10 @@ const Questions = ({
     // console.log("Updated questions:", updatedQuestions);
   };
 
-  const handleInputChange = async (name: string, value: string | string[]) => {
+  const handleInputChange = async (
+    name: string,
+    value: string | string[] | number[]
+  ) => {
     // console.log(name, "name", value);
     setTemplateData((prevState: TemplateData) => ({
       ...prevState,

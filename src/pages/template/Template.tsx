@@ -23,7 +23,7 @@ const Template: React.FC = () => {
     likes: [],
     tags: [],
     topic: "",
-    creator_id: "",
+    creator_id: 0,
     image_url: "",
     who_can_fill: [],
   });

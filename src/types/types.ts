@@ -3,7 +3,7 @@
 // find all instances of interface and refactor
 
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   created_at: string;
@@ -18,13 +18,13 @@ export interface TemplateData {
   likes: string[];
   tags: string[];
   topic: string;
-  creator_id: string; // this is number too
+  creator_id: number; // this is number too
   image_url: string;
-  who_can_fill: string[];
+  who_can_fill: number[];
 }
 
 export interface Question {
-  id: string;
+  id: number;
   title: string;
   description: string;
   order: number;
@@ -36,6 +36,7 @@ export interface Comment {
   created_at: string;
   form_id: number;
   author_id: number;
+  // remove that from here, component and db
   author_name: string;
   text: string;
 }
