@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Container, Nav, Form, Button, ListGroup } from "react-bootstrap";
-import Comment from "../../components/Comment";
+import { Container, Nav } from "react-bootstrap";
 import Results from "./Results";
 import Questions from "./Questions/Questions";
 import Aggregation from "./Aggregation";
@@ -12,25 +11,13 @@ import { useParams } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/user/UserContext";
 import { TemplateData } from "../../types/types";
 import useIsFormCreatorOrAdmin from "../../hooks/useIsFormCreatorOrAdmin";
-
-interface Comment {
-  id: number;
-  name: string;
-  text: string;
-}
-
-const mockComments: Comment[] = [
-  { id: 1, name: "Alice", text: "This is a great feature!" },
-  { id: 2, name: "Bob", text: "Thanks for adding this functionality." },
-  { id: 3, name: "Charlie", text: "Looking forward to more updates!" },
-];
+import Comments from "./Comments";
 
 const Template: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("Questions");
-  const [comments, setComments] = useState<Comment[]>(mockComments);
-  const [newComment, setNewComment] = useState<string>("");
 
   const [data, setData] = useState<TemplateData>({
+    id: 0,
     title: "",
     description: "",
     likes: [],
@@ -68,7 +55,6 @@ const Template: React.FC = () => {
     setActiveTab(tabName);
   };
 
-  // maybe we can sync that with comments
   const handleLike = async () => {
     setData((prevState) => ({
       ...prevState,
@@ -81,19 +67,6 @@ const Template: React.FC = () => {
 
     if (error) {
       console.error("Error updating data:", error);
-    }
-  };
-
-  const handleAddComment = () => {
-    if (newComment.trim()) {
-      const newId = comments.length ? comments[comments.length - 1].id + 1 : 1;
-      const newCommentObj: Comment = {
-        id: newId,
-        name: "Anonymous",
-        text: newComment,
-      };
-      setComments([...comments, newCommentObj]);
-      setNewComment("");
     }
   };
 
@@ -148,34 +121,7 @@ const Template: React.FC = () => {
 
       <Likes likes={data.likes} handleLike={handleLike} />
 
-      <div className="mt-5">
-        <h4> {t("template.comments.title")}:</h4>
-        <ListGroup className="my-4">
-          {comments.map((comment) => (
-            <Comment comment={comment} key={comment.id} />
-          ))}
-        </ListGroup>
-
-        {currentUser.name && (
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Control
-                as="textarea"
-                rows={3}
-                type="text"
-                // make those 50 above sm and 100 by default
-                className={`w-sm-50`}
-                placeholder={t("template.comments.placeholder")}
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-              />
-            </Form.Group>
-            <Button variant="primary" onClick={handleAddComment}>
-              {t("template.comments.add_button")}
-            </Button>
-          </Form>
-        )}
-      </div>
+      <Comments formId={data.id} />
     </Container>
   );
 };

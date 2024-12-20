@@ -15,7 +15,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const { currentUser } = useContext(CurrentUserContext);
   const location = useLocation();
   const { id } = useParams();
-  console.log(useFormAccess(id), "result");
+  // console.log(useFormAccess(id), "result");
 
   if (!checkTemplate && !checkAdmin && currentUser.name) {
     return <Navigate to="/" state={{ from: location }} replace />;

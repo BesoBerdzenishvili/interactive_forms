@@ -27,9 +27,9 @@ function App() {
         <Route path="/admin-panel" element={<ProtectedRoute checkAdmin />}>
           <Route path="/admin-panel" element={<AdminPanel />} />
         </Route>
-        <Route path="/template/:id" element={<ProtectedRoute checkTemplate />}>
-          <Route path="/template/:id" element={<Template />} />
-        </Route>
+        {/* <Route path="/template/:id" element={<ProtectedRoute checkTemplate />}> */}
+        <Route path="/template/:id" element={<Template />} />
+        {/* </Route> */}
         <Route path="/user-form/:id" element={<UserForm />} />
         <Route path="/user-panel" element={<UserPanel />} />
         <Route path="/no-access" element={<NoAccess />} />

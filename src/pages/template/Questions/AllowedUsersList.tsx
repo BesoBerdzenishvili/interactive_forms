@@ -40,6 +40,7 @@ export default function AllowedUsersList({
     fetchProfiles();
   }, []);
 
+  // this isn't displaying list because userid's wrong datatype
   const usersList = users.filter((user) => whoCanFill.includes(user.id));
 
   const addUser = () => {
