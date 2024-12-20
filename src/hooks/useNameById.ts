@@ -18,6 +18,6 @@ export default function useNameById(userId: number) {
     fetchProfiles();
   }, []);
   if (users) {
-    return users.filter((i) => i.id === userId)[0].name;
+    return users.filter((i) => i.id === userId)[0].name || "No such user";
   }
 }

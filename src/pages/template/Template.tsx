@@ -116,7 +116,7 @@ const Template: React.FC = () => {
           />
         )}
         {activeTab === "Aggregation" && <Aggregation />}
-        {activeTab === "Results" && <Results />}
+        {activeTab === "Results" && <Results formId={data.id} />}
       </div>
 
       <Likes likes={data.likes} handleLike={handleLike} />

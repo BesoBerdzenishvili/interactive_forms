@@ -81,7 +81,6 @@ export default function Comments({ formId }: CommentsProps) {
       .from("comments")
       .insert({
         form_id: formId,
-        author_name: currentUser.name,
         author_id: currentUser.id,
         text: newComment,
       })

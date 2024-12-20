@@ -36,7 +36,17 @@ export interface Comment {
   created_at: string;
   form_id: number;
   author_id: number;
-  // remove that from here, component and db
-  author_name: string;
   text: string;
+}
+
+export interface Answer {
+  id: number;
+  form_id: number;
+  author_id: number;
+  created_at: string;
+  title: string;
+  description: string;
+  answer: string;
+  order: number;
+  type: string;
 }
