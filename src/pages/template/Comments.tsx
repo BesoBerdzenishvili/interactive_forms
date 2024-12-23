@@ -23,6 +23,7 @@ export default function Comments({ formId }: CommentsProps) {
       const { data, error } = await supabase.from("comments").select("*");
       if (data) {
         setComments(
+          // do it like that in other places too (questions and answers)
           data.filter((comment: CommentType) => comment.form_id === formId)
         );
       }
@@ -94,7 +95,9 @@ export default function Comments({ formId }: CommentsProps) {
 
   return (
     <div className="mt-5">
-      <h4>{t("template.comments.title")}:</h4>
+      <h4>
+        {comments.length} {t("template.comments.title")}:
+      </h4>
       <ListGroup className="my-4">
         {comments.map((comment) => (
           <Comment comment={comment} key={comment.id} />
