@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import Results from "./Results";
-import Questions from "./Questions/Questions";
+import Questionnaire from "./Questions/Questionnaire";
 import Aggregation from "./Aggregation";
 import { DarkModeContext } from "../../contexts/dark_mode/DarkModeContext";
 import Likes from "../../components/Likes";
@@ -82,7 +82,7 @@ const Template: React.FC = () => {
 
       <div className="mt-4">
         {activeTab === "Questions" && (
-          <Questions
+          <Questionnaire
             hasAccess={hasAccess}
             templateData={data}
             setTemplateData={setData}

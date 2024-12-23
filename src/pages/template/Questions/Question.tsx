@@ -1,93 +1,176 @@
-import { useContext } from "react";
-import { Form } from "react-bootstrap";
+import { useContext, useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { CurrentUserContext } from "../../../contexts/user/UserContext";
-import { Question as Qtype } from "../../../types/types";
+import { Answer, Question as Qtype } from "../../../types/types";
+import supabase from "../../../config/supabase";
 
-const mockQTypes = ["text", "paragraph", "number", "ckeckbox"];
+const QTypes = ["text", "paragraph", "number", "checkbox"];
+
+interface newAnswer extends Answer {
+  id: number;
+  answer: string;
+}
 
 export default function Question({
   q,
-  handleUpdateQuestion,
   hasAccess,
-  mockType = "ckeckbox",
+  removeQuestion,
+  updateAnswer,
+  answers,
 }: // we may not need to fetch mockType as prop
 {
   q: Qtype;
-  handleUpdateQuestion: (id: number, field: string, value: string) => void;
   hasAccess: boolean;
   mockType?: string;
+  answers: newAnswer[] | undefined;
+  removeQuestion: (id: number) => void;
+  updateAnswer: (id: number, field: string, value: string) => void;
 }) {
   const { currentUser } = useContext(CurrentUserContext);
+  const [question, setQuestion] = useState({
+    title: "",
+    description: "",
+    order: 0,
+    form_id: 0,
+    type: "",
+  });
+
+  useEffect(() => {
+    setQuestion(q);
+  }, []);
+
+  const updateQuestion = async (id: number, field: string, value: string) => {
+    updateAnswer(id, field, value);
+    setQuestion((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+
+    const { error } = await supabase
+      .from("questions")
+      .update({ [field]: value })
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error updating data:", error);
+    }
+  };
+  // by changing this to state uncontrolled component error will go
+  let thisAnswer = answers?.filter((i) => i.id === q.id)[0];
 
   let inputElement;
-  switch (mockType) {
+  switch (question.type) {
     case "text":
-      inputElement = <Form.Control type="text" placeholder="Enter answer" />;
+      inputElement = (
+        <Form.Control
+          value={thisAnswer?.answer}
+          onChange={(e) => updateAnswer(q.id, "answer", e.target.value)}
+          type="text"
+          placeholder="Enter answer"
+        />
+      );
       break;
     case "paragraph":
       inputElement = (
-        <Form.Control as="textarea" rows={3} placeholder="Enter answer" />
+        <Form.Control
+          value={thisAnswer?.answer}
+          onChange={(e) => updateAnswer(q.id, "answer", e.target.value)}
+          as="textarea"
+          rows={3}
+          placeholder="Enter answer"
+        />
       );
       break;
     case "number":
-      inputElement = <Form.Control type="number" placeholder="Enter number" />;
+      inputElement = (
+        <Form.Control
+          value={thisAnswer?.answer}
+          onChange={(e) => updateAnswer(q.id, "answer", e.target.value)}
+          type="number"
+          placeholder="Enter number"
+        />
+      );
       break;
-    case "ckeckbox":
-      inputElement = <Form.Check type="checkbox" label="Check me out" />;
+    case "checkbox":
+      inputElement = (
+        <Form.Check
+          value={thisAnswer?.answer}
+          onChange={(e) => updateAnswer(q.id, "answer", e.target.value)}
+          type="checkbox"
+          label="Check me out"
+        />
+      );
       break;
   }
 
   return (
     <div key={q.id} className="border rounded p-3 mb-3 w-sm-50">
       <Form.Group controlId={`question-title-${q.id}`} className="mb-2">
-        <Form.Label>Question Title</Form.Label>
+        <div className="d-flex justify-content-between align-items-end">
+          <Form.Label>
+            <b>Question Title</b>
+          </Form.Label>
+          <Button
+            onClick={() => removeQuestion(q.id)}
+            variant="danger"
+            className="mb-3"
+          >
+            X
+          </Button>
+        </div>
         {hasAccess ? (
           <Form.Control
             type="text"
-            value={q.title}
+            value={question.title}
             required
-            onChange={(e) =>
-              handleUpdateQuestion(q.id, "title", e.target.value)
-            }
+            onChange={(e) => updateQuestion(q.id, "title", e.target.value)}
           />
         ) : (
-          <h3>Test Title</h3>
+          <h6>
+            <i>{q.title}</i>
+          </h6>
         )}
       </Form.Group>
       <Form.Group controlId={`question-description-${q.id}`} className="mb-2">
-        <Form.Label>Question Description</Form.Label>
+        <Form.Label>
+          <b>Question Description</b>
+        </Form.Label>
         {hasAccess ? (
           <Form.Control
             type="text"
-            value={q.description}
+            value={question.description}
             required
             onChange={(e) =>
-              handleUpdateQuestion(q.id, "description", e.target.value)
+              updateQuestion(q.id, "description", e.target.value)
             }
           />
         ) : (
-          <h3>Test Description</h3>
+          <h6>
+            <i>{q.description}</i>
+          </h6>
         )}
       </Form.Group>
       <Form.Group className="mb-2">
-        {hasAccess && (
-          <>
-            <Form.Label>Question Type</Form.Label>
-            <Form.Select
-              value={q.type}
-              onChange={(e) =>
-                handleUpdateQuestion(q.id, "type", e.target.value)
-              }
-            >
-              {mockQTypes.map((i) => {
-                return (
-                  <option key={i} value={i}>
-                    {i}
-                  </option>
-                );
-              })}
-            </Form.Select>
-          </>
+        <Form.Label className="font-weight-bold">
+          <b>Question Type</b>
+        </Form.Label>
+        {hasAccess ? (
+          <Form.Select
+            value={question.type}
+            onChange={(e) => updateQuestion(q.id, "type", e.target.value)}
+          >
+            {QTypes.map((i) => {
+              return (
+                <option key={i} value={i}>
+                  {i}
+                </option>
+              );
+            })}
+          </Form.Select>
+        ) : (
+          <h6>
+            <i>{q.type}</i>
+          </h6>
         )}
       </Form.Group>
       {currentUser.name && (

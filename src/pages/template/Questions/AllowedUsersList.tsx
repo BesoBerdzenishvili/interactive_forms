@@ -41,6 +41,8 @@ export default function AllowedUsersList({
   }, []);
 
   // this isn't displaying list because userid's wrong datatype
+  // filter from useEffect (Comments as example. put userid in []):
+  // https://supabase.com/docs/reference/javascript/is
   const usersList = users.filter((user) => whoCanFill.includes(user.id));
 
   const addUser = () => {

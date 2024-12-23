@@ -19,6 +19,8 @@ const Likes: React.FC<LikesProps> = ({ likes, handleLike }) => {
       {currentUser.name && (
         <Button
           variant="outline-primary"
+          // send this value to handleUpdateInput as value:
+          // [...data.likes, currentUser.id.toString()]
           onClick={handleLike}
           disabled={handleDisabled()}
         >

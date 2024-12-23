@@ -1,197 +1,155 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { Form, Button, InputGroup, Image } from "react-bootstrap";
-import Question from "./Question";
-import AllowedUsersList from "./AllowedUsersList";
-import Description from "./Description";
+import { useContext, useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { Answer, Question as QType } from "../../../types/types";
+import Question from "./Question";
 import supabase from "../../../config/supabase";
-import { Question as QType, TemplateData } from "../../../types/types";
-import Topics from "./Topics";
-import UploadComponent from "../../../components/UploadImage";
+import { CurrentUserContext } from "../../../contexts/user/UserContext";
+import DismissibleAlert from "../../../components/Alert";
+import alert from "../../../utils/alertMessages";
 
-const Questions = ({
-  templateData,
-  setTemplateData,
-  hasAccess,
-}: {
-  templateData: TemplateData;
-  setTemplateData: Dispatch<SetStateAction<TemplateData>>;
+// Each time form is filled increase filled_forms with one
+// actually we can calculate total answers like in aggregation
+
+interface QuestionsProps {
   hasAccess: boolean;
-}) => {
-  const [tagInput, setTagInput] = useState("");
-  const [questions, setQuestions] = useState<QType[]>([]); // separate table
+  formId: number;
+}
 
-  const { t } = useTranslation();
-  const { id } = useParams();
+interface newAnswer extends Answer {
+  id: number;
+}
 
-  const handleAddTag = () => {
-    if (tagInput && !templateData.tags.includes(tagInput)) {
-      setTemplateData((prevState: TemplateData) => ({
-        ...prevState,
-        tags: [...templateData.tags, tagInput],
-      }));
-      handleInputChange("tags", [...templateData.tags, tagInput]);
-    }
+export default function Questions({ hasAccess, formId }: QuestionsProps) {
+  const { currentUser } = useContext(CurrentUserContext);
+  const [questions, setQuestions] = useState<QType[]>([]);
+  const [answers, setAnswers] = useState<newAnswer[]>();
+  const [show, setShow] = useState(false);
+  const [message, setMessage] = useState({
+    color: "",
+    heading: "",
+    text: "",
+  });
+
+  useEffect(() => {
+    setAnswers(
+      questions?.map((i) => ({
+        ...i,
+        answer: "",
+        author_id: currentUser.id,
+        send_id: (Date.now() + currentUser.id).toString(),
+      }))
+    );
+  }, [questions]);
+
+  const updateAnswer = (id: number, field: string, value: string) => {
+    console.log(answers, "updated answer", value);
+
+    setAnswers(
+      answers?.map((a) => (a.id === id ? { ...a, [field]: value } : a))
+    );
   };
 
-  const handleAddQuestion = () => {
+  const sendAnswers = async () => {
+    const { error } = await supabase
+      .from("answers")
+      .insert(answers?.map(({ id, ...rest }) => rest));
+    if (error) {
+      console.log(error);
+      setShow(true);
+      const { text, ...rest } = alert.questions.sendError;
+      setMessage({ ...rest, text: error.message });
+    }
+    setAnswers([]);
+    setShow(true);
+    setMessage(alert.questions.sendSuccess);
+  };
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const { data, error } = await supabase
+        .from("questions")
+        .select()
+        .eq("form_id", formId);
+      if (data) {
+        setQuestions(data);
+      }
+
+      if (error) {
+        console.log(error);
+      }
+    };
+    fetchQuestions();
+  }, [formId]);
+
+  const { t } = useTranslation();
+
+  const removeQuestion = async (id: number) => {
+    await supabase.from("questions").delete().eq("id", id);
+    setQuestions(questions.filter((i) => i.id !== id));
+  };
+
+  const handleAddQuestion = async () => {
+    const { error } = await supabase.from("questions").insert({
+      title: "Untitled question",
+      description: "description",
+      // automatically increase this field from db
+      order: questions.length,
+      form_id: formId,
+      type: "text",
+    });
+
+    if (error) {
+      console.error("Error updating data:", error);
+    }
+
     const newQuestion: QType = {
       id: Date.now(),
-      title: "",
-      description: "",
+      title: "Untitled question",
+      description: "description",
+      form_id: formId,
       order: questions.length,
-      type: "other",
+      type: "text",
     };
     setQuestions([...questions, newQuestion]);
   };
 
-  const handleUpdateQuestion = (id: number, field: string, value: string) => {
-    const updatedQuestions = questions.map((q) =>
-      q.id === id ? { ...q, [field]: value } : q
-    );
-    setQuestions(updatedQuestions);
-    // console.log("Updated questions:", updatedQuestions);
-  };
-
-  const handleInputChange = async (
-    name: string,
-    value: string | string[] | number[]
-  ) => {
-    // console.log(name, "name", value);
-    setTemplateData((prevState: TemplateData) => ({
-      ...prevState,
-      [name]: value,
-    }));
-
-    const { error } = await supabase
-      .from("templates")
-      .update({ [name]: value })
-      .eq("id", id);
-    if (error) {
-      console.error("Error updating data:", error);
-    }
-  };
-
   return (
-    <div className="p-4">
-      {/* if user is creator show "create questionnaire" else "Questionnaire" */}
-      <h2 className="text-center">{t("template.questions.title")}</h2>
+    <>
+      {show && <DismissibleAlert data={message} setShow={setShow} />}
+      <div className="d-flex flex-column justify-content-center">
+        <h4 className="mt-5 mb-4">
+          {t("template.questions.questions")} ({questions?.length})
+        </h4>
 
-      {templateData.image_url && (
-        <Image
-          rounded
-          fluid
-          className="text-center d-block mx-auto mt-4"
-          src={templateData.image_url}
-          alt="user's uploaded image"
-        />
-      )}
-
-      <Form>
-        {/* Title */}
-        <Form.Group controlId="formTitle" className="my-3 w-sm-25">
-          <Form.Label>{t("template.questions.form_title")}</Form.Label>
-          {hasAccess ? (
-            <Form.Control
-              type="text"
-              placeholder={t("template.questions.title_placeholder")}
-              value={templateData.title}
-              onChange={(e) => handleInputChange("title", e.target.value)}
-            />
-          ) : (
-            <h2>{templateData.title}</h2>
-          )}
-        </Form.Group>
-
-        {/* Description */}
-        <Description
-          description={templateData.description}
-          hasAccess={hasAccess}
-          onChange={handleInputChange}
-        />
-
-        {/* Topic */}
-        <Topics
-          handleInputChange={handleInputChange}
-          initialTopic={templateData.topic}
-          hasAccess={hasAccess}
-        />
-
-        {/* Tags */}
-        <Form.Group controlId="formTags" className="mb-3 w-sm-25">
-          <Form.Label>{t("template.questions.tags")}</Form.Label>
-          {hasAccess && (
-            <InputGroup>
-              <Form.Control
-                type="text"
-                placeholder={t("template.questions.tags_placeholder")}
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
-              />
-              <Button onClick={handleAddTag}>
-                <i className="bi bi-plus-circle"></i>
-              </Button>
-            </InputGroup>
-          )}
-          <div className="mt-2">
-            {templateData.tags.map((tag, index) => (
-              <span key={index} className="badge bg-primary me-2">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </Form.Group>
-
-        {/* Image */}
-        {hasAccess && (
-          <>
-            <Form.Group className="mb-3 w-sm-25">
-              <Form.Label>{t("template.questions.image")}</Form.Label>
-              <br />
-              <UploadComponent handleInputChange={handleInputChange} />
-            </Form.Group>
-
-            <AllowedUsersList
-              whoCanFill={templateData.who_can_fill}
-              handleInputChange={handleInputChange}
-            />
-          </>
+        {questions?.map((q) => (
+          <Question
+            key={q.id}
+            hasAccess={hasAccess}
+            q={q}
+            answers={answers}
+            removeQuestion={removeQuestion}
+            updateAnswer={updateAnswer}
+          />
+        ))}
+        {questions?.length > 0 && (
+          <Button className="mb-4 self-center" onClick={sendAnswers}>
+            {t("template.questions.submit_questions")}
+          </Button>
         )}
-
-        {/* Questions */}
-        {/* Each time form is filled increase filled_forms with one */}
-        <div className="d-flex flex-column justify-content-center">
-          <h4 className="mt-5 mb-4">{t("template.questions.questions")}</h4>
-
-          {questions.map((q) => (
-            <Question
-              hasAccess={hasAccess}
-              q={q}
-              handleUpdateQuestion={handleUpdateQuestion}
-            />
-          ))}
-          {questions.length > 0 && (
-            <Button className="mb-4 self-center">
-              {t("template.questions.submit_questions")}
+        {hasAccess && (
+          <div>
+            <Button
+              className="self-center"
+              variant="primary"
+              onClick={handleAddQuestion}
+            >
+              <i className="bi bi-plus"></i>{" "}
+              {t("template.questions.add_question")}
             </Button>
-          )}
-          {hasAccess && (
-            <div>
-              <Button
-                className="self-center"
-                variant="primary"
-                onClick={handleAddQuestion}
-              >
-                <i className="bi bi-plus"></i>{" "}
-                {t("template.questions.add_question")}
-              </Button>
-            </div>
-          )}
-        </div>
-      </Form>
-    </div>
+          </div>
+        )}
+      </div>
+    </>
   );
-};
-
-export default Questions;
+}

@@ -23,6 +23,7 @@ export interface Question {
   id: number;
   title: string;
   description: string;
+  form_id: number;
   order: number;
   type: string;
 }
@@ -36,10 +37,10 @@ export interface Comment {
 }
 
 export interface Answer {
-  id: number;
+  // id: number;
   form_id: number;
   author_id: number;
-  created_at: string;
+  // created_at: string;/
   title: string;
   description: string;
   answer: string;
@@ -47,3 +48,5 @@ export interface Answer {
   order: number;
   type: string;
 }
+// we may need another type for recieved Answer with id
+// or modify (remove id) on place
