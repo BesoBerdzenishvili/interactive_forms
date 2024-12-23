@@ -56,7 +56,8 @@
         "add_question": "Add Question"
       },
       "aggregation": {
-        "title": "Aggregation(?)"
+        "title": "Aggregation(?)",
+        "total_users": "Unique users: {{uniqueUsers}}, All answers: {{totalAnswers}}"
       },
       "results": {
         "title": "Filled Forms",

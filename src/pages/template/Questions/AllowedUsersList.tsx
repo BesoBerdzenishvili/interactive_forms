@@ -8,8 +8,8 @@ import DismissibleAlert from "../../../components/Alert";
 import alert from "../../../utils/alertMessages";
 
 interface AllowedUsersListProps {
-  whoCanFill: string[];
-  handleInputChange: (name: string, value: string[]) => void;
+  whoCanFill: number[];
+  handleInputChange: (name: string, value: number[]) => void;
 }
 
 export default function AllowedUsersList({
@@ -40,6 +40,9 @@ export default function AllowedUsersList({
     fetchProfiles();
   }, []);
 
+  // this isn't displaying list because userid's wrong datatype
+  // filter from useEffect (Comments as example. put userid in []):
+  // https://supabase.com/docs/reference/javascript/is
   const usersList = users.filter((user) => whoCanFill.includes(user.id));
 
   const addUser = () => {
@@ -66,7 +69,7 @@ export default function AllowedUsersList({
     setMessage(alert.allowedUsers.userCreated);
   };
 
-  const removeUser = (id: string) => {
+  const removeUser = (id: number) => {
     handleInputChange("who_can_fill", [...whoCanFill.filter((i) => i !== id)]);
   };
 
