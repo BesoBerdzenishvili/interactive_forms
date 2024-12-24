@@ -55,7 +55,8 @@ export default function Results({ formId }: ResultsProps) {
           {answers?.map((template) => (
             <Result
               template={template}
-              onClick={() => navigate("/user-form/rhtj")}
+              // replace with userId and formId
+              onClick={() => navigate("/user-form/5/3")}
             />
           ))}
         </tbody>
