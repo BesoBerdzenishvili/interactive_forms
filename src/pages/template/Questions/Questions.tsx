@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { Answer, Question as QType } from "../../../types/types";
 import Question from "./Question";
 import supabase from "../../../config/supabase";
-import { CurrentUserContext } from "../../../contexts/user/UserContext";
+// import { CurrentUserContext } from "../../../contexts/user/UserContext";
 import DismissibleAlert from "../../../components/Alert";
 import alert from "../../../utils/alertMessages";
 
