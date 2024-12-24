@@ -11,8 +11,12 @@ interface ResultsProps {
   formId: number;
 }
 
+interface newAnswer extends Answer {
+  created_at: string;
+}
+
 export default function Results({ formId }: ResultsProps) {
-  const [answers, setAnswers] = useState<Answer[]>();
+  const [answers, setAnswers] = useState<newAnswer[]>();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { darkMode } = useContext(DarkModeContext);
@@ -33,6 +37,8 @@ export default function Results({ formId }: ResultsProps) {
     };
     fetchAnswers();
   }, []);
+  const userIds = Array.from(new Set(answers?.map((i) => i.author_id)));
+  console.log(answers, "answers");
 
   return (
     <div className="text-center">
@@ -52,11 +58,11 @@ export default function Results({ formId }: ResultsProps) {
           </tr>
         </thead>
         <tbody>
-          {answers?.map((template) => (
+          {userIds?.map((i, index) => (
             <Result
-              template={template}
-              // replace with userId and formId
-              onClick={() => navigate("/user-form/5/3")}
+              index={index}
+              answer={answers?.filter((j) => j.author_id === i)[0]}
+              onClick={() => navigate(`/user-form/${formId}/${i}`)}
             />
           ))}
         </tbody>

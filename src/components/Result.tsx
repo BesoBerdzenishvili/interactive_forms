@@ -1,17 +1,22 @@
-import useNameById from "../hooks/useNameById";
 import { Answer } from "../types/types";
 
-interface ResultProps {
-  template: Answer;
-  onClick: () => void;
+interface newAnswer extends Answer {
+  created_at: string;
 }
 
-export default function Result({ template, onClick }: ResultProps) {
+interface ResultProps {
+  answer: newAnswer | undefined;
+  onClick: () => void;
+  index: number;
+}
+
+export default function Result({ answer, onClick, index }: ResultProps) {
   return (
-    <tr key={template.id} onClick={onClick}>
-      <td>{template.id}</td>
-      <td>{useNameById(template.author_id)}</td>
-      <td>{template.created_at.split("T")[0]}</td>
+    <tr onClick={onClick}>
+      <td>{index + 1}</td>
+      {/* remove useNameById */}
+      <td>{answer?.author_name}</td>
+      <td>{answer?.created_at.split("T")[0]}</td>
     </tr>
   );
 }
