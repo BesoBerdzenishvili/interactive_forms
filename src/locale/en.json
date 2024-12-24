@@ -79,7 +79,7 @@
     },
     "user_form": {
       "topic": "Topic",
-      "created_by": "Created By",
+      "created_by": "Filled By",
       "created_at": "Created At",
       "tags": "Tags"
     },
@@ -114,7 +114,7 @@
         "tab": {
           "index": "Index",
           "template": "Template",
-          "author": "Author"
+          "author": "Filled By"
         }
       }
     },

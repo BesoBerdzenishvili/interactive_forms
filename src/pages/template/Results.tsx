@@ -38,7 +38,6 @@ export default function Results({ formId }: ResultsProps) {
     fetchAnswers();
   }, []);
   const userIds = Array.from(new Set(answers?.map((i) => i.author_id)));
-  console.log(answers, "answers");
 
   return (
     <div className="text-center">
