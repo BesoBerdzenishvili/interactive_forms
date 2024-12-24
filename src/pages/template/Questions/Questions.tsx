@@ -50,6 +50,23 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
     );
   };
 
+  const increaseFilledForms = async () => {
+    const { error } = await supabase
+      .from("templates")
+      .update({
+        filled_forms: templateData.filled_forms + 1,
+        users_who_filled: [...templateData.users_who_filled, currentUser.id],
+      })
+      .eq("id", templateData.id);
+    if (error) {
+      console.log(error);
+      setShow(true);
+      const { text, ...rest } = alert.questions.sendError;
+      setMessage({ ...rest, text: error.message });
+      return;
+    }
+  };
+
   const sendAnswers = async () => {
     if (templateData.users_who_filled.includes(currentUser.id)) {
       setShow(true);
@@ -71,13 +88,7 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
       const { text, ...rest } = alert.questions.sendError;
       setMessage({ ...rest, text: error.message });
     }
-    await supabase
-      .from("templates")
-      .update({
-        filled_forms: templateData.filled_forms + 1,
-        users_who_filled: [...templateData.users_who_filled, currentUser.id],
-      })
-      .eq("id", templateData.id);
+    increaseFilledForms();
     setAnswers([]);
     setShow(true);
     setMessage(alert.questions.sendSuccess);
