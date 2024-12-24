@@ -140,7 +140,11 @@ const Questionnaire = ({
 
         {/* Questions */}
 
-        <Questions hasAccess={hasAccess} formId={templateData.id} />
+        <Questions
+          hasAccess={hasAccess}
+          formId={templateData.id}
+          formTitle={templateData.title}
+        />
       </Form>
     </div>
   );
