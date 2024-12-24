@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { Answer, Question as QType } from "../../../types/types";
 import Question from "./Question";
 import supabase from "../../../config/supabase";
-// import { CurrentUserContext } from "../../../contexts/user/UserContext";
+import { CurrentUserContext } from "../../../contexts/user/UserContext";
 import DismissibleAlert from "../../../components/Alert";
 import alert from "../../../utils/alertMessages";
 
@@ -14,14 +14,19 @@ import alert from "../../../utils/alertMessages";
 interface QuestionsProps {
   hasAccess: boolean;
   formId: number;
+  formTitle: string;
 }
 
 interface newAnswer extends Answer {
   id: number;
 }
 
-export default function Questions({ hasAccess, formId }: QuestionsProps) {
-  // const { currentUser } = useContext(CurrentUserContext);
+export default function Questions({
+  hasAccess,
+  formId,
+  formTitle,
+}: QuestionsProps) {
+  const { currentUser } = useContext(CurrentUserContext);
   const [questions, setQuestions] = useState<QType[]>([]);
   const [answers, setAnswers] = useState<newAnswer[]>();
   const [show, setShow] = useState(false);
@@ -31,18 +36,18 @@ export default function Questions({ hasAccess, formId }: QuestionsProps) {
     text: "",
   });
 
-  // useEffect(() => {
-  //   setAnswers(
-  //     questions?.map((i) => ({
-  //       ...i,
-  //       answer: "",
-  //       author_id: currentUser.id,
-  //       author_name: currentUser.name,
-  //       form_title: '',
-  //       send_id: (Date.now() + currentUser.id).toString(),
-  //     }))
-  //   );
-  // }, [questions]);
+  useEffect(() => {
+    setAnswers(
+      questions?.map((i) => ({
+        ...i,
+        answer: "",
+        author_id: currentUser.id,
+        author_name: currentUser.name,
+        template_title: formTitle,
+        send_id: (Date.now() + currentUser.id).toString(),
+      }))
+    );
+  }, [questions]);
 
   const updateAnswer = (id: number, field: string, value: string) => {
     setAnswers(
@@ -51,9 +56,15 @@ export default function Questions({ hasAccess, formId }: QuestionsProps) {
   };
 
   const sendAnswers = async () => {
-    const { error } = await supabase
-      .from("answers")
-      .insert(answers?.map(({ id, ...rest }) => rest));
+    const { error } = await supabase.from("answers").insert(
+      answers
+        ?.map((i) => ({
+          ...i,
+          author_name: currentUser.name,
+          template_title: formTitle,
+        }))
+        .map(({ id, ...rest }) => rest)
+    );
     if (error) {
       console.log(error);
       setShow(true);

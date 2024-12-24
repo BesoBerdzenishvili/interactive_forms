@@ -82,7 +82,6 @@ const UserForm = () => {
           <strong>{t("user_form.topic")}:</strong> <br /> {formData?.topic}
         </Card.Text>
         <Card.Text>
-          {/* get this from answer */}
           <strong>{t("user_form.created_by")}:</strong> <br />
           {answers[0]?.author_name}
         </Card.Text>

@@ -4,16 +4,13 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 import { CurrentUserContext } from "../contexts/user/UserContext";
+import supabase from "../config/supabase";
+import PanelCell from "../components/PanelCell";
+import { Answer } from "../types/types";
 
 interface Template {
   id: number;
   title: string;
-}
-
-interface FilledForm {
-  index: number;
-  templateName: string;
-  authorName: string;
 }
 
 const UserPanel: React.FC = () => {
@@ -21,17 +18,32 @@ const UserPanel: React.FC = () => {
     { id: 1, title: "Template 1" },
     { id: 2, title: "Template 2" },
   ]);
+  const [filledForms, setFilledForms] = useState<Answer[]>([]);
+  const [orderBy, setOrderBy] = useState<string>("order");
 
   const navigate = useNavigate();
-
-  const [filledForms, setFilledForms] = useState<FilledForm[]>([
-    { index: 1, templateName: "Template 1", authorName: "User A" },
-    { index: 2, templateName: "Template 2", authorName: "User B" },
-  ]);
 
   const { t } = useTranslation();
   const { darkMode } = useContext(DarkModeContext);
   const { currentUser } = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      const { data, error } = await supabase
+        .from("answers")
+        .select()
+        .eq("author_id", currentUser.id)
+        .order(orderBy);
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        setFilledForms(data);
+      }
+    };
+    fetchAnswers();
+  }, [orderBy]);
+  const formIds = Array.from(new Set(filledForms?.map((i) => i.form_id)));
 
   const addTemplate = () => {
     const newTemplate = {
@@ -53,20 +65,19 @@ const UserPanel: React.FC = () => {
   };
 
   const handleSortFilledForms = (column: string) => {
-    const sortedFilledForms = [...filledForms].sort((a, b) =>
-      a[column as keyof FilledForm] > b[column as keyof FilledForm] ? 1 : -1
-    );
-    setFilledForms(sortedFilledForms);
+    setOrderBy(column);
   };
 
   useEffect(() => {
     if (!currentUser.name) {
       navigate("/");
     }
+    // do we need currentUser.name as dep?
   }, []);
 
   return (
     <Container className="pt-4">
+      {/* refactor as 2 components (with parent state) */}
       <Row className="mb-4">
         <Col>
           <div className="d-flex justify-content-between">
@@ -128,25 +139,27 @@ const UserPanel: React.FC = () => {
           >
             <thead>
               <tr>
-                <th onClick={() => handleSortFilledForms("index")}>
+                <th onClick={() => handleSortFilledForms("order")}>
+                  {/* add up and down arrows when clicked 
+                  and make field cursor pointer */}
                   {t("user_panel.filled_forms.tab.index")}
                 </th>
-                <th onClick={() => handleSortFilledForms("templateName")}>
+                <th onClick={() => handleSortFilledForms("template_title")}>
                   {t("user_panel.filled_forms.tab.template")}
                 </th>
-                <th onClick={() => handleSortFilledForms("authorName")}>
+                <th onClick={() => handleSortFilledForms("author_name")}>
                   {t("user_panel.filled_forms.tab.author")}
                 </th>
               </tr>
             </thead>
             <tbody>
-              {filledForms.map((form) => (
-                // replace with userId and formId
-                <tr key={form.index} onClick={() => navigate("/user-form/1/3")}>
-                  <td>{form.index}</td>
-                  <td>{form.templateName}</td>
-                  <td>{form.authorName}</td>
-                </tr>
+              {formIds.map((formId, index) => (
+                <PanelCell
+                  key={formId}
+                  answer={filledForms?.filter((j) => j.form_id === formId)[0]}
+                  formId={formId}
+                  index={index}
+                />
               ))}
             </tbody>
           </Table>
