@@ -71,6 +71,13 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
       const { text, ...rest } = alert.questions.sendError;
       setMessage({ ...rest, text: error.message });
     }
+    await supabase
+      .from("templates")
+      .update({
+        filled_forms: templateData.filled_forms + 1,
+        users_who_filled: [...templateData.users_who_filled, currentUser.id],
+      })
+      .eq("id", templateData.id);
     setAnswers([]);
     setShow(true);
     setMessage(alert.questions.sendSuccess);
