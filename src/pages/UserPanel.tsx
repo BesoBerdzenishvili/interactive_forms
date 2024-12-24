@@ -6,20 +6,13 @@ import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 import { CurrentUserContext } from "../contexts/user/UserContext";
 import supabase from "../config/supabase";
 import PanelCell from "../components/PanelCell";
-import { Answer } from "../types/types";
-
-interface Template {
-  id: number;
-  title: string;
-}
+import { Answer, TemplateData } from "../types/types";
 
 const UserPanel: React.FC = () => {
-  const [templates, setTemplates] = useState<Template[]>([
-    { id: 1, title: "Template 1" },
-    { id: 2, title: "Template 2" },
-  ]);
+  const [templates, setTemplates] = useState<TemplateData[]>([]);
   const [filledForms, setFilledForms] = useState<Answer[]>([]);
   const [orderBy, setOrderBy] = useState<string>("order");
+  const [orderTemplates, setOrderTemplates] = useState<boolean>(true);
 
   const navigate = useNavigate();
 
@@ -45,24 +38,54 @@ const UserPanel: React.FC = () => {
   }, [orderBy]);
   const formIds = Array.from(new Set(filledForms?.map((i) => i.form_id)));
 
-  const addTemplate = () => {
+  const addTemplate = async () => {
     const newTemplate = {
-      id: templates.length + 1,
-      title: `Template ${templates.length + 1}`,
+      creator_id: currentUser.id,
+      title: "Untitled Form",
+      description: "Form description",
+      likes: [],
+      tags: [],
+      image_url: "",
+      topic: "Other",
+      who_can_fill: [],
     };
-    setTemplates([...templates, newTemplate]);
+    const { data, error } = await supabase
+      .from("templates")
+      .insert(newTemplate)
+      .select();
+
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      setTemplates((prevTemplates) => [...prevTemplates, data[0]]);
+    }
   };
 
-  const deleteTemplate = (id: number) => {
+  const deleteTemplate = async (id: number) => {
+    const { error } = await supabase.from("templates").delete().eq("id", id);
+    if (error) {
+      console.log(error);
+    }
     setTemplates(templates.filter((template) => template.id !== id));
   };
 
-  const handleSortTemplates = (column: string) => {
-    const sortedTemplates = [...templates].sort((a, b) =>
-      a[column as keyof Template] > b[column as keyof Template] ? 1 : -1
-    );
-    setTemplates(sortedTemplates);
-  };
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      const { data, error } = await supabase
+        .from("templates")
+        .select()
+        .eq("creator_id", currentUser.id)
+        .order("title", { ascending: orderTemplates });
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        setTemplates(data);
+      }
+    };
+    fetchTemplates();
+  }, [orderTemplates]);
 
   const handleSortFilledForms = (column: string) => {
     setOrderBy(column);
@@ -97,21 +120,22 @@ const UserPanel: React.FC = () => {
             className="mt-3 text-center"
           >
             <thead>
-              <tr>
-                <th onClick={() => handleSortTemplates("id")}>
-                  {t("user_panel.templates.tab.index")}
-                </th>
-                <th onClick={() => handleSortTemplates("title")}>
-                  {t("user_panel.templates.tab.template_title")}
-                </th>
+              {/* add up down arrow here too */}
+              <tr onClick={() => setOrderTemplates(!orderTemplates)}>
+                <th>{t("user_panel.templates.tab.index")}</th>
+                <th>{t("user_panel.templates.tab.template_title")}</th>
                 <th>{t("user_panel.templates.tab.actions")}</th>
               </tr>
             </thead>
             <tbody>
-              {templates.map((template) => (
-                <tr key={template.id} onClick={() => navigate("/template/5")}>
-                  <td>{template.id}</td>
-                  <td>{template.title}</td>
+              {templates.map((template, index) => (
+                <tr key={template.id}>
+                  <td onClick={() => navigate(`/template/${template.id}`)}>
+                    {index + 1}
+                  </td>
+                  <td onClick={() => navigate(`/template/${template.id}`)}>
+                    {template.title}
+                  </td>
                   <td>
                     <Button
                       variant="danger"
