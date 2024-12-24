@@ -5,7 +5,8 @@
 }
 
 td,
-i {
+i,
+.pointer {
   cursor: pointer;
 }
 

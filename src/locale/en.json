@@ -57,7 +57,8 @@
       },
       "aggregation": {
         "title": "Aggregation(?)",
-        "total_users": "Unique users: {{uniqueUsers}}, All answers: {{totalAnswers}}"
+        "total_users_old": "Unique users: {{uniqueUsers}}, All answers: {{totalAnswers}}",
+        "total_users": "Answers: {{totalAnswers}}"
       },
       "results": {
         "title": "Filled Forms",

@@ -17,6 +17,9 @@ export interface TemplateData {
   creator_id: number;
   image_url: string;
   who_can_fill: number[];
+  // check for changes
+  users_who_filled: number[];
+  filled_forms: number;
 }
 
 export interface Question {

@@ -43,11 +43,8 @@ const UserPanel: React.FC = () => {
       creator_id: currentUser.id,
       title: "Untitled Form",
       description: "Form description",
-      likes: [],
-      tags: [],
       image_url: "",
       topic: "Other",
-      who_can_fill: [],
     };
     const { data, error } = await supabase
       .from("templates")

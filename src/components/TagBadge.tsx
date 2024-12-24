@@ -6,8 +6,8 @@ interface TagBadgeProps {
 
 const TagBadge: React.FC<TagBadgeProps> = ({ tag }) => {
   return (
-    <h5>
-      <Badge pill bg="info" className="hand-cursor">
+    <h5 className="pointer">
+      <Badge pill bg="info">
         {tag}
       </Badge>
     </h5>

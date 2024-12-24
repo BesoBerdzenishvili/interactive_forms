@@ -26,6 +26,8 @@ const Template: React.FC = () => {
     creator_id: 0,
     image_url: "",
     who_can_fill: [],
+    users_who_filled: [],
+    filled_forms: 0,
   });
 
   const { id } = useParams();
