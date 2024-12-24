@@ -141,7 +141,8 @@ const UserPanel: React.FC = () => {
             </thead>
             <tbody>
               {filledForms.map((form) => (
-                <tr key={form.index} onClick={() => navigate("/template/ttrj")}>
+                // replace with userId and formId
+                <tr key={form.index} onClick={() => navigate("/user-form/1/3")}>
                   <td>{form.index}</td>
                   <td>{form.templateName}</td>
                   <td>{form.authorName}</td>

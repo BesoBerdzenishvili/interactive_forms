@@ -47,6 +47,8 @@ export interface Answer {
   send_id: string;
   order: number;
   type: string;
+  author_name: string;
+  template_title: string;
 }
 // we may need another type for recieved Answer with id
 // or modify (remove id) on place

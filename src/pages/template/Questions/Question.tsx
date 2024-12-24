@@ -110,13 +110,15 @@ export default function Question({
           <Form.Label>
             <b>Question Title</b>
           </Form.Label>
-          <Button
-            onClick={() => removeQuestion(q.id)}
-            variant="danger"
-            className="mb-3"
-          >
-            X
-          </Button>
+          {hasAccess && (
+            <Button
+              onClick={() => removeQuestion(q.id)}
+              variant="danger"
+              className="mb-3"
+            >
+              X
+            </Button>
+          )}
         </div>
         {hasAccess ? (
           <Form.Control
