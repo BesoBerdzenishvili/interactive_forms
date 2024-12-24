@@ -62,6 +62,11 @@ const alert = {
       heading: "Error!",
       text: "",
     },
+    alreadySend: {
+      color: "warning",
+      heading: "Warning!",
+      text: "You already filled this form!",
+    },
   },
 };
 

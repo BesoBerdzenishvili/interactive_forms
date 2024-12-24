@@ -57,7 +57,8 @@
       },
       "aggregation": {
         "title": "აგრეგაცია(?)",
-        "total_users": "მოპასუხეები: {{uniqueUsers}}, პასუხები სულ: {{totalAnswers}}"
+        "total_users_old": "მოპასუხეები: {{uniqueUsers}}, პასუხები სულ: {{totalAnswers}}",
+        "total_users": "პასუხები: {{totalAnswers}}"
       },
       "results": {
         "title": "შევსებული ფორმები",

@@ -43,15 +43,15 @@ const Aggregation = ({ formId }: AggregationProps) => {
     {}
   );
 
-  const totalAnswers = new Set(answers?.map((i) => i.send_id));
-  const uniqueUsers = new Set(answers?.map((i) => i.author_id));
+  const totalAnswers = new Set(answers?.map((i) => i.send_id)).size;
+  // const uniqueUsers = new Set(answers?.map((i) => i.author_id)).size;
 
   return (
     <Container>
       <h3 className="mb-4">
         {t("template.aggregation.total_users", {
-          uniqueUsers: uniqueUsers.size,
-          totalAnswers: totalAnswers.size,
+          // uniqueUsers: uniqueUsers,
+          totalAnswers: totalAnswers,
         })}
       </h3>
       {Object.entries(groupedData).map(([title, items]) => (

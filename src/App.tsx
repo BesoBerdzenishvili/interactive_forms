@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import Main from "./pages/Main";
+import Main from "./pages/Main/Main";
 import AdminPanel from "./pages/AdminPanel";
 import Template from "./pages/template/Template";
 import UserForm from "./pages/UserForm";

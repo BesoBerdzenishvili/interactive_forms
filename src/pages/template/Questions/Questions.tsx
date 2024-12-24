@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { Answer, Question as QType } from "../../../types/types";
+import { Answer, Question as QType, TemplateData } from "../../../types/types";
 import Question from "./Question";
 import supabase from "../../../config/supabase";
 import { CurrentUserContext } from "../../../contexts/user/UserContext";
@@ -13,19 +13,14 @@ import alert from "../../../utils/alertMessages";
 
 interface QuestionsProps {
   hasAccess: boolean;
-  formId: number;
-  formTitle: string;
-}
+  templateData: TemplateData;
+} // replace id and title from templateData
 
 interface newAnswer extends Answer {
   id: number;
 }
 
-export default function Questions({
-  hasAccess,
-  formId,
-  formTitle,
-}: QuestionsProps) {
+export default function Questions({ hasAccess, templateData }: QuestionsProps) {
   const { currentUser } = useContext(CurrentUserContext);
   const [questions, setQuestions] = useState<QType[]>([]);
   const [answers, setAnswers] = useState<newAnswer[]>();
@@ -43,7 +38,7 @@ export default function Questions({
         answer: "",
         author_id: currentUser.id,
         author_name: currentUser.name,
-        template_title: formTitle,
+        template_title: templateData.title,
         send_id: (Date.now() + currentUser.id).toString(),
       }))
     );
@@ -56,12 +51,17 @@ export default function Questions({
   };
 
   const sendAnswers = async () => {
+    if (templateData.users_who_filled.includes(currentUser.id)) {
+      setShow(true);
+      setMessage(alert.questions.alreadySend);
+      return;
+    }
     const { error } = await supabase.from("answers").insert(
       answers
         ?.map((i) => ({
           ...i,
           author_name: currentUser.name,
-          template_title: formTitle,
+          template_title: templateData.title,
         }))
         .map(({ id, ...rest }) => rest)
     );
@@ -81,7 +81,7 @@ export default function Questions({
       const { data, error } = await supabase
         .from("questions")
         .select()
-        .eq("form_id", formId);
+        .eq("form_id", templateData.id);
       if (data) {
         setQuestions(data);
       }
@@ -91,7 +91,8 @@ export default function Questions({
       }
     };
     fetchQuestions();
-  }, [formId]);
+    // do we need deps here?
+  }, [templateData.id]);
 
   const { t } = useTranslation();
 
@@ -106,7 +107,7 @@ export default function Questions({
       description: "description",
       // automatically increase this field from db
       order: questions.length,
-      form_id: formId,
+      form_id: templateData.id,
       type: "text",
     });
 
@@ -118,7 +119,7 @@ export default function Questions({
       id: Date.now(),
       title: "Untitled question",
       description: "description",
-      form_id: formId,
+      form_id: templateData.id,
       order: questions.length,
       type: "text",
     };
