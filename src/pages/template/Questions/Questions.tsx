@@ -162,7 +162,7 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
             updateAnswer={updateAnswer}
           />
         ))}
-        {questions?.length > 0 && (
+        {questions?.length > 0 && currentUser.name && (
           <Button className="mb-4 self-center" onClick={sendAnswers}>
             {t("template.questions.submit_questions")}
           </Button>
