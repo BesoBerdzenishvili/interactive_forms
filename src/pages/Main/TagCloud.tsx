@@ -30,7 +30,7 @@ export default function TagCloud() {
 
   const uniqueTags = [...new Set(allTags)];
   return (
-    <Stack direction="horizontal" gap={3} className="overflow-auto mt-5">
+    <Stack direction="horizontal" className="overflow-auto mt-5">
       {uniqueTags.map((tag) => (
         <TagBadge key={tag} tag={tag} />
       ))}

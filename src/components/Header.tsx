@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import LanguageSwitch from "./LanguageSwitch";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 import { CurrentUserContext } from "../contexts/user/UserContext";
 
@@ -24,11 +24,12 @@ const Header: React.FC<HeaderProps> = () => {
   const { t } = useTranslation();
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
   const { currentUser, logout } = useContext(CurrentUserContext);
+  const navigate = useNavigate();
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Search query:", searchQuery);
-    // Add search logic here
+    navigate(`/search/${searchQuery}`);
+    // when time do autocomplete anyway
   };
   document.body.style.backgroundColor = darkMode ? "black" : "";
   return (
