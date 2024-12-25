@@ -29,7 +29,6 @@ const Header: React.FC<HeaderProps> = () => {
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
     navigate(`/search/${searchQuery}`);
-    // when time do autocomplete anyway
   };
   document.body.style.backgroundColor = darkMode ? "black" : "";
   return (

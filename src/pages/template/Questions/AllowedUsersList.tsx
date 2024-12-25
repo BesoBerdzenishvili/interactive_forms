@@ -6,6 +6,7 @@ import supabase from "../../../config/supabase";
 import { User } from "../../../types/types";
 import DismissibleAlert from "../../../components/Alert";
 import alert from "../../../utils/alertMessages";
+import Autocomplete from "../../../components/Autocomplete";
 
 interface AllowedUsersListProps {
   whoCanFill: number[];
@@ -18,6 +19,8 @@ export default function AllowedUsersList({
 }: AllowedUsersListProps) {
   const [users, setUsers] = useState<User[]>([]);
   const [show, setShow] = useState(false);
+  const [orderBy, setOrderBy] = useState("name");
+  const [asc, setAsc] = useState(false);
   const [message, setMessage] = useState({
     color: "",
     heading: "",
@@ -29,7 +32,10 @@ export default function AllowedUsersList({
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      const { data, error } = await supabase.from("profiles").select();
+      const { data, error } = await supabase
+        .from("profiles")
+        .select()
+        .order(orderBy, { ascending: asc });
       if (error) {
         console.log(error);
       }
@@ -38,11 +44,8 @@ export default function AllowedUsersList({
       }
     };
     fetchProfiles();
-  }, []);
+  }, [orderBy, asc]);
 
-  // this isn't displaying list because userid's wrong datatype
-  // filter from useEffect (Comments as example. put userid in []):
-  // https://supabase.com/docs/reference/javascript/is
   const usersList = users.filter((user) => whoCanFill.includes(user.id));
 
   const addUser = () => {
@@ -73,34 +76,42 @@ export default function AllowedUsersList({
     handleInputChange("who_can_fill", [...whoCanFill.filter((i) => i !== id)]);
   };
 
+  const nameOptions = [...new Set(users.map((i) => i.name))];
+  const emailOptions = [...new Set(users.map((i) => i.email))];
+
   return (
     <div>
       {/* Users Table */}
       {show && <DismissibleAlert data={message} setShow={setShow} />}
 
-      <AllowedUsers removeUser={removeUser} users={usersList} />
+      <AllowedUsers
+        asc={asc}
+        setAsc={setAsc}
+        setOrderBy={setOrderBy}
+        removeUser={removeUser}
+        users={usersList}
+      />
 
       {/* Add User */}
       <Form.Group className="mb-3 w-sm-25">
         <h5>{t("template.questions.allowed_users.who_can_fill")}:</h5>
         <InputGroup>
           <Stack direction="vertical" gap={2}>
-            <Form.Control
-              type="text"
+            <Autocomplete
+              initialValue={newUserName}
+              setInitialValue={setNewUserName}
+              options={nameOptions}
               placeholder={t(
                 "template.questions.allowed_users.name_placeholder"
               )}
-              value={newUserName}
-              onChange={(e) => setNewUserName(e.target.value)}
             />
-            <Form.Control
-              // make sure this checks email format
-              type="email"
+            <Autocomplete
+              initialValue={newUserEmail}
+              setInitialValue={setNewUserEmail}
+              options={emailOptions}
               placeholder={t(
                 "template.questions.allowed_users.email_placeholder"
               )}
-              value={newUserEmail}
-              onChange={(e) => setNewUserEmail(e.target.value)}
             />
           </Stack>
           <Button onClick={addUser}>
