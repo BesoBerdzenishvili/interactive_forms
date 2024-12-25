@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { DarkModeContext } from "../../../contexts/dark_mode/DarkModeContext";
@@ -6,6 +6,9 @@ import { DarkModeContext } from "../../../contexts/dark_mode/DarkModeContext";
 interface AllowedUsersProps {
   users: User[];
   removeUser: (id: number) => void;
+  asc: boolean;
+  setAsc: Dispatch<SetStateAction<boolean>>;
+  setOrderBy: Dispatch<SetStateAction<string>>;
 }
 interface User {
   id: number;
@@ -13,13 +16,20 @@ interface User {
   email: string;
 }
 
-const AllowedUsers: React.FC<AllowedUsersProps> = ({ users, removeUser }) => {
-  const [sortField, setSortField] = useState<"name" | "email">("name");
-  const sortedUsers = [...users].sort((a, b) =>
-    a[sortField].localeCompare(b[sortField])
-  );
+const AllowedUsers: React.FC<AllowedUsersProps> = ({
+  users,
+  removeUser,
+  asc,
+  setAsc,
+  setOrderBy,
+}) => {
   const { t } = useTranslation();
   const { darkMode } = useContext(DarkModeContext);
+
+  const sortFields = (field: string) => {
+    setOrderBy(field);
+    setAsc(!asc);
+  };
 
   return (
     <div className="my-4">
@@ -30,10 +40,10 @@ const AllowedUsers: React.FC<AllowedUsersProps> = ({ users, removeUser }) => {
         <Table striped bordered hover className={darkMode ? "table-dark" : ""}>
           <thead>
             <tr>
-              <th onClick={() => setSortField("name")}>
+              <th onClick={() => sortFields("name")}>
                 {t("template.questions.allowed_users.name")}
               </th>
-              <th onClick={() => setSortField("email")}>
+              <th onClick={() => sortFields("email")}>
                 {t("template.questions.allowed_users.email")}
               </th>
               <th className="text-center">
@@ -42,7 +52,7 @@ const AllowedUsers: React.FC<AllowedUsersProps> = ({ users, removeUser }) => {
             </tr>
           </thead>
           <tbody>
-            {sortedUsers.map((user) => (
+            {users?.map((user) => (
               <tr key={user.id}>
                 <td>{user.name}</td>
                 <td>{user.email}</td>

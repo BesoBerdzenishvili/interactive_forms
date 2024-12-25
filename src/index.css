@@ -15,3 +15,7 @@ i,
   margin-left: auto;
   margin-right: auto;
 }
+
+.hoverable:hover {
+  background-color: lightslategray;
+}

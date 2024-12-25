@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Form, Button, InputGroup, Image } from "react-bootstrap";
+import { Form, Button, Image, Stack } from "react-bootstrap";
 import AllowedUsersList from "./AllowedUsersList";
 import Description from "./Description";
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,8 @@ import Topics from "./Topics";
 import UploadComponent from "../../../components/UploadImage";
 import Questions from "./Questions";
 import TagBadge from "../../../components/TagBadge";
+import Autocomplete from "../../../components/Autocomplete";
+import useAllUniqueTags from "../../../hooks/useAllUniqueTags";
 
 const Questionnaire = ({
   templateData,
@@ -39,7 +41,6 @@ const Questionnaire = ({
     name: string,
     value: string | string[] | number[]
   ) => {
-    // console.log(name, "name", value);
     setTemplateData((prevState: TemplateData) => ({
       ...prevState,
       [name]: value,
@@ -53,6 +54,8 @@ const Questionnaire = ({
       console.error("Error updating data:", error);
     }
   };
+
+  const options = useAllUniqueTags();
 
   return (
     <div className="p-4">
@@ -99,20 +102,20 @@ const Questionnaire = ({
         />
 
         {/* Tags */}
-        <Form.Group controlId="formTags" className="mb-3 w-sm-25">
+        <Form.Group className="mb-3 w-sm-25">
           <Form.Label>{t("template.questions.tags")}</Form.Label>
           {hasAccess && (
-            <InputGroup>
-              <Form.Control
-                type="text"
+            <Stack gap={2} direction="horizontal">
+              <Autocomplete
+                initialValue={tagInput}
+                setInitialValue={setTagInput}
+                options={options}
                 placeholder={t("template.questions.tags_placeholder")}
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
               />
               <Button onClick={handleAddTag}>
                 <i className="bi bi-plus-circle"></i>
               </Button>
-            </InputGroup>
+            </Stack>
           )}
           <div className="mt-2 d-flex">
             {templateData.tags.map((tag) => (
@@ -138,7 +141,6 @@ const Questionnaire = ({
         )}
 
         {/* Questions */}
-
         <Questions hasAccess={hasAccess} templateData={templateData} />
       </Form>
     </div>
