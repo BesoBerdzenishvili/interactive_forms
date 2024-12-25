@@ -10,6 +10,7 @@ import Registration from "./auth/Registration";
 import Login from "./auth/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NoAccess from "./pages/NoAccess";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         {/* </Route> */}
         <Route path="/user-form/:formId/:userId" element={<UserForm />} />
         <Route path="/user-panel" element={<UserPanel />} />
+        <Route path="/search/:searchTerm/:tags?" element={<SearchResults />} />
         <Route path="/no-access" element={<NoAccess />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

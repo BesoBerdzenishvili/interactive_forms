@@ -9,6 +9,7 @@ import { TemplateData } from "../../../types/types";
 import Topics from "./Topics";
 import UploadComponent from "../../../components/UploadImage";
 import Questions from "./Questions";
+import TagBadge from "../../../components/TagBadge";
 
 const Questionnaire = ({
   templateData,
@@ -113,11 +114,9 @@ const Questionnaire = ({
               </Button>
             </InputGroup>
           )}
-          <div className="mt-2">
-            {templateData.tags.map((tag, index) => (
-              <span key={index} className="badge bg-primary me-2">
-                {tag}
-              </span>
+          <div className="mt-2 d-flex">
+            {templateData.tags.map((tag) => (
+              <TagBadge key={tag} tag={tag} bg="primary" />
             ))}
           </div>
         </Form.Group>

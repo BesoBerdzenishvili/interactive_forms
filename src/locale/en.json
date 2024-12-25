@@ -126,6 +126,11 @@
         "responses": "Responses"
       }
     },
+    "search_results": {
+      "title": "Template title",
+      "date": "Created at",
+      "no_match": "No Matches..."
+    },
     "not_found": {
       "title": "Page Not Found",
       "message": "The page you’re looking for doesn’t exist or has been moved.",
