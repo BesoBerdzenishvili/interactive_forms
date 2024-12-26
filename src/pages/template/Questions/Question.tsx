@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../../../contexts/user/UserContext";
 import { Answer, Question as Qtype } from "../../../types/types";
 import supabase from "../../../config/supabase";
 
-const QTypes = ["text", "paragraph", "number", "checkbox"];
+const questionTypes = ["text", "paragraph", "number", "checkbox"];
 
 interface newAnswer extends Answer {
   id: number;
@@ -38,6 +38,10 @@ export default function Question({
   useEffect(() => {
     setQuestion(q);
   }, []);
+
+  useEffect(() => {
+    updateQuestion(q.id, "order", String(q.order));
+  }, [q.order]);
 
   const updateQuestion = async (id: number, field: string, value: string) => {
     updateAnswer(id, field, value);
@@ -161,7 +165,7 @@ export default function Question({
             value={question.type}
             onChange={(e) => updateQuestion(q.id, "type", e.target.value)}
           >
-            {QTypes.map((i) => {
+            {questionTypes.map((i) => {
               return (
                 <option key={i} value={i}>
                   {i}
