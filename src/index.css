@@ -19,3 +19,15 @@ i,
 .hoverable:hover {
   background-color: lightslategray;
 }
+
+.grab {
+  cursor: grab;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+
+.grab:active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+}

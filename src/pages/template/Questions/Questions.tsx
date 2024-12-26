@@ -7,6 +7,7 @@ import supabase from "../../../config/supabase";
 import { CurrentUserContext } from "../../../contexts/user/UserContext";
 import DismissibleAlert from "../../../components/Alert";
 import alert from "../../../utils/alertMessages";
+import VirtualList from "react-virtual-drag-list";
 
 interface QuestionsProps {
   hasAccess: boolean;
@@ -96,7 +97,8 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
       const { data, error } = await supabase
         .from("questions")
         .select()
-        .eq("form_id", templateData.id);
+        .eq("form_id", templateData.id)
+        .order("order");
       if (data) {
         setQuestions(data);
       }
@@ -149,16 +151,38 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
           {t("template.questions.questions")} ({questions?.length})
         </h4>
 
-        {questions?.map((q) => (
-          <Question
-            key={q.id}
-            hasAccess={hasAccess}
-            q={q}
-            answers={answers}
-            removeQuestion={removeQuestion}
-            updateAnswer={updateAnswer}
-          />
-        ))}
+        <VirtualList
+          className="virtual-list"
+          dataKey="order"
+          dataSource={questions.map((i) => ({
+            ...i,
+            order: i.order.toString(),
+          }))}
+          handle=".handle"
+          onDrop={(event) => {
+            const newQuestions = event.list.map((item, index) => ({
+              ...item,
+              order: index,
+            }));
+            setQuestions(newQuestions);
+          }}
+        >
+          {(record) => {
+            const newRecord = { ...record, order: Number(record.order) };
+            return (
+              <div key={record.id}>
+                <i className="bi bi-grip-horizontal handle position-absolute ms-3 fs-3 grab" />
+                <Question
+                  hasAccess={hasAccess}
+                  q={newRecord}
+                  answers={answers}
+                  removeQuestion={removeQuestion}
+                  updateAnswer={updateAnswer}
+                />
+              </div>
+            );
+          }}
+        </VirtualList>
         {questions?.length > 0 && currentUser.name && (
           <Button className="mb-4 self-center" onClick={sendAnswers}>
             {t("template.questions.submit_questions")}
