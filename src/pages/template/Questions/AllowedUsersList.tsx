@@ -62,11 +62,6 @@ export default function AllowedUsersList({
       setMessage(alert.allowedUsers.alreadyInList);
       return;
     }
-    if (newUser.is_admin) {
-      setShow(true);
-      setMessage(alert.allowedUsers.adminAccesses);
-      return;
-    }
     handleInputChange("who_can_fill", [...whoCanFill, newUser.id]);
     setShow(true);
     setMessage(alert.allowedUsers.userCreated);

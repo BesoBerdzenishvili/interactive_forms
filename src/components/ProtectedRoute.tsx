@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation, useParams } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/user/UserContext";
-import useFormAccess from "../hooks/useFormAccess";
+import checkFormAccess from "../utils/checkFormAccess";
+import supabase from "../config/supabase";
 
 interface ProtectedRouteProps {
   checkAdmin?: boolean;
@@ -15,17 +16,34 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const { currentUser } = useContext(CurrentUserContext);
   const location = useLocation();
   const { id } = useParams();
-  // console.log(useFormAccess(id), "result");
+  const [templates, setTemplates] = useState<number[]>([]);
+
+  useEffect(() => {
+    const fetchTemplate = async () => {
+      const { data, error } = await supabase
+        .from("templates")
+        .select("who_can_fill")
+        .eq("id", id)
+        .single();
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        console.log(data.who_can_fill, "templ data");
+        setTemplates(data.who_can_fill);
+      }
+    };
+    fetchTemplate();
+  }, []);
 
   if (!checkTemplate && !checkAdmin && currentUser.name) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
-
+  // why do we need location here?
   if (!checkTemplate && checkAdmin && !currentUser.is_admin) {
     return <Navigate to="/no-access" state={{ from: location }} replace />;
   }
-
-  if (checkTemplate && !checkAdmin && useFormAccess(id)) {
+  if (checkTemplate && !checkAdmin && !checkFormAccess(templates)) {
     return <Navigate to="/no-access" state={{ from: location }} replace />;
   }
 

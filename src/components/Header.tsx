@@ -18,6 +18,7 @@ interface HeaderProps {
   currentUser?: string;
 }
 // make header sticky (sticky-top)
+// but so that it hides when we scroll down and then appears (at certain screen height)
 const Header: React.FC<HeaderProps> = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
