@@ -8,9 +8,6 @@ import { CurrentUserContext } from "../../../contexts/user/UserContext";
 import DismissibleAlert from "../../../components/Alert";
 import alert from "../../../utils/alertMessages";
 
-// Each time form is filled increase filled_forms with one
-// actually we can calculate total answers like in aggregation
-
 interface QuestionsProps {
   hasAccess: boolean;
   templateData: TemplateData;

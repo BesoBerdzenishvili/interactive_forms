@@ -70,7 +70,7 @@ const AdminPanel = () => {
       error && console.error(error);
     }
   };
-  // see if you can use one function to toggle admin
+
   const handleMakeUser = async () => {
     if (currentUser.is_admin) {
       const { error } = await supabase

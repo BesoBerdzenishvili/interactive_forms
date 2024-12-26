@@ -1,5 +1,7 @@
 import { useContext, useMemo } from "react";
 import { CurrentUserContext } from "../contexts/user/UserContext";
+// change name to useCreatorOrAdmin
+// parameter should be creator_id
 
 export default function useIsFormCreatorOrAdmin(form_creator_id: number) {
   const { currentUser } = useContext(CurrentUserContext);

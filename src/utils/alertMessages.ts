@@ -30,11 +30,6 @@ const alert = {
     },
   },
   allowedUsers: {
-    adminAccesses: {
-      color: "danger",
-      heading: "Error!",
-      text: "You cannot prevent admin from seeng this Template",
-    },
     userCreated: {
       color: "success",
       heading: "Success!",
