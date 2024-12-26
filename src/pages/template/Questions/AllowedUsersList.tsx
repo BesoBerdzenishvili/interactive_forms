@@ -82,6 +82,7 @@ export default function AllowedUsersList({
       <AllowedUsers
         asc={asc}
         setAsc={setAsc}
+        orderBy={orderBy}
         setOrderBy={setOrderBy}
         removeUser={removeUser}
         users={usersList}

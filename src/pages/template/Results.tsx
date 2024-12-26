@@ -6,6 +6,7 @@ import { DarkModeContext } from "../../contexts/dark_mode/DarkModeContext";
 import supabase from "../../config/supabase";
 import { Answer } from "../../types/types";
 import Result from "../../components/Result";
+import SortArrow from "../../components/SortArrow";
 
 interface ResultsProps {
   formId: number;
@@ -17,6 +18,8 @@ interface newAnswer extends Answer {
 
 export default function Results({ formId }: ResultsProps) {
   const [answers, setAnswers] = useState<newAnswer[]>();
+  const [orderBy, setOrderBy] = useState<string>("created_at");
+  const [asc, setAsc] = useState<boolean>(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { darkMode } = useContext(DarkModeContext);
@@ -27,7 +30,7 @@ export default function Results({ formId }: ResultsProps) {
         .from("answers")
         .select()
         .eq("form_id", formId)
-        .order("created_at");
+        .order(orderBy, { ascending: asc });
       if (error) {
         console.log(error);
       }
@@ -36,8 +39,13 @@ export default function Results({ formId }: ResultsProps) {
       }
     };
     fetchAnswers();
-  }, []);
+  }, [orderBy, asc]);
   const userIds = Array.from(new Set(answers?.map((i) => i.author_id)));
+
+  const sortFields = (field: string) => {
+    setOrderBy(field);
+    setAsc(!asc);
+  };
 
   return (
     <div className="text-center">
@@ -52,8 +60,14 @@ export default function Results({ formId }: ResultsProps) {
         <thead>
           <tr>
             <th>{t("template.results.tab.index")}</th>
-            <th>{t("template.results.tab.user")}</th>
-            <th>{t("template.results.tab.filled_at")}</th>
+            <th onClick={() => sortFields("author_name")}>
+              {t("template.results.tab.user")}
+              <SortArrow orderBy={orderBy} fieldName="author_name" asc={asc} />
+            </th>
+            <th onClick={() => sortFields("created_at")}>
+              {t("template.results.tab.filled_at")}
+              <SortArrow orderBy={orderBy} fieldName="created_at" asc={asc} />
+            </th>
           </tr>
         </thead>
         <tbody>

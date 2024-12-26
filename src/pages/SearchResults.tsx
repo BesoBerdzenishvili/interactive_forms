@@ -4,6 +4,7 @@ import supabase from "../config/supabase";
 import { Table } from "react-bootstrap";
 import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 import { useTranslation } from "react-i18next";
+import SortArrow from "../components/SortArrow";
 
 // when time - try to join different tables ()
 // get template ids from those tables
@@ -70,9 +71,11 @@ export default function SearchResults() {
               <th>#</th>
               <th onClick={() => orderTable("title")}>
                 {t("search_results.title")}
+                <SortArrow orderBy={order} fieldName="title" asc={asc} />
               </th>
               <th onClick={() => orderTable("date")}>
                 {t("search_results.date")}
+                <SortArrow orderBy={order} fieldName="date" asc={asc} />
               </th>
             </tr>
           </thead>

@@ -4,7 +4,7 @@ import Main from "./pages/Main/Main";
 import AdminPanel from "./pages/AdminPanel";
 import Template from "./pages/template/Template";
 import UserForm from "./pages/UserForm";
-import UserPanel from "./pages/UserPanel";
+import UserPanel from "./pages/userPanel/UserPanel";
 import NotFound from "./pages/NotFound";
 import Registration from "./auth/Registration";
 import Login from "./auth/Login";
