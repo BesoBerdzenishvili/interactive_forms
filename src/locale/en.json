@@ -5,6 +5,7 @@
       "register": "Register",
       "login": "Login",
       "logout": "Logout",
+      "my_panel": "My Panel",
       "admin_panel": "Admin Panel"
     },
     "registration": {

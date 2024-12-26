@@ -1,30 +1,19 @@
 import { useContext, useState } from "react";
-import {
-  Navbar,
-  Nav,
-  Button,
-  Badge,
-  Form,
-  FormControl,
-  Stack,
-} from "react-bootstrap";
+import { Navbar, Nav, Button, Form, FormControl, Stack } from "react-bootstrap";
 import LanguageSwitch from "./LanguageSwitch";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
-import { CurrentUserContext } from "../contexts/user/UserContext";
+import UserMenu from "./UserMenu";
 
-interface HeaderProps {
-  currentUser?: string;
-}
 // make header sticky (sticky-top)
 // but so that it hides when we scroll down and then appears (at certain screen height)
-const Header: React.FC<HeaderProps> = () => {
+// is this in bootstrap?
+const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const { t } = useTranslation();
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
-  const { currentUser, logout } = useContext(CurrentUserContext);
   const navigate = useNavigate();
 
   const handleSearch = (event: React.FormEvent) => {
@@ -62,37 +51,7 @@ const Header: React.FC<HeaderProps> = () => {
           </Form>
         </Nav>
         <Nav className="ml-auto">
-          {currentUser.name ? (
-            <Stack direction="horizontal" gap={3}>
-              <h3 className="px-3">
-                <Link to="/user-panel">
-                  <Badge pill bg="danger" className="pb-2">
-                    {currentUser.name}
-                  </Badge>
-                </Link>
-              </h3>
-              {/* if Link has bad spacing use Button */}
-              {currentUser.is_admin && (
-                <Link to="/admin-panel">
-                  <Button> {t("header.admin_panel")}</Button>
-                </Link>
-              )}
-              <Button onClick={logout}> {t("header.logout")}</Button>
-            </Stack>
-          ) : (
-            <>
-              <Link to="/registration">
-                <Button variant="warning" className="m-1">
-                  {t("header.register")}
-                </Button>
-              </Link>
-              <Link to="/login">
-                <Button variant="warning" className="m-1">
-                  {t("header.login")}
-                </Button>
-              </Link>
-            </>
-          )}
+          <UserMenu />
         </Nav>
       </Navbar.Collapse>
     </Navbar>
