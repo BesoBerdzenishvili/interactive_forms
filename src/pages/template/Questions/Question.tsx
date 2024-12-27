@@ -3,6 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { CurrentUserContext } from "../../../contexts/user/UserContext";
 import { Answer, Question as Qtype } from "../../../types/types";
 import supabase from "../../../config/supabase";
+import { useTranslation } from "react-i18next";
 
 const questionTypes = ["text", "paragraph", "number", "checkbox"];
 
@@ -34,6 +35,7 @@ export default function Question({
     form_id: 0,
     type: "",
   });
+  const { t } = useTranslation();
 
   useEffect(() => {
     setQuestion(q);
@@ -70,7 +72,7 @@ export default function Question({
           value={thisAnswer?.answer}
           onChange={(e) => updateAnswer(q.id, "answer", e.target.value)}
           type="text"
-          placeholder="Enter answer"
+          placeholder={t("template.questions.question.answer_types.text")}
         />
       );
       break;
@@ -81,7 +83,7 @@ export default function Question({
           onChange={(e) => updateAnswer(q.id, "answer", e.target.value)}
           as="textarea"
           rows={3}
-          placeholder="Enter answer"
+          placeholder={t("template.questions.question.answer_types.text")}
         />
       );
       break;
@@ -91,7 +93,7 @@ export default function Question({
           value={thisAnswer?.answer}
           onChange={(e) => updateAnswer(q.id, "answer", e.target.value)}
           type="number"
-          placeholder="Enter number"
+          placeholder={t("template.questions.question.answer_types.number")}
         />
       );
       break;
@@ -101,7 +103,7 @@ export default function Question({
           value={thisAnswer?.answer}
           onChange={(e) => updateAnswer(q.id, "answer", e.target.value)}
           type="checkbox"
-          label="Check me out"
+          label={t("template.questions.question.answer_types.checkbox")}
         />
       );
       break;
@@ -112,7 +114,7 @@ export default function Question({
       <Form.Group controlId={`question-title-${q.id}`} className="mb-2">
         <div className="d-flex justify-content-between align-items-end">
           <Form.Label>
-            <b>Question Title</b>
+            <b>{t("template.questions.question.title")}</b>
           </Form.Label>
           {hasAccess && (
             <Button
@@ -139,7 +141,7 @@ export default function Question({
       </Form.Group>
       <Form.Group controlId={`question-description-${q.id}`} className="mb-2">
         <Form.Label>
-          <b>Question Description</b>
+          <b>{t("template.questions.question.description")}</b>
         </Form.Label>
         {hasAccess ? (
           <Form.Control
@@ -158,7 +160,7 @@ export default function Question({
       </Form.Group>
       <Form.Group className="mb-2">
         <Form.Label className="font-weight-bold">
-          <b>Question Type</b>
+          <b>{t("template.questions.question.type")}</b>
         </Form.Label>
         {hasAccess ? (
           <Form.Select
@@ -181,7 +183,7 @@ export default function Question({
       </Form.Group>
       {currentUser.name && (
         <>
-          <Form.Label>Answer</Form.Label>
+          <Form.Label>{t("template.questions.question.answer")}</Form.Label>
           {inputElement}
         </>
       )}

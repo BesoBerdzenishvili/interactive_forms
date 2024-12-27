@@ -53,6 +53,17 @@
           "email_placeholder": "User email"
         },
         "questions": "Questions",
+        "question": {
+          "title": "Question Title",
+          "description": "Question Description",
+          "type": "Question Type",
+          "answer": "Answer",
+          "answer_types": {
+            "text": "Enter answer",
+            "number": "Enter number",
+            "checkbox": "Check me out"
+          }
+        },
         "submit_questions": "Submit Questions",
         "add_question": "Add Question"
       },
