@@ -62,7 +62,6 @@ const UserForm = () => {
 
   return (
     <Container>
-      {/* Form Header */}
       <Card className={`mb-4 px-3 py-4 ${darkMode && "bg-dark text-white"}`}>
         {formData?.image_url && (
           <Image
@@ -106,7 +105,6 @@ const UserForm = () => {
         </Card.Text>
       </Card>
 
-      {/* Form Questions */}
       <Form>
         {answers.map((answer) => (
           <AnswerPanel key={answer.id} answer={answer} darkMode={darkMode} />

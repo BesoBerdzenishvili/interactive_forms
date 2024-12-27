@@ -14,7 +14,6 @@ export default function Description({
   const { t } = useTranslation();
 
   const handleDescriptionChange = (e: string) => {
-    // find why is in ReactMarkdownEditor e string
     onChange("description", e);
   };
   return (

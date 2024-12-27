@@ -47,7 +47,6 @@ export default function PopularTemplates() {
           </tr>
         </thead>
         <tbody>
-          {/* learn how to manipulate table widths */}
           {filledForms?.map((form, index) => (
             <tr key={form.id} onClick={() => navigate(`/template/${form.id}`)}>
               <td>{index + 1}</td>

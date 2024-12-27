@@ -5,6 +5,17 @@ import { useTranslation } from "react-i18next";
 interface UploadComponentProps {
   handleInputChange: (name: string, value: string) => void;
 }
+interface CloudinaryError {
+  message: string;
+  status?: number;
+}
+
+interface CloudinaryUploadResult {
+  event: string;
+  info: {
+    secure_url: string;
+  };
+}
 
 const UploadComponent: React.FC<UploadComponentProps> = ({
   handleInputChange,
@@ -21,8 +32,8 @@ const UploadComponent: React.FC<UploadComponentProps> = ({
           cloudName: import.meta.env.VITE_COUDINARY_CLOUD_NAME,
           uploadPreset: import.meta.env.VITE_COUDINARY_PRESET_NAME,
           resourceType: "image",
-        }, // change type any here
-        (error: any, result: any) => {
+        },
+        (error: CloudinaryError, result: CloudinaryUploadResult) => {
           if (!error && result && result.event === "success") {
             handleInputChange("image_url", result.info.secure_url);
           }

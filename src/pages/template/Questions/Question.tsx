@@ -18,8 +18,7 @@ export default function Question({
   removeQuestion,
   updateAnswer,
   answers,
-}: // we may not need to fetch mockType as prop
-{
+}: {
   q: Qtype;
   hasAccess: boolean;
   mockType?: string;
@@ -61,7 +60,6 @@ export default function Question({
       console.error("Error updating data:", error);
     }
   };
-  // by changing this to state uncontrolled component error will go
   let thisAnswer = answers?.filter((i) => i.id === q.id)[0];
 
   let inputElement;
