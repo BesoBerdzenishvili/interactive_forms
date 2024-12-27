@@ -6,8 +6,10 @@ import { DarkModeContext } from "../../contexts/dark_mode/DarkModeContext";
 import supabase from "../../config/supabase";
 import { Table } from "react-bootstrap";
 
+type newTemplateData = Pick<TemplateData, "id" | "title" | "filled_forms">;
+
 export default function PopularTemplates() {
-  const [filledForms, setFilledForms] = useState<TemplateData[]>();
+  const [filledForms, setFilledForms] = useState<newTemplateData[]>();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { darkMode } = useContext(DarkModeContext);
@@ -16,7 +18,7 @@ export default function PopularTemplates() {
     const fetchTemplates = async () => {
       const { data, error } = await supabase
         .from("templates")
-        .select()
+        .select("id, title, filled_forms")
         .order("filled_forms", { ascending: false })
         .limit(5);
       if (error) {
@@ -47,7 +49,7 @@ export default function PopularTemplates() {
         <tbody>
           {/* learn how to manipulate table widths */}
           {filledForms?.map((form, index) => (
-            <tr key={index} onClick={() => navigate(`/template/${form.id}`)}>
+            <tr key={form.id} onClick={() => navigate(`/template/${form.id}`)}>
               <td>{index + 1}</td>
               <td>{form.title}</td>
               <td>{form.filled_forms}</td>

@@ -10,7 +10,7 @@ interface TopicsProps {
 }
 
 interface Topic {
-  id: string;
+  id: number;
   topic: string;
 }
 
@@ -36,11 +36,10 @@ export default function Topics({
     fetchTpoics();
   }, [initialTopic]);
 
-  const [topics, setTopics] = useState<Topic[]>([{ id: "", topic: "" }]);
+  const [topics, setTopics] = useState<Topic[]>([]);
   const { t } = useTranslation();
 
-  // replace any
-  const handleChange = async (e: any) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTopic(e.target.value);
     handleInputChange("topic", e.target.value);
   };

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/user/UserContext";
 
-export default function checkFormAccess(templates: number[]) {
+export default function useFormAccess(templates: number[]) {
   const { currentUser } = useContext(CurrentUserContext);
   if (templates?.length === 0 || currentUser.is_admin) {
     return true;

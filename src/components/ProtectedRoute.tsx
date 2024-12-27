@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation, useParams } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/user/UserContext";
-import checkFormAccess from "../utils/checkFormAccess";
+import useFormAccess from "../hooks/useFormAccess";
 import supabase from "../config/supabase";
 
 interface ProtectedRouteProps {
@@ -29,7 +29,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         console.log(error);
       }
       if (data) {
-        console.log(data.who_can_fill, "templ data");
         setTemplates(data.who_can_fill);
       }
     };
@@ -43,7 +42,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (!checkTemplate && checkAdmin && !currentUser.is_admin) {
     return <Navigate to="/no-access" state={{ from: location }} replace />;
   }
-  if (checkTemplate && !checkAdmin && !checkFormAccess(templates)) {
+  if (checkTemplate && !checkAdmin && !useFormAccess(templates)) {
     return <Navigate to="/no-access" state={{ from: location }} replace />;
   }
 
