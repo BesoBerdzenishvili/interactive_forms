@@ -31,3 +31,7 @@ i,
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
 }
+
+.gray-placeholder::placeholder {
+  color: gray;
+}
