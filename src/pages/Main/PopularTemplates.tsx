@@ -32,7 +32,7 @@ export default function PopularTemplates() {
   }, []);
   return (
     <>
-      <h3>Popular Templates</h3>
+      <h3>{t("main.popular_title")}</h3>
       <Table
         bordered
         variant={darkMode ? "dark" : ""}

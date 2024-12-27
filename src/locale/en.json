@@ -121,6 +121,8 @@
       }
     },
     "main": {
+      "latest_title": "Latest Templates",
+      "popular_title": "Popular Templates",
       "tab": {
         "title": "Title",
         "author": "Author",
