@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Navigate, Outlet, useLocation, useParams } from "react-router-dom";
+import { Navigate, Outlet, useParams } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/user/UserContext";
 import useFormAccess from "../hooks/useFormAccess";
 import supabase from "../config/supabase";
@@ -14,7 +14,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   checkTemplate = false,
 }) => {
   const { currentUser } = useContext(CurrentUserContext);
-  const location = useLocation();
   const { id } = useParams();
   const [templates, setTemplates] = useState<number[]>([]);
 
@@ -36,14 +35,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }, []);
 
   if (!checkTemplate && !checkAdmin && currentUser.name) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/" />;
   }
-  // why do we need location here?
   if (!checkTemplate && checkAdmin && !currentUser.is_admin) {
-    return <Navigate to="/no-access" state={{ from: location }} replace />;
+    return <Navigate to="/no-access" />;
   }
   if (checkTemplate && !checkAdmin && !useFormAccess(templates)) {
-    return <Navigate to="/no-access" state={{ from: location }} replace />;
+    return <Navigate to="/no-access" />;
   }
 
   return <Outlet />;
