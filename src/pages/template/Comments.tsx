@@ -20,12 +20,12 @@ export default function Comments({ formId }: CommentsProps) {
 
   useEffect(() => {
     const fetchComments = async () => {
-      const { data, error } = await supabase.from("comments").select("*");
+      const { data, error } = await supabase
+        .from("comments")
+        .select("*")
+        .eq("form_id", formId);
       if (data) {
-        setComments(
-          // do it like that in other places too (questions and answers)
-          data.filter((comment: CommentType) => comment.form_id === formId)
-        );
+        setComments(data);
       }
       if (error) {
         console.log(error);
@@ -41,7 +41,7 @@ export default function Comments({ formId }: CommentsProps) {
           event: "*",
           schema: "public",
           table: "comments",
-          filter: `form_id=eq.${formId}`, // Filter for comments of the specific form
+          filter: `form_id=eq.${formId}`,
         },
         (payload) => {
           switch (payload.eventType) {
