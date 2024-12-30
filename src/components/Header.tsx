@@ -19,7 +19,7 @@ const Header: React.FC = () => {
   };
   document.body.style.backgroundColor = darkMode ? "black" : "";
   return (
-    <Navbar expand="lg" className="bg-primary px-4">
+    <Navbar expand="lg" className="bg-primary px-4 z-1">
       <Stack direction="horizontal" gap={3}>
         <Navbar.Brand href="/">
           <h1 className="fw-bold">Q</h1>
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
             </Button>
           </Form>
         </Nav>
-        <Nav className="ml-auto">
+        <Nav className="ml-auto ">
           <UserMenu />
         </Nav>
       </Navbar.Collapse>

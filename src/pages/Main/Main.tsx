@@ -6,8 +6,6 @@ import TagCloud from "./TagCloud";
 
 export default function Main() {
   const { darkMode } = useContext(DarkModeContext);
-  // figure out other way to center main
-  // position absolute causes lot's of trouble (hits header, on mobile version hits burger menu)
 
   return (
     <div
