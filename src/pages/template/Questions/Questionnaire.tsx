@@ -113,7 +113,7 @@ const Questionnaire = ({
               </Button>
             </Stack>
           )}
-          <div className="mt-2 d-flex">
+          <div className="mt-2 d-flex flex-wrap">
             {templateData.tags.map((tag) => (
               <TagBadge key={tag} tag={tag} bg="primary" />
             ))}
