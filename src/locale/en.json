@@ -27,6 +27,11 @@
       "login": "Login"
     },
     "template": {
+      "overlay": {
+        "title": "Success!",
+        "message": "Your Answers are send.",
+        "button": "Main Page"
+      },
       "nav": {
         "questions": "Questions",
         "aggregation": "Aggregation",

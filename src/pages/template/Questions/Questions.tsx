@@ -8,6 +8,7 @@ import { CurrentUserContext } from "../../../contexts/user/UserContext";
 import DismissibleAlert from "../../../components/Alert";
 import alert from "../../../utils/alertMessages";
 import VirtualList from "react-virtual-drag-list";
+import FullScreenOverlay from "../../../components/FullScreenOverlay";
 
 interface QuestionsProps {
   hasAccess: boolean;
@@ -23,6 +24,7 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
   const [questions, setQuestions] = useState<QType[]>([]);
   const [answers, setAnswers] = useState<newAnswer[]>();
   const [show, setShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const [message, setMessage] = useState({
     color: "",
     heading: "",
@@ -88,8 +90,7 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
     }
     increaseFilledForms();
     setAnswers([]);
-    setShow(true);
-    setMessage(alert.questions.sendSuccess);
+    setModalShow(true);
   };
 
   useEffect(() => {
@@ -143,6 +144,12 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
 
   return (
     <>
+      {modalShow && (
+        <FullScreenOverlay
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
+      )}
       {show && <DismissibleAlert data={message} setShow={setShow} />}
       <div className="d-flex flex-column justify-content-center">
         <h4 className="mt-5 mb-4">

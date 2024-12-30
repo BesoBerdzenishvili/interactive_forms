@@ -36,11 +36,6 @@ const alert = {
     },
   },
   questions: {
-    sendSuccess: {
-      color: "success",
-      heading: "Success!",
-      text: "Answers submitted Successfully",
-    },
     sendError: {
       color: "danger",
       heading: "Error!",

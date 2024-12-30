@@ -27,6 +27,11 @@
       "login": "შესვლა"
     },
     "template": {
+      "overlay": {
+        "title": "წარმატება!",
+        "message": "თქვენი პასუხები გაიგზავნა.",
+        "button": "საწყისი გვერდი"
+      },
       "nav": {
         "questions": "კითხვები",
         "aggregation": "აგრეგაცია",
