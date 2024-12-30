@@ -72,7 +72,6 @@ const Questionnaire = ({
       )}
 
       <Form>
-        {/* Title */}
         <Form.Group controlId="formTitle" className="my-3 w-sm-25">
           <Form.Label>{t("template.questions.form_title")}</Form.Label>
           {hasAccess ? (
@@ -87,21 +86,18 @@ const Questionnaire = ({
           )}
         </Form.Group>
 
-        {/* Description */}
         <Description
           description={templateData.description}
           hasAccess={hasAccess}
           onChange={handleInputChange}
         />
 
-        {/* Topic */}
         <Topics
           handleInputChange={handleInputChange}
           initialTopic={templateData.topic}
           hasAccess={hasAccess}
         />
 
-        {/* Tags */}
         <Form.Group className="mb-3 w-sm-25">
           <Form.Label>{t("template.questions.tags")}</Form.Label>
           {hasAccess && (
@@ -124,7 +120,6 @@ const Questionnaire = ({
           </div>
         </Form.Group>
 
-        {/* Image */}
         {hasAccess && (
           <>
             <Form.Group className="mb-3 w-sm-25">
@@ -140,7 +135,6 @@ const Questionnaire = ({
           </>
         )}
 
-        {/* Questions */}
         <Questions hasAccess={hasAccess} templateData={templateData} />
       </Form>
     </div>

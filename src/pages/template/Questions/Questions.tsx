@@ -12,7 +12,7 @@ import VirtualList from "react-virtual-drag-list";
 interface QuestionsProps {
   hasAccess: boolean;
   templateData: TemplateData;
-} // replace id and title from templateData
+}
 
 interface newAnswer extends Answer {
   id: number;
@@ -108,7 +108,6 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
       }
     };
     fetchQuestions();
-    // do we need deps here?
   }, [templateData.id]);
 
   const { t } = useTranslation();
@@ -122,7 +121,6 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
     const { error } = await supabase.from("questions").insert({
       title: "Untitled question",
       description: "description",
-      // automatically increase this field from db
       order: questions.length,
       form_id: templateData.id,
       type: "text",
