@@ -5,6 +5,7 @@ import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 import supabase from "../config/supabase";
 import { Answer, TemplateData } from "../types/types";
 import { useParams } from "react-router-dom";
+import AnswerPanel from "../components/AnswerPanel";
 
 interface newTemplateData extends TemplateData {
   date: string;
@@ -61,7 +62,6 @@ const UserForm = () => {
 
   return (
     <Container>
-      {/* Form Header */}
       <Card className={`mb-4 px-3 py-4 ${darkMode && "bg-dark text-white"}`}>
         {formData?.image_url && (
           <Image
@@ -99,37 +99,15 @@ const UserForm = () => {
             </Badge>
           ))}
         </Card.Text>
-        {/* center vertically */}
-        <Card.Text className="d-flex align-items-center">
+        <Card.Text>
           {formData?.likes?.length}
           <i className="bi bi-heart-fill text-danger ms-1" />
         </Card.Text>
       </Card>
 
-      {/* Form Questions */}
-      {/* refactor */}
       <Form>
         {answers.map((answer) => (
-          <Card
-            key={answer.id}
-            className={`mb-4 ${darkMode && "bg-dark text-white"}`}
-          >
-            <Card.Body>
-              <Card.Title>{answer.title}</Card.Title>
-              <Card.Subtitle className="mb-2 text-secondary">
-                <i>{answer.description}</i>
-              </Card.Subtitle>
-              <Card.Text>
-                <i>
-                  {answer.type === "checkbox"
-                    ? answer.answer
-                      ? "Yes"
-                      : "No"
-                    : answer.answer}
-                </i>
-              </Card.Text>
-            </Card.Body>
-          </Card>
+          <AnswerPanel key={answer.id} answer={answer} darkMode={darkMode} />
         ))}
       </Form>
     </Container>

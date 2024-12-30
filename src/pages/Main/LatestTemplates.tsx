@@ -3,11 +3,12 @@ import { TemplateData } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../config/supabase";
 import { Carousel, Image } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 export default function LatestTemplates() {
   const [latestTemplates, setLatestTemplates] = useState<TemplateData[]>();
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   useEffect(() => {
     const fetchTemplates = async () => {
       const { data, error } = await supabase
@@ -26,8 +27,7 @@ export default function LatestTemplates() {
   }, []);
   return (
     <>
-      {/* translate */}
-      <h3>Latest Templates</h3>
+      <h3>{t("main.latest_title")}</h3>
       <Carousel className="w-50 h-50">
         {latestTemplates?.map((template, index) => (
           <Carousel.Item
@@ -46,8 +46,9 @@ export default function LatestTemplates() {
             />
             <Carousel.Caption>
               <h3>{template.title}</h3>
-              <p>{template.description}</p>
-              <h5>User Name (after refactoring)</h5>
+              <p>
+                <i> {template.description}</i>
+              </p>
             </Carousel.Caption>
           </Carousel.Item>
         ))}

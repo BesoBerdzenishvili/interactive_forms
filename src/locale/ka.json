@@ -27,6 +27,11 @@
       "login": "შესვლა"
     },
     "template": {
+      "overlay": {
+        "title": "წარმატება!",
+        "message": "თქვენი პასუხები გაიგზავნა.",
+        "button": "საწყისი გვერდი"
+      },
       "nav": {
         "questions": "კითხვები",
         "aggregation": "აგრეგაცია",
@@ -53,6 +58,17 @@
           "email_placeholder": "მომხმარებლის ელ-ფოსტა"
         },
         "questions": "შეკითხვები",
+        "question": {
+          "title": "სათაური",
+          "description": "აღწერა",
+          "type": "ტიპი",
+          "answer": "პასუხი",
+          "answer_types": {
+            "text": "შეიყვანეთ პასუხი",
+            "number": "შეიყვანეთ რიცხვი",
+            "checkbox": "მომნიშნე"
+          }
+        },
         "submit_questions": "პასუხების გაგზავნა",
         "add_question": "დაამატე კითხვა"
       },
@@ -121,6 +137,8 @@
       }
     },
     "main": {
+      "latest_title": "უახლესი შაბლონები",
+      "popular_title": "პოპულარული შაბლონები",
       "tab": {
         "title": "სათაური",
         "author": "ავტორი",

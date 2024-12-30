@@ -27,6 +27,11 @@
       "login": "Login"
     },
     "template": {
+      "overlay": {
+        "title": "Success!",
+        "message": "Your Answers are send.",
+        "button": "Main Page"
+      },
       "nav": {
         "questions": "Questions",
         "aggregation": "Aggregation",
@@ -53,6 +58,17 @@
           "email_placeholder": "User email"
         },
         "questions": "Questions",
+        "question": {
+          "title": "Question Title",
+          "description": "Question Description",
+          "type": "Question Type",
+          "answer": "Answer",
+          "answer_types": {
+            "text": "Enter answer",
+            "number": "Enter number",
+            "checkbox": "Check me out"
+          }
+        },
         "submit_questions": "Submit Questions",
         "add_question": "Add Question"
       },
@@ -121,6 +137,8 @@
       }
     },
     "main": {
+      "latest_title": "Latest Templates",
+      "popular_title": "Popular Templates",
       "tab": {
         "title": "Title",
         "author": "Author",

@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import supabase from "../config/supabase";
 import { User } from "../types/types";
 
+type newUser = Pick<User, "id" | "name">;
+
 export default function useNameById(userId: number) {
-  const [users, setUsers] = useState<User[]>();
+  const [users, setUsers] = useState<newUser[]>();
   useEffect(() => {
     const fetchProfiles = async () => {
-      const { data, error } = await supabase.from("profiles").select();
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("id, name");
       if (data) {
         setUsers(data);
       }

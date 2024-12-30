@@ -31,3 +31,11 @@ i,
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
 }
+
+.gray-placeholder::placeholder {
+  color: gray;
+}
+
+.z-1 {
+  z-index: 1000;
+}

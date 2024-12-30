@@ -8,11 +8,12 @@ import { CurrentUserContext } from "../../../contexts/user/UserContext";
 import DismissibleAlert from "../../../components/Alert";
 import alert from "../../../utils/alertMessages";
 import VirtualList from "react-virtual-drag-list";
+import FullScreenOverlay from "../../../components/FullScreenOverlay";
 
 interface QuestionsProps {
   hasAccess: boolean;
   templateData: TemplateData;
-} // replace id and title from templateData
+}
 
 interface newAnswer extends Answer {
   id: number;
@@ -23,29 +24,18 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
   const [questions, setQuestions] = useState<QType[]>([]);
   const [answers, setAnswers] = useState<newAnswer[]>();
   const [show, setShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const [message, setMessage] = useState({
     color: "",
     heading: "",
     text: "",
   });
 
-  useEffect(() => {
-    setAnswers(
-      questions?.map((i) => ({
-        ...i,
-        answer: "",
-        author_id: currentUser.id,
-        author_name: currentUser.name,
-        template_title: templateData.title,
-        send_id: (Date.now() + currentUser.id).toString(),
-      }))
-    );
-  }, [questions]);
-
   const updateAnswer = (id: number, field: string, value: string) => {
-    setAnswers(
-      answers?.map((a) => (a.id === id ? { ...a, [field]: value } : a))
+    const newAnswer = answers?.map((a) =>
+      a.id === id ? { ...a, [field]: value } : a
     );
+    setAnswers(newAnswer);
   };
 
   const increaseFilledForms = async () => {
@@ -85,11 +75,10 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
       setShow(true);
       const { text, ...rest } = alert.questions.sendError;
       setMessage({ ...rest, text: error.message });
+      return;
     }
     increaseFilledForms();
-    setAnswers([]);
-    setShow(true);
-    setMessage(alert.questions.sendSuccess);
+    setModalShow(true);
   };
 
   useEffect(() => {
@@ -101,6 +90,16 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
         .order("order");
       if (data) {
         setQuestions(data);
+        setAnswers(
+          data.map((i) => ({
+            ...i,
+            answer: "",
+            author_id: currentUser.id,
+            author_name: currentUser.name,
+            template_title: templateData.title,
+            send_id: (Date.now() + currentUser.id).toString(),
+          }))
+        );
       }
 
       if (error) {
@@ -108,7 +107,6 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
       }
     };
     fetchQuestions();
-    // do we need deps here?
   }, [templateData.id]);
 
   const { t } = useTranslation();
@@ -122,7 +120,6 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
     const { error } = await supabase.from("questions").insert({
       title: "Untitled question",
       description: "description",
-      // automatically increase this field from db
       order: questions.length,
       form_id: templateData.id,
       type: "text",
@@ -145,6 +142,12 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
 
   return (
     <>
+      {modalShow && (
+        <FullScreenOverlay
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
+      )}
       {show && <DismissibleAlert data={message} setShow={setShow} />}
       <div className="d-flex flex-column justify-content-center">
         <h4 className="mt-5 mb-4">
@@ -171,7 +174,9 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
             const newRecord = { ...record, order: Number(record.order) };
             return (
               <div key={record.id}>
-                <i className="bi bi-grip-horizontal handle position-absolute ms-3 fs-3 grab" />
+                {hasAccess && (
+                  <i className="bi bi-grip-horizontal handle position-absolute ms-3 fs-3 grab" />
+                )}
                 <Question
                   hasAccess={hasAccess}
                   q={newRecord}

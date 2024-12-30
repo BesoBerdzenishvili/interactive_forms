@@ -34,7 +34,7 @@ export default function FilledForms() {
     fetchAnswers();
   }, [orderBy]);
 
-  const formIds = Array.from(new Set(filledForms?.map((i) => i.form_id)));
+  const formIds = [...new Set(filledForms?.map((i) => i.form_id))];
 
   const handleSort = (column: string) => {
     setOrderBy(column);

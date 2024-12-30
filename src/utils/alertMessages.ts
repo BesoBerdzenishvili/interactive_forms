@@ -1,14 +1,3 @@
-// translate these too (i know, i know...)
-
-// do unified errorMessage:
-//{ color: "danger",
-//       heading: "Error!",
-//       text: "",}
-// set text on error (e.g. Questions)
-// or generic 'Something went wrong' message here in text
-
-// also like in Questions, set text to error.message not just error (i think registration has this error)
-
 const alert = {
   login: {
     blocked: {
@@ -47,15 +36,10 @@ const alert = {
     },
   },
   questions: {
-    sendSuccess: {
-      color: "success",
-      heading: "Success!",
-      text: "Answers submitted Successfully",
-    },
     sendError: {
       color: "danger",
       heading: "Error!",
-      text: "",
+      text: "Something went wrong",
     },
     alreadySend: {
       color: "warning",

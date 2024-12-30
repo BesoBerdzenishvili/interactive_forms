@@ -8,8 +8,10 @@ import { CurrentUserContext } from "../../contexts/user/UserContext";
 import { useNavigate } from "react-router-dom";
 import SortArrow from "../../components/SortArrow";
 
+type newTemplateData = Pick<TemplateData, "id" | "title">;
+
 export default function UserTemplates() {
-  const [templates, setTemplates] = useState<TemplateData[]>([]);
+  const [templates, setTemplates] = useState<newTemplateData[]>([]);
   const [asc, setAsc] = useState<boolean>(true);
 
   const { t } = useTranslation();
@@ -21,7 +23,7 @@ export default function UserTemplates() {
     const fetchTemplates = async () => {
       const { data, error } = await supabase
         .from("templates")
-        .select()
+        .select("id, title")
         .eq("creator_id", currentUser.id)
         .order("title", { ascending: asc });
       if (error) {

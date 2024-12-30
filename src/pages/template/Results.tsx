@@ -40,7 +40,7 @@ export default function Results({ formId }: ResultsProps) {
     };
     fetchAnswers();
   }, [orderBy, asc]);
-  const userIds = Array.from(new Set(answers?.map((i) => i.author_id)));
+  const userIds = [...new Set(answers?.map((i) => i.author_id))];
 
   const sortFields = (field: string) => {
     setOrderBy(field);
