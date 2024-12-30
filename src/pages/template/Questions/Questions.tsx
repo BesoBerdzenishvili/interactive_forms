@@ -31,23 +31,11 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
     text: "",
   });
 
-  useEffect(() => {
-    setAnswers(
-      questions?.map((i) => ({
-        ...i,
-        answer: "",
-        author_id: currentUser.id,
-        author_name: currentUser.name,
-        template_title: templateData.title,
-        send_id: (Date.now() + currentUser.id).toString(),
-      }))
-    );
-  }, [questions]);
-
   const updateAnswer = (id: number, field: string, value: string) => {
-    setAnswers(
-      answers?.map((a) => (a.id === id ? { ...a, [field]: value } : a))
+    const newAnswer = answers?.map((a) =>
+      a.id === id ? { ...a, [field]: value } : a
     );
+    setAnswers(newAnswer);
   };
 
   const increaseFilledForms = async () => {
@@ -87,9 +75,9 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
       setShow(true);
       const { text, ...rest } = alert.questions.sendError;
       setMessage({ ...rest, text: error.message });
+      return;
     }
     increaseFilledForms();
-    setAnswers([]);
     setModalShow(true);
   };
 
@@ -102,6 +90,16 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
         .order("order");
       if (data) {
         setQuestions(data);
+        setAnswers(
+          data.map((i) => ({
+            ...i,
+            answer: "",
+            author_id: currentUser.id,
+            author_name: currentUser.name,
+            template_title: templateData.title,
+            send_id: (Date.now() + currentUser.id).toString(),
+          }))
+        );
       }
 
       if (error) {

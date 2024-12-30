@@ -34,6 +34,7 @@ export default function Question({
     form_id: 0,
     type: "",
   });
+  const [check, setCheck] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -59,6 +60,11 @@ export default function Question({
     if (error) {
       console.error("Error updating data:", error);
     }
+  };
+
+  const handleCheckbox = () => {
+    setCheck(!check);
+    updateAnswer(q.id, "answer", String(!check));
   };
   let thisAnswer = answers?.filter((i) => i.id === q.id)[0];
 
@@ -98,8 +104,8 @@ export default function Question({
     case "checkbox":
       inputElement = (
         <Form.Check
-          value={thisAnswer?.answer}
-          onChange={(e) => updateAnswer(q.id, "answer", e.target.value)}
+          checked={check}
+          onChange={handleCheckbox}
           type="checkbox"
           label={t("template.questions.question.answer_types.checkbox")}
         />
