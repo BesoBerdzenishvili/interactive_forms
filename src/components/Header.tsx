@@ -6,9 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 import UserMenu from "./UserMenu";
 
-// make header sticky (sticky-top)
-// but so that it hides when we scroll down and then appears (at certain screen height)
-// is this in bootstrap?
 const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -25,11 +22,10 @@ const Header: React.FC = () => {
     <Navbar expand="lg" className="bg-primary px-4">
       <Stack direction="horizontal" gap={3}>
         <Navbar.Brand href="/">
-          <h1>Q</h1>
+          <h1 className="fw-bold">Q</h1>
         </Navbar.Brand>
         <i
-          className={`bi bi-${darkMode ? "brightness-high" : "moon"}-fill`}
-          style={{ fontSize: "1.5rem" }}
+          className={`bi bi-${darkMode ? "brightness-high" : "moon"}-fill fs-3`}
           onClick={toggleDarkMode}
         />
         <LanguageSwitch />
