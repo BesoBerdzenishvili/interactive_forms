@@ -171,7 +171,9 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
             const newRecord = { ...record, order: Number(record.order) };
             return (
               <div key={record.id}>
-                <i className="bi bi-grip-horizontal handle position-absolute ms-3 fs-3 grab" />
+                {hasAccess && (
+                  <i className="bi bi-grip-horizontal handle position-absolute ms-3 fs-3 grab" />
+                )}
                 <Question
                   hasAccess={hasAccess}
                   q={newRecord}
