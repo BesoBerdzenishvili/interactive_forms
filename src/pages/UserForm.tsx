@@ -6,6 +6,7 @@ import supabase from "../config/supabase";
 import { Answer, TemplateData } from "../types/types";
 import { useParams } from "react-router-dom";
 import AnswerPanel from "../components/AnswerPanel";
+import MarkdownEditor from "@uiw/react-markdown-editor";
 
 interface newTemplateData extends TemplateData {
   date: string;
@@ -77,7 +78,10 @@ const UserForm = () => {
         <Card.Title className="bg-primary text-white text-center p-2">
           {formData?.title}
         </Card.Title>
-        <Card.Text>{formData?.description}</Card.Text>
+        <MarkdownEditor.Markdown
+          className={`my-3 ${darkMode && "bg-dark text-white"}`}
+          source={formData?.description}
+        />
         <Card.Text>
           <strong>{t("user_form.topic")}:</strong> <br /> {formData?.topic}
         </Card.Text>

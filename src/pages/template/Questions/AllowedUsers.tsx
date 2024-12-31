@@ -1,79 +1,118 @@
-import { Dispatch, SetStateAction, useContext } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Form, InputGroup, Stack } from "react-bootstrap";
+import AllowedUsersList from "./AllowedUsersList";
 import { useTranslation } from "react-i18next";
-import { DarkModeContext } from "../../../contexts/dark_mode/DarkModeContext";
-import SortArrow from "../../../components/SortArrow";
+import { useEffect, useState } from "react";
+import supabase from "../../../config/supabase";
 import { User } from "../../../types/types";
+import DismissibleAlert from "../../../components/Alert";
+import alert from "../../../utils/alertMessages";
+import Autocomplete from "../../../components/Autocomplete";
 
 interface AllowedUsersProps {
-  users: User[];
-  removeUser: (id: number) => void;
-  asc: boolean;
-  setAsc: Dispatch<SetStateAction<boolean>>;
-  orderBy: string;
-  setOrderBy: Dispatch<SetStateAction<string>>;
+  whoCanFill: number[];
+  handleInputChange: (name: string, value: number[]) => void;
 }
 
-const AllowedUsers: React.FC<AllowedUsersProps> = ({
-  users,
-  removeUser,
-  asc,
-  setAsc,
-  orderBy,
-  setOrderBy,
-}) => {
+export default function AllowedUsers({
+  whoCanFill,
+  handleInputChange,
+}: AllowedUsersProps) {
+  const [users, setUsers] = useState<User[]>([]);
+  const [show, setShow] = useState(false);
+  const [orderBy, setOrderBy] = useState("name");
+  const [asc, setAsc] = useState(false);
+  const [message, setMessage] = useState({
+    color: "",
+    heading: "",
+    text: "",
+  });
+  const [newUserName, setNewUserName] = useState("");
+  const [newUserEmail, setNewUserEmail] = useState("");
   const { t } = useTranslation();
-  const { darkMode } = useContext(DarkModeContext);
 
-  const sortFields = (field: string) => {
-    setOrderBy(field);
-    setAsc(!asc);
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select()
+        .order(orderBy, { ascending: asc });
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        setUsers(data);
+      }
+    };
+    fetchProfiles();
+  }, [orderBy, asc]);
+
+  const usersList = users.filter((user) => whoCanFill.includes(user.id));
+
+  const addUser = () => {
+    const newUser = users.filter((i) => i.email === newUserEmail)[0];
+    setNewUserName("");
+    setNewUserEmail("");
+    if (!newUser) {
+      setShow(true);
+      setMessage(alert.allowedUsers.userNotFound);
+      return;
+    }
+    if (whoCanFill.includes(newUser.id)) {
+      setShow(true);
+      setMessage(alert.allowedUsers.alreadyInList);
+      return;
+    }
+    handleInputChange("who_can_fill", [...whoCanFill, newUser.id]);
+    setShow(true);
+    setMessage(alert.allowedUsers.userCreated);
   };
 
-  return (
-    <div className="my-4">
-      <h4> {t("template.questions.allowed_users.title")}</h4>
-      {users.length === 0 ? (
-        <p>{t("template.questions.allowed_users.everyone")}</p>
-      ) : (
-        <Table striped bordered hover className={darkMode ? "table-dark" : ""}>
-          <thead>
-            <tr>
-              <th onClick={() => sortFields("name")}>
-                {t("template.questions.allowed_users.name")}
-                <SortArrow orderBy={orderBy} fieldName="name" asc={asc} />
-              </th>
-              <th onClick={() => sortFields("email")}>
-                {t("template.questions.allowed_users.email")}
-                <SortArrow orderBy={orderBy} fieldName="email" asc={asc} />
-              </th>
+  const removeUser = (id: number) => {
+    handleInputChange("who_can_fill", [...whoCanFill.filter((i) => i !== id)]);
+  };
 
-              <th className="text-center">
-                {t("template.questions.allowed_users.remove")}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.map((user) => (
-              <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  <Button
-                    onClick={() => removeUser(user.id)}
-                    variant="danger"
-                    className="self-center"
-                  >
-                    X
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
+  const nameOptions = [...new Set(users.map((i) => i.name))];
+  const emailOptions = [...new Set(users.map((i) => i.email))];
+
+  return (
+    <div>
+      {show && <DismissibleAlert data={message} setShow={setShow} />}
+
+      <AllowedUsersList
+        asc={asc}
+        setAsc={setAsc}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+        removeUser={removeUser}
+        users={usersList}
+      />
+
+      <Form.Group className="mb-3 w-sm-25">
+        <h5>{t("template.questions.allowed_users.who_can_fill")}:</h5>
+        <InputGroup>
+          <Stack direction="vertical" gap={2}>
+            <Autocomplete
+              initialValue={newUserName}
+              setInitialValue={setNewUserName}
+              options={nameOptions}
+              placeholder={t(
+                "template.questions.allowed_users.name_placeholder"
+              )}
+            />
+            <Autocomplete
+              initialValue={newUserEmail}
+              setInitialValue={setNewUserEmail}
+              options={emailOptions}
+              placeholder={t(
+                "template.questions.allowed_users.email_placeholder"
+              )}
+            />
+          </Stack>
+          <Button onClick={addUser}>
+            <i className="bi bi-person-plus"></i>
+          </Button>
+        </InputGroup>
+      </Form.Group>
     </div>
   );
-};
-
-export default AllowedUsers;
+}

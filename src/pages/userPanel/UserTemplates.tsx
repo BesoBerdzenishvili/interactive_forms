@@ -72,44 +72,50 @@ export default function UserTemplates() {
           <i className="bi bi-plus" /> {t("user_panel.templates.add_button")}
         </Button>
       </div>
-      <Table
-        bordered
-        responsive
-        hover
-        variant={darkMode ? "dark" : ""}
-        className="mt-3 text-center"
-      >
-        <thead>
-          <tr onClick={() => setAsc(!asc)}>
-            <th>{t("user_panel.templates.tab.index")}</th>
-            <th>
-              {t("user_panel.templates.tab.template_title")}
-              <SortArrow orderBy="title" fieldName="title" asc={asc} />
-            </th>
-            <th>{t("user_panel.templates.tab.actions")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {templates.map((template, index) => (
-            <tr key={template.id}>
-              <td onClick={() => navigate(`/template/${template.id}`)}>
-                {index + 1}
-              </td>
-              <td onClick={() => navigate(`/template/${template.id}`)}>
-                {template.title}
-              </td>
-              <td>
-                <Button
-                  variant="danger"
-                  onClick={() => deleteTemplate(template.id)}
-                >
-                  <i className="bi bi-trash" />
-                </Button>
-              </td>
+      {templates?.length ? (
+        <Table
+          bordered
+          responsive
+          hover
+          variant={darkMode ? "dark" : ""}
+          className="mt-3 text-center"
+        >
+          <thead>
+            <tr onClick={() => setAsc(!asc)}>
+              <th>{t("user_panel.templates.tab.index")}</th>
+              <th>
+                {t("user_panel.templates.tab.template_title")}
+                <SortArrow orderBy="title" fieldName="title" asc={asc} />
+              </th>
+              <th>{t("user_panel.templates.tab.actions")}</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {templates.map((template, index) => (
+              <tr key={template.id}>
+                <td onClick={() => navigate(`/template/${template.id}`)}>
+                  {index + 1}
+                </td>
+                <td onClick={() => navigate(`/template/${template.id}`)}>
+                  {template.title}
+                </td>
+                <td>
+                  <Button
+                    variant="danger"
+                    onClick={() => deleteTemplate(template.id)}
+                  >
+                    <i className="bi bi-trash" />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <p className={`${darkMode && "text-light"}`}>
+          {t("no_data.no_templates")}
+        </p>
+      )}
     </Col>
   );
 }

@@ -40,7 +40,7 @@ export default function FilledForms() {
     setOrderBy(column);
     setAsc(!asc);
   };
-  return (
+  return filledForms?.length ? (
     <Col className="text-center">
       <h3 className="text-secondary">{t("user_panel.filled_forms.title")}</h3>
       <Table
@@ -49,7 +49,6 @@ export default function FilledForms() {
         hover
         variant={darkMode ? "dark" : ""}
         className="mt-3"
-        style={{ overflow: "auto" }}
       >
         <thead>
           <tr>
@@ -80,5 +79,7 @@ export default function FilledForms() {
         </tbody>
       </Table>
     </Col>
+  ) : (
+    <p className={`${darkMode && "text-light"}`}>{t("no_data.no_forms")}</p>
   );
 }

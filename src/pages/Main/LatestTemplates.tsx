@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import supabase from "../../config/supabase";
 import { Carousel, Image } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import MarkdownEditor from "@uiw/react-markdown-editor";
 
 export default function LatestTemplates() {
   const [latestTemplates, setLatestTemplates] = useState<TemplateData[]>();
@@ -25,10 +26,10 @@ export default function LatestTemplates() {
     };
     fetchTemplates();
   }, []);
-  return (
+  return latestTemplates?.length ? (
     <>
-      <h3>{t("main.latest_title")}</h3>
-      <Carousel className="w-50 h-50">
+      <h3 className="my-3">{t("main.latest_title")}</h3>
+      <Carousel className="w-50 h-100 d-flex flex-column justify-content-center align-items-center">
         {latestTemplates?.map((template, index) => (
           <Carousel.Item
             className="pointer"
@@ -44,15 +45,27 @@ export default function LatestTemplates() {
               alt={template.title}
               className="img-fluid"
             />
-            <Carousel.Caption>
-              <h3>{template.title}</h3>
-              <p>
-                <i> {template.description}</i>
-              </p>
+            <Carousel.Caption className="position-absolute top-50 start-50 translate-middle text-outline">
+              <h3>
+                {template.title.length > 30
+                  ? template.title.split(" ").slice(0, 4).join(" ") + "..."
+                  : template.title}
+              </h3>
+              <MarkdownEditor.Markdown
+                className="bg-transparent text-light fs-2"
+                source={
+                  template.description.length > 30
+                    ? template.description.split(" ").slice(0, 4).join(" ") +
+                      "..."
+                    : template.description
+                }
+              />
             </Carousel.Caption>
           </Carousel.Item>
         ))}
       </Carousel>
     </>
+  ) : (
+    <p>{t("no_data.no_templates")}</p>
   );
 }

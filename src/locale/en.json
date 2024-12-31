@@ -158,6 +158,11 @@
     "no_access": {
       "title": "Access Denied",
       "message": "You do not have permission to access this page. Please contact the administrator if you believe this is an error."
+    },
+    "no_data": {
+      "no_templates": "No Templates yet",
+      "no_forms": "No Forms yet",
+      "no_tags": "No tags yet"
     }
   }
 }

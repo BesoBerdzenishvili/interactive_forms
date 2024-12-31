@@ -30,9 +30,9 @@ export default function PopularTemplates() {
     };
     fetchTemplates();
   }, []);
-  return (
+  return filledForms?.length ? (
     <>
-      <h3>{t("main.popular_title")}</h3>
+      <h3 className="my-3">{t("main.popular_title")}</h3>
       <Table
         bordered
         variant={darkMode ? "dark" : ""}
@@ -57,5 +57,7 @@ export default function PopularTemplates() {
         </tbody>
       </Table>
     </>
+  ) : (
+    <p>{t("no_data.no_forms")}</p>
   );
 }
