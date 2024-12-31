@@ -117,27 +117,24 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
   };
 
   const handleAddQuestion = async () => {
-    const { error } = await supabase.from("questions").insert({
-      title: "Untitled question",
-      description: "description",
-      order: questions.length,
-      form_id: templateData.id,
-      type: "text",
-    });
+    const { data, error } = await supabase
+      .from("questions")
+      .insert({
+        title: "Untitled question",
+        description: "description",
+        order: questions.length,
+        form_id: templateData.id,
+        type: "text",
+      })
+      .select();
 
     if (error) {
       console.error("Error updating data:", error);
     }
 
-    const newQuestion: QType = {
-      id: Date.now(),
-      title: "Untitled question",
-      description: "description",
-      form_id: templateData.id,
-      order: questions.length,
-      type: "text",
-    };
-    setQuestions([...questions, newQuestion]);
+    if (data) {
+      setQuestions([...questions, data[0]]);
+    }
   };
 
   return (
@@ -157,10 +154,14 @@ export default function Questions({ hasAccess, templateData }: QuestionsProps) {
         <VirtualList
           className="virtual-list"
           dataKey="order"
-          dataSource={questions.map((i) => ({
-            ...i,
-            order: i.order.toString(),
-          }))}
+          dataSource={
+            questions
+              ? questions.map((i) => ({
+                  ...i,
+                  order: i.order.toString(),
+                }))
+              : []
+          }
           handle=".handle"
           onDrop={(event) => {
             const newQuestions = event.list.map((item, index) => ({
