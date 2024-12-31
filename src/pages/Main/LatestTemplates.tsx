@@ -27,8 +27,8 @@ export default function LatestTemplates() {
   }, []);
   return latestTemplates?.length ? (
     <>
-      <h3>{t("main.latest_title")}</h3>
-      <Carousel className="w-50 h-50 d-flex flex-column justify-content-center align-items-center">
+      <h3 className="my-3">{t("main.latest_title")}</h3>
+      <Carousel className="w-50 h-100 d-flex flex-column justify-content-center align-items-center">
         {latestTemplates?.map((template, index) => (
           <Carousel.Item
             className="pointer"

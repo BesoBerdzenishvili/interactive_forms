@@ -7,7 +7,7 @@ export default function TagCloud() {
   const tags = useAllUniqueTags();
   const { t } = useTranslation();
   return (
-    <Stack direction="horizontal" className="overflow-auto mt-5">
+    <Stack direction="horizontal" className="overflow-auto mt-3">
       {tags.length ? (
         tags.map((tag) => <TagBadge key={tag} tag={tag} />)
       ) : (
