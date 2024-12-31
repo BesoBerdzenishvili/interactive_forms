@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormControl, InputGroup, Dropdown } from "react-bootstrap";
 
 interface AutocompleteProps {
@@ -17,6 +17,10 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
   const [inputValue, setInputValue] = useState(initialValue);
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    setInputValue(initialValue);
+  }, [initialValue]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

@@ -35,6 +35,7 @@ const Questionnaire = ({
       }));
       handleInputChange("tags", [...templateData.tags, tagInput]);
     }
+    setTagInput("");
   };
 
   const handleInputChange = async (
