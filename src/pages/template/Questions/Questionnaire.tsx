@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Form, Button, Image, Stack } from "react-bootstrap";
-import AllowedUsersList from "./AllowedUsersList";
+import AllowedUsers from "./AllowedUsers";
 import Description from "./Description";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -128,7 +128,7 @@ const Questionnaire = ({
               <UploadComponent handleInputChange={handleInputChange} />
             </Form.Group>
 
-            <AllowedUsersList
+            <AllowedUsers
               whoCanFill={templateData.who_can_fill}
               handleInputChange={handleInputChange}
             />
