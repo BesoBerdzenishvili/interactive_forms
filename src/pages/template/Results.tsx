@@ -50,36 +50,44 @@ export default function Results({ formId }: ResultsProps) {
   return (
     <div className="text-center">
       <h3>{t("template.results.title")}</h3>
-      <Table
-        bordered
-        responsive
-        hover
-        variant={darkMode ? "dark" : ""}
-        className="mt-3 text-center"
-      >
-        <thead>
-          <tr>
-            <th>{t("template.results.tab.index")}</th>
-            <th onClick={() => sortFields("author_name")}>
-              {t("template.results.tab.user")}
-              <SortArrow orderBy={orderBy} fieldName="author_name" asc={asc} />
-            </th>
-            <th onClick={() => sortFields("created_at")}>
-              {t("template.results.tab.filled_at")}
-              <SortArrow orderBy={orderBy} fieldName="created_at" asc={asc} />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {userIds?.map((i, index) => (
-            <Result
-              index={index}
-              answer={answers?.filter((j) => j.author_id === i)[0]}
-              onClick={() => navigate(`/user-form/${formId}/${i}`)}
-            />
-          ))}
-        </tbody>
-      </Table>
+      {answers?.length ? (
+        <Table
+          bordered
+          responsive
+          hover
+          variant={darkMode ? "dark" : ""}
+          className="mt-3 text-center"
+        >
+          <thead>
+            <tr>
+              <th>{t("template.results.tab.index")}</th>
+              <th onClick={() => sortFields("author_name")}>
+                {t("template.results.tab.user")}
+                <SortArrow
+                  orderBy={orderBy}
+                  fieldName="author_name"
+                  asc={asc}
+                />
+              </th>
+              <th onClick={() => sortFields("created_at")}>
+                {t("template.results.tab.filled_at")}
+                <SortArrow orderBy={orderBy} fieldName="created_at" asc={asc} />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {userIds?.map((i, index) => (
+              <Result
+                index={index}
+                answer={answers?.filter((j) => j.author_id === i)[0]}
+                onClick={() => navigate(`/user-form/${formId}/${i}`)}
+              />
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <p>{t("no_data.no_forms")}</p>
+      )}
     </div>
   );
 }

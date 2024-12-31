@@ -25,7 +25,7 @@ export default function LatestTemplates() {
     };
     fetchTemplates();
   }, []);
-  return (
+  return latestTemplates?.length ? (
     <>
       <h3>{t("main.latest_title")}</h3>
       <Carousel className="w-50 h-50">
@@ -54,5 +54,7 @@ export default function LatestTemplates() {
         ))}
       </Carousel>
     </>
+  ) : (
+    <p>{t("no_data.no_templates")}</p>
   );
 }

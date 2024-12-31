@@ -64,7 +64,7 @@ export default function UserTemplates() {
     }
     setTemplates(templates.filter((template) => template.id !== id));
   };
-  return (
+  return templates?.length ? (
     <Col>
       <div className="d-flex justify-content-between">
         <h3 className="text-secondary">{t("user_panel.templates.title")}</h3>
@@ -111,5 +111,7 @@ export default function UserTemplates() {
         </tbody>
       </Table>
     </Col>
+  ) : (
+    <p className={`${darkMode && "text-light"}`}>{t("no_data.no_templates")}</p>
   );
 }

@@ -30,7 +30,7 @@ export default function PopularTemplates() {
     };
     fetchTemplates();
   }, []);
-  return (
+  return filledForms?.length ? (
     <>
       <h3>{t("main.popular_title")}</h3>
       <Table
@@ -57,5 +57,7 @@ export default function PopularTemplates() {
         </tbody>
       </Table>
     </>
+  ) : (
+    <p>{t("no_data.no_forms")}</p>
   );
 }
