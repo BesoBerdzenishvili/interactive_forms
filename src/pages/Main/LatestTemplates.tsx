@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import supabase from "../../config/supabase";
 import { Carousel, Image } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import MarkdownEditor from "@uiw/react-markdown-editor";
 
 export default function LatestTemplates() {
   const [latestTemplates, setLatestTemplates] = useState<TemplateData[]>();
@@ -50,14 +51,15 @@ export default function LatestTemplates() {
                   ? template.title.split(" ").slice(0, 4).join(" ") + "..."
                   : template.title}
               </h3>
-              <h4>
-                <i>
-                  {template.description.length > 30
+              <MarkdownEditor.Markdown
+                className="bg-transparent text-light fs-2"
+                source={
+                  template.description.length > 30
                     ? template.description.split(" ").slice(0, 4).join(" ") +
                       "..."
-                    : template.description}
-                </i>
-              </h4>
+                    : template.description
+                }
+              />
             </Carousel.Caption>
           </Carousel.Item>
         ))}
