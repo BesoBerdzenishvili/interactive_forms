@@ -49,7 +49,6 @@ export default function FilledForms() {
         hover
         variant={darkMode ? "dark" : ""}
         className="mt-3"
-        style={{ overflow: "auto" }}
       >
         <thead>
           <tr>
