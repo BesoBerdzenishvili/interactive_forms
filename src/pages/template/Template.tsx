@@ -9,7 +9,7 @@ import supabase from "../../config/supabase";
 import { useParams } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/user/UserContext";
 import { TemplateData } from "../../types/types";
-import useIsFormCreatorOrAdmin from "../../hooks/useIsFormCreatorOrAdmin";
+import useCreatorOrAdmin from "../../hooks/useCreatorOrAdmin";
 import Comments from "./Comments";
 import NavBar from "./NavBar";
 
@@ -71,7 +71,7 @@ const Template: React.FC = () => {
     }
   };
 
-  const hasAccess = useIsFormCreatorOrAdmin(data.creator_id);
+  const hasAccess = useCreatorOrAdmin(data.creator_id);
 
   return (
     <Container className={`px-5 pb-3 px-sm-2 ${darkMode ? "text-white" : ""}`}>

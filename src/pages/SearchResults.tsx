@@ -6,16 +6,6 @@ import { DarkModeContext } from "../contexts/dark_mode/DarkModeContext";
 import { useTranslation } from "react-i18next";
 import SortArrow from "../components/SortArrow";
 
-// when time - try to join different tables ()
-// get template ids from those tables
-// and add those templates to search results as well
-
-// get ids in on arr
-// fetch separate templates where id is in(arr)
-
-// join multiple columns:
-//  const { data, error } = await supabase.from('Calorie').select(`calorieAmount, profiles (userName)`);
-
 interface TemplateData {
   id: number;
   title: string;
