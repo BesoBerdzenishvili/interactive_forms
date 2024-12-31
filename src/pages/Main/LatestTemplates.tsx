@@ -44,11 +44,20 @@ export default function LatestTemplates() {
               alt={template.title}
               className="img-fluid"
             />
-            <Carousel.Caption className="position-absolute top-50 start-50 translate-middle">
-              <h3>{template.title}</h3>
-              <p>
-                <i> {template.description}</i>
-              </p>
+            <Carousel.Caption className="position-absolute top-50 start-50 translate-middle text-outline">
+              <h3>
+                {template.title.length > 30
+                  ? template.title.split(" ").slice(0, 4).join(" ") + "..."
+                  : template.title}
+              </h3>
+              <h4>
+                <i>
+                  {template.description.length > 30
+                    ? template.description.split(" ").slice(0, 4).join(" ") +
+                      "..."
+                    : template.description}
+                </i>
+              </h4>
             </Carousel.Caption>
           </Carousel.Item>
         ))}
