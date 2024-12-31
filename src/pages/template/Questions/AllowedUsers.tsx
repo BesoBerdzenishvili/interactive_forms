@@ -76,7 +76,6 @@ export default function AllowedUsers({
 
   return (
     <div>
-      {/* Users Table */}
       {show && <DismissibleAlert data={message} setShow={setShow} />}
 
       <AllowedUsersList
@@ -88,7 +87,6 @@ export default function AllowedUsers({
         users={usersList}
       />
 
-      {/* Add User */}
       <Form.Group className="mb-3 w-sm-25">
         <h5>{t("template.questions.allowed_users.who_can_fill")}:</h5>
         <InputGroup>
