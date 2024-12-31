@@ -9,26 +9,31 @@ interface ProtectedRouteProps {
   checkTemplate?: boolean;
 }
 
+interface Template {
+  who_can_fill: number[];
+  creator_id: number;
+}
+
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   checkAdmin = false,
   checkTemplate = false,
 }) => {
   const { currentUser } = useContext(CurrentUserContext);
   const { id } = useParams();
-  const [templates, setTemplates] = useState<number[]>([]);
+  const [templates, setTemplates] = useState<Template>();
 
   useEffect(() => {
     const fetchTemplate = async () => {
       const { data, error } = await supabase
         .from("templates")
-        .select("who_can_fill")
+        .select("who_can_fill, creator_id")
         .eq("id", id)
         .single();
       if (error) {
         console.log(error);
       }
       if (data) {
-        setTemplates(data.who_can_fill);
+        setTemplates(data);
       }
     };
     fetchTemplate();
@@ -40,7 +45,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (!checkTemplate && checkAdmin && !currentUser.is_admin) {
     return <Navigate to="/no-access" />;
   }
-  if (checkTemplate && !checkAdmin && !useFormAccess(templates)) {
+  if (
+    checkTemplate &&
+    !checkAdmin &&
+    !useFormAccess(templates?.who_can_fill, templates?.creator_id)
+  ) {
     return <Navigate to="/no-access" />;
   }
 
