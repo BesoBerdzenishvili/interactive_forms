@@ -27,10 +27,10 @@ export default function AnswerPanel({
     setAnswerText(answer.answer);
   }, []);
 
-  const updateAnswer = async () => {
+  const updateAnswer = async (text: string) => {
     const { error } = await supabase
       .from("answers")
-      .update({ answer: answerText })
+      .update({ answer: text })
       .eq("id", answer.id);
     if (error) {
       console.log(error);
