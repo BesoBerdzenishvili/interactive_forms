@@ -48,10 +48,26 @@ export default function AllowedUsers({
 
   const usersList = users.filter((user) => whoCanFill.includes(user.id));
 
+  useEffect(() => {
+    const matchingUser = users.find((user) => user.name === newUserName);
+    if (matchingUser) {
+      setNewUserEmail(matchingUser.email);
+    } else if (newUserName === "") {
+      setNewUserEmail("");
+    }
+  }, [newUserName]);
+
+  useEffect(() => {
+    const matchingUser = users.find((user) => user.email === newUserEmail);
+    if (matchingUser) {
+      setNewUserName(matchingUser.name);
+    } else if (newUserEmail === "") {
+      setNewUserName("");
+    }
+  }, [newUserEmail]);
+
   const addUser = () => {
-    const newUser = users.filter((i) => i.email === newUserEmail)[0];
-    setNewUserName("");
-    setNewUserEmail("");
+    const newUser = users.find((i) => i.email === newUserEmail);
     if (!newUser) {
       setShow(true);
       setMessage(alert.allowedUsers.userNotFound);
@@ -62,6 +78,8 @@ export default function AllowedUsers({
       setMessage(alert.allowedUsers.alreadyInList);
       return;
     }
+    setNewUserName("");
+    setNewUserEmail("");
     handleInputChange("who_can_fill", [...whoCanFill, newUser.id]);
     setShow(true);
     setMessage(alert.allowedUsers.userCreated);
