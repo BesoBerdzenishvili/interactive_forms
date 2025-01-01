@@ -32,7 +32,7 @@ export default function Description({
         />
       ) : (
         <MarkdownEditor.Markdown
-          className={`my-3 ${darkMode && "bg-black text-white"}`}
+          className={`mb-3 ${darkMode && "bg-black text-white"}`}
           source={description}
         />
       )}
