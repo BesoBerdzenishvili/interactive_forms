@@ -1,6 +1,9 @@
 import { Form } from "react-bootstrap";
 import ReactMarkdownEditor from "@uiw/react-markdown-editor";
 import { useTranslation } from "react-i18next";
+import MarkdownEditor from "@uiw/react-markdown-editor";
+import { useContext } from "react";
+import { DarkModeContext } from "../../../contexts/dark_mode/DarkModeContext";
 
 export default function Description({
   description,
@@ -12,6 +15,7 @@ export default function Description({
   hasAccess: boolean;
 }) {
   const { t } = useTranslation();
+  const { darkMode } = useContext(DarkModeContext);
 
   const handleDescriptionChange = (e: string) => {
     onChange("description", e);
@@ -27,7 +31,10 @@ export default function Description({
           height="100px"
         />
       ) : (
-        <h4>{description}</h4>
+        <MarkdownEditor.Markdown
+          className={`my-3 ${darkMode && "bg-black text-white"}`}
+          source={description}
+        />
       )}
     </Form.Group>
   );
