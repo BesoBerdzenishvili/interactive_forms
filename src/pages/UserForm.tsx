@@ -61,6 +61,11 @@ const UserForm = () => {
     fetchAnswers();
   }, []);
 
+  const deleteAnswer = async (id: number) => {
+    await supabase.from("answers").delete().eq("id", id);
+    setAnswers(answers.filter((i) => i.id !== id));
+  };
+
   return (
     <Container>
       <Card className={`mb-4 px-3 py-4 ${darkMode && "bg-dark text-white"}`}>
@@ -109,9 +114,17 @@ const UserForm = () => {
         </Card.Text>
       </Card>
 
+      <Card.Text className={`${darkMode && "text-light"}`}>
+        {t("user_form.answers.note")}
+      </Card.Text>
       <Form>
         {answers.map((answer) => (
-          <AnswerPanel key={answer.id} answer={answer} darkMode={darkMode} />
+          <AnswerPanel
+            key={answer.id}
+            answer={answer}
+            darkMode={darkMode}
+            deleteAnswer={deleteAnswer}
+          />
         ))}
       </Form>
     </Container>

@@ -99,7 +99,12 @@
       "topic": "Topic",
       "created_by": "Filled By",
       "created_at": "Created At",
-      "tags": "Tags"
+      "tags": "Tags",
+      "answers": {
+        "note": "Double Click on the answer for editing",
+        "yes": "Yes",
+        "no": "No"
+      }
     },
     "admin_panel": {
       "buttons": {
