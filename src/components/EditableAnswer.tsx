@@ -16,7 +16,7 @@ interface EditableAnswerProps {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   check?: boolean;
-  onSave?: () => void;
+  onSave: (text: string) => void;
 }
 
 const EditableAnswer: React.FC<EditableAnswerProps> = ({
@@ -46,9 +46,7 @@ const EditableAnswer: React.FC<EditableAnswerProps> = ({
   };
 
   const handleSave = () => {
-    if (onSave) {
-      onSave();
-    }
+    onSave(value);
     setIsEditing(false);
     setDropdownOpen(false);
   };
@@ -60,7 +58,9 @@ const EditableAnswer: React.FC<EditableAnswerProps> = ({
 
   const handleDropdownSelect = (selected: string | null) => {
     if (selected !== null) {
-      setValue(selected === "true" ? "true" : "false");
+      const answer = selected === "true" ? "true" : "false";
+      setValue(answer);
+      onSave(answer);
     }
     setIsEditing(false);
     setDropdownOpen(false);
@@ -94,7 +94,7 @@ const EditableAnswer: React.FC<EditableAnswerProps> = ({
           <Dropdown.Toggle variant={darkMode ? "dark" : "light"}>
             {value === "true" ? yes : no}
           </Dropdown.Toggle>
-          <Dropdown.Menu onBlur={handleSave}>
+          <Dropdown.Menu>
             <Dropdown.Item eventKey="true">{yes}</Dropdown.Item>
             <Dropdown.Item eventKey="false">{no}</Dropdown.Item>
           </Dropdown.Menu>
