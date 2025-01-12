@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/user/UserContext";
 import UserTemplates from "./UserTemplates";
 import FilledForms from "./FilledForms";
+import SalesforceConnector from "./SalesforceConnector";
 
 const UserPanel: React.FC = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const UserPanel: React.FC = () => {
 
   return (
     <Container className="pt-4">
+      <SalesforceConnector />
       <Row className="mb-4">
         <UserTemplates />
         <FilledForms />

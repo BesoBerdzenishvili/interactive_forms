@@ -123,6 +123,18 @@
       }
     },
     "user_panel": {
+      "salesforce": {
+        "sidebar": {
+          "title": "რეგისტრაცია Salesforce-ზე",
+          "first_name": "სახელი",
+          "first_name_placeholder": "შეიყვანეთ სახელი",
+          "last_name": "გვარი",
+          "last_name_placeholder": "შეიყვანეთ გვარი",
+          "email": "ემაილი",
+          "email_placeholder": "შეიყვანეთ ემაილი",
+          "register_button": "რეგისტრაცია"
+        }
+      },
       "templates": {
         "title": "შაბლონები",
         "add_button": "დაამატე შაბლონი",

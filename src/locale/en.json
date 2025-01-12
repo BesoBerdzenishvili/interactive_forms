@@ -123,6 +123,19 @@
       }
     },
     "user_panel": {
+      "salesforce": {
+        "sidebar": {
+          "title": "Register to Salesforce",
+          "first_name": "First Name",
+          "first_name_placeholder": "Enter first name",
+          "last_name": "Last Name",
+          "last_name_placeholder": "Enter last name",
+          "email": "Email",
+          "email_placeholder": "Enter email",
+          "register_button": "Register"
+        }
+      },
+
       "templates": {
         "title": "Templates",
         "add_button": "Add Template",
