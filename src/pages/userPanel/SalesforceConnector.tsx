@@ -43,7 +43,7 @@ export default function SalesforceConnector() {
   };
 
   return (
-    <div className="d-flex justify-content-end">
+    <>
       <Button variant="success" onClick={handleShow} className="mb-3">
         Salesforce
       </Button>
@@ -116,6 +116,6 @@ export default function SalesforceConnector() {
           )}
         </Offcanvas.Body>
       </Offcanvas>
-    </div>
+    </>
   );
 }

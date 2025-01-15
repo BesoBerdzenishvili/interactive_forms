@@ -135,7 +135,17 @@
           "register_button": "Register"
         }
       },
-
+      "jira": {
+        "title": "Your Jira Tickets",
+        "no_tickets": "No tickets created...",
+        "ticket": {
+          "assignee": "Assignee",
+          "type": "Type",
+          "priority": "Priority",
+          "status": "Status",
+          "reporter": "Reporter"
+        }
+      },
       "templates": {
         "title": "Templates",
         "add_button": "Add Template",

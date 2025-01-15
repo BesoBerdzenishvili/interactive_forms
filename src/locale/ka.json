@@ -135,6 +135,17 @@
           "register_button": "რეგისტრაცია"
         }
       },
+      "jira": {
+        "title": "შენი Jira ბილეთები",
+        "no_tickets": "ბილეთები არაა შექმნილი...",
+        "ticket": {
+          "assignee": "შემსრულებელი",
+          "type": "ტიპი",
+          "priority": "პრიორიტეტი",
+          "status": "სტატუსი",
+          "reporter": "შემტყობინებელი"
+        }
+      },
       "templates": {
         "title": "შაბლონები",
         "add_button": "დაამატე შაბლონი",
