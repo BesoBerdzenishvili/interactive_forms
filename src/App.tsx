@@ -11,11 +11,13 @@ import Login from "./auth/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NoAccess from "./pages/NoAccess";
 import SearchResults from "./pages/SearchResults";
+import NewJiraTicket from "./components/NewJiraTicket";
 
 function App() {
   return (
     <>
       <Header />
+      <NewJiraTicket />
       <Routes>
         <Route path="/" element={<Main />} />
 
